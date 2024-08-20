@@ -1,0 +1,4 @@
+repository "QueryClash@boss16805@cloud"
+  path "/"
+    br "/main"
+    co "/main"
