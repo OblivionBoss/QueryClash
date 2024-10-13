@@ -1793,9 +1793,9 @@ MonoBehaviour:
   canvasParent: {fileID: 1489060950}
   database: {fileID: 0}
   icon:
-  - {fileID: 21300000, guid: 9b0a6bc822a2af5479e829d7a6d68a2a, type: 3}
-  - {fileID: 21300000, guid: 4ff1457c62fa68442a86f6f107cb0cb6, type: 3}
-  - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 21300000, guid: b20d39c45762cad4cadd89c784bd3cb8, type: 3}
+  - {fileID: 21300000, guid: e2f02a91f114f074cace4a802aee98cd, type: 3}
+  - {fileID: 21300000, guid: 68d83e3834cc37544b36884b1328f9bd, type: 3}
   dbName: URI=file:RDB.db
   randomSeed: 42
   output: {fileID: 510494128}
