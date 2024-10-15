@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using System.Timers;
-using static UnityEditor.Progress;
 
 public enum MaterialType
 {
@@ -147,6 +146,7 @@ public class RDBManager : MonoBehaviour
             {
                 temp = e.Message;
                 Debug.Log(e);
+                output.text = temp;
                 throw e;
             }
             connection.Close();
