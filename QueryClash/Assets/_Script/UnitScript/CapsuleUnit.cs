@@ -6,7 +6,7 @@ public class CapsuleUnit : MonoBehaviour
 {
     public float MaxHp;
     public float CurrentHp;
-
+    
     void Start()
     {
         CurrentHp = MaxHp;

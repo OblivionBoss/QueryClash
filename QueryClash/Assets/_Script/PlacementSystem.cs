@@ -27,14 +27,25 @@ public class PlacementSystem : MonoBehaviour
         //StopPlacement();
         floorData = new();
         unitData = new();
+        gridVisualization.SetActive(true);
     }
 
 
     public void StartPlacement( int ID )
     {
+        //StopPlacement();
+        
+        buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
+
+    }
+
+    public void StartRemoving()
+    {
         StopPlacement();
         gridVisualization.SetActive(true);
-        buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
+        buildingState = new RemovingState(grid, preview, floorData, unitData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
 
