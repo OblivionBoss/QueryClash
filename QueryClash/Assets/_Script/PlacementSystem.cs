@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlacementSystem : MonoBehaviour
 {
-    
+
     [SerializeField] InputManager inputManager;
     [SerializeField] Grid grid;
 
@@ -20,6 +20,9 @@ public class PlacementSystem : MonoBehaviour
     private Vector3Int lastDetectedPosition = Vector3Int.zero;
 
     [SerializeField] private ObjectPlacer objectPlacer;
+
+
+
 
     IBuildingState buildingState;
     private void Start()
@@ -38,7 +41,6 @@ public class PlacementSystem : MonoBehaviour
         buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
-
     }
 
     public void StartRemoving()
@@ -46,8 +48,6 @@ public class PlacementSystem : MonoBehaviour
         StopPlacement();
         gridVisualization.SetActive(true);
         buildingState = new RemovingState(grid, preview, floorData, unitData, objectPlacer);
-        inputManager.OnClicked += PlaceStructure;
-        inputManager.OnExit += StopPlacement;
 
     }
 
@@ -60,10 +60,12 @@ public class PlacementSystem : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
+        // Place the structure
         buildingState.OnAction(gridPosition);
 
         StopPlacement();
     }
+
 
     //private bool CheckPlacementValidity(Vector3Int gridPositition, int selectedObjectIndex)
     //{
@@ -105,6 +107,20 @@ public class PlacementSystem : MonoBehaviour
         
     }
 
-
+    public void RemoveUnitAt(Vector3Int gridPosition)
+    {
+        // Check if there is a unit at the specified grid position
+        if (unitData.CanPlaceObjectAt(gridPosition, Vector2Int.one) == false)
+        {
+            // Get the index of the unit to be removed
+            int gameObjectIndex = unitData.GetRepresentationIndex(gridPosition);
+            if (gameObjectIndex != -1)
+            {
+                // Remove unit data and destroy the GameObject
+                unitData.RemoveObjectAt(gridPosition);
+                objectPlacer.RemoveOBjectAt(gameObjectIndex);
+            }
+        }
+    }
 
 }

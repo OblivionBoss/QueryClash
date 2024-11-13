@@ -20,11 +20,15 @@ public class LeftBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-
-        if (collision.gameObject.CompareTag("RightTeam"))
+         
+        if (collision.gameObject.CompareTag("RightTeam") && collision.gameObject.layer == 3)
         {
             CubeUnit u = collision.gameObject.GetComponent<CubeUnit>();
-            u.ReduceHp(Damage);
+            if (u != null)
+            {
+                // Reduce the HP of the collided unit
+                u.ReduceHp(Damage);
+            }
             Destroy(gameObject);
         }
     }

@@ -14,6 +14,15 @@ public class ObjectPlacer : MonoBehaviour
         GameObject newObject = Instantiate(prefab);
         newObject.transform.position = position;
         placedGameObjects.Add(newObject);
+
+        // Check if the placed object has a CapsuleUnit script
+        CapsuleUnit unit = newObject.GetComponent<CapsuleUnit>();
+        if (unit != null)
+        {
+            // Call the OnPlaced method of the CapsuleUnit
+            unit.OnPlaced();
+        }
+
         return placedGameObjects.Count - 1;
     }
 
