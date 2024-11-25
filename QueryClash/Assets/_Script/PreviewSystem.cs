@@ -30,15 +30,15 @@ public class PreviewSystem : MonoBehaviour
         previewObject = Instantiate(prefab);
         PreparePreview(previewObject);
         PrepareCursor(size);
-        cellIndicator.SetActive(true); 
+        cellIndicator.SetActive(true);
 
     }
 
     private void PrepareCursor(Vector2Int size)
     {
-        if(size.x < 0 || size.y > 0)
+        if (size.x < 0 || size.y > 0)
         {
-            cellIndicator.transform.localScale = new Vector3(size.x,1,size.y);
+            cellIndicator.transform.localScale = new Vector3(size.x, 1, size.y);
             cellIndicatorRenderer.material.mainTextureScale = size;
         }
 
@@ -48,10 +48,10 @@ public class PreviewSystem : MonoBehaviour
     {
         Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
 
-        foreach(Renderer renderer in renderers)
+        foreach (Renderer renderer in renderers)
         {
             Material[] materials = renderer.materials;
-            for(int i = 0; i < materials.Length; i++)
+            for (int i = 0; i < materials.Length; i++)
             {
                 materials[i] = previewMaterialInstance;
             }
@@ -64,11 +64,11 @@ public class PreviewSystem : MonoBehaviour
     public void StopShowingPreview()
     {
         cellIndicator.SetActive(false);
-        if(previewObject != null)
+        if (previewObject != null)
         {
             Destroy(previewObject);
         }
-        
+
     }
 
     public void UpdatePosition(Vector3 position, bool validity)
@@ -79,9 +79,9 @@ public class PreviewSystem : MonoBehaviour
             MovePreview(position);
             ApplyFeedbackToPreview(validity);
         }
-        
+
         MoveCursor(position);
-        
+
         ApplyFeedbackToCursor(validity);
     }
 
@@ -110,7 +110,7 @@ public class PreviewSystem : MonoBehaviour
 
     private void MovePreview(Vector3 position)
     {
-        previewObject.transform.position = new Vector3(position.x, position.y + previewYOffset,position.z);
+        previewObject.transform.position = new Vector3(position.x, position.y + previewYOffset, position.z);
     }
 
     internal void StartShowingRemovePreview()
@@ -118,7 +118,7 @@ public class PreviewSystem : MonoBehaviour
         cellIndicator.SetActive(true);
         PrepareCursor(Vector2Int.one);
         ApplyFeedbackToCursor(false);
-    
+
     }
 
 }
