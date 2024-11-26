@@ -8,6 +8,7 @@ using System.Collections;
 using System.Timers;
 using System;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 public enum MaterialType
 {
@@ -58,6 +59,8 @@ public class RDBManager : MonoBehaviour
     public TMP_InputField query_command;
     private ResourceDatabase resourceDatabase;
 
+    private GameObject queryResult;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,10 +71,11 @@ public class RDBManager : MonoBehaviour
         //GenerateAllTables(table_name, all_table_list);
 
         resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab);
-        GameObject a = Instantiate(linePrefab, linePanel);
-        var b = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[0]).getTable();
-        var c = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[1]).getTable();
-        a.transform.GetComponent<LineRendererUi>().CreateLine(b, c, Color.green);
+        queryResult = null;
+        //GameObject a = Instantiate(linePrefab, linePanel);
+        //var b = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[0]).getTable();
+        //var c = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[1]).getTable();
+        //a.transform.GetComponent<LineRendererUi>().CreateLine(b, c, Color.green);
         //GenerateQueryMaterialForAllTableResourceData();
 
         //database.text = debug_getDatabase(table_name, all_table_list);
@@ -96,9 +100,20 @@ public class RDBManager : MonoBehaviour
 
     public void Query()
     {
+        if (queryResult != null)
+        {
+            foreach (Transform line in linePanel)
+            {
+                Destroy(line.gameObject);
+            }
+            Destroy(queryResult);
+        }
         string temp = "";
         string[] column_select_list = null;
         string modify_query_com = "";
+        List<List<string>> query_list = new List<List<string>>(); // idx [i][0] is a column name | idx [i][1] to [i][k] is a data
+        List<List<GameObject>> query_cell_list = new List<List<GameObject>>(); // idx [i][0] to [i][k-1] is a query cell in table
+        List<List<Sprite>> mat_sprites = new List<List<Sprite>>();
         try
         {
             using (var connection = new SqliteConnection(dbName))
@@ -184,7 +199,6 @@ public class RDBManager : MonoBehaviour
                             }
                             reader.Close();
                         }
-                        List<List<string>> query_list = new List<List<string>>();
                         foreach (string column_select in column_select_list)
                         {
                             ResourceTable column_select_table = resourceDatabase.GetResourceTableFromColumnName(column_select);
@@ -211,11 +225,16 @@ public class RDBManager : MonoBehaviour
                                 Debug.LogError($"this pk \"{pk}\" not exists in query_all_result");
                             }
                             query_list.Add(query_all_list[column_select_idx]);
+                            List<GameObject> qc_list = new List<GameObject>();
+                            List<Sprite> sprite_list = new List<Sprite>();
                             for (int i = 1; i < query_all_list[column_select_idx].Count; i++)
                             {
                                 ResourceData queryMaterialCell = column_select_table.GetData(column_select, query_all_list[pk_idx][i], query_all_list[column_select_idx][i]);
-                                queryMaterialCell.GetMaterial();
+                                qc_list.Add(queryMaterialCell.getCell());
+                                sprite_list.Add(queryMaterialCell.GetMaterial());
                             }
+                            query_cell_list.Add(qc_list);
+                            mat_sprites.Add(sprite_list);
                         }
                     }
                     catch (SqliteException e)
@@ -233,6 +252,7 @@ public class RDBManager : MonoBehaviour
             Debug.LogError("SQLite Connection ERROR -> " + e.Message);
             throw e;
         }
+        queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
 
     public void getResource()
@@ -326,67 +346,56 @@ public class RDBManager : MonoBehaviour
         return Instantiate(tablePrefab, canvasParent);
     }
 
-    public void GenerateQueryResultTable(List<List<string>> query_result)
+    public GameObject GenerateQueryResultTable(List<List<string>> query_result, List<List<GameObject>> cell_list, List<List<Sprite>> mat_sprites)
     {
-            // Create a new table
-            GameObject newTable = Instantiate(tablePrefab, canvasParent);
+        // Create a new table
+        GameObject newTable = Instantiate(tablePrefab, canvasParent);
 
-            TextMeshProUGUI tableNameText = newTable.transform.Find("TableName").Find("TableNameText").GetComponent<TextMeshProUGUI>();
-            tableNameText.text = "Query Result";
+        TextMeshProUGUI tableNameText = newTable.transform.Find("TableName").Find("TableNameText").GetComponent<TextMeshProUGUI>();
+        tableNameText.text = "Query Result";
 
-            Transform tableData = newTable.transform.Find("TableData");
+        Transform tableData = newTable.transform.Find("TableData");
 
-            // Create columns within the table
-            GenerateTableColumns(tableData, query_result);
+        // Create columns within the table
+        GenerateTableColumns(tableData, query_result, cell_list, mat_sprites);
+
+        return newTable;
     }
 
-    public void GenerateTableColumns(Transform tableData, List<List<string>> col_list)
+    public void GenerateTableColumns(Transform tableData, List<List<string>> query_result, List<List<GameObject>> cell_list, List<List<Sprite>> mat_sprites)
     {
-        for (int i = 0; i < col_list.Count; i++)
+        for (int i = 0; i < query_result.Count; i++)
         {
             // Create a new column
             GameObject newColumn = Instantiate(colPrefab, tableData);
 
             TextMeshProUGUI colNameText = newColumn.transform.Find("ColumnName").Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
-            colNameText.text = col_list[i][0];
+            colNameText.text = query_result[i][0];
 
             Transform columnData = newColumn.transform.Find("ColumnData");
 
-            List<Node> cellsInColumn = new List<Node>();
             // Create cells within the table
-            GenerateColumnCells(columnData, col_list[i], cellsInColumn);
-
-            try
-            {
-                resourceTable.Add(col_list[i][0], cellsInColumn);
-            }
-            catch
-            {
-                resourceTable.Add(col_list[i][0] + i, cellsInColumn);
-            }
-            
+            GenerateColumnCells(columnData, query_result[i], cell_list[i], mat_sprites[i]);
         }
     }
 
-    public void GenerateColumnCells(Transform column, List<string> data_list, List<Node> cellsInColumn)
+    public void GenerateColumnCells(Transform column, List<string> data_list, List<GameObject> target_cells, List<Sprite> mat_sprites)
     {
         for (int i = 1; i < data_list.Count; i++)
         {
             // Create a new cell
             GameObject newCell = Instantiate(cellPrefab, column);
 
-            int type = UnityEngine.Random.Range(0, icon.Length);
-
             // Set the icon (Image component)
             Image iconImage = newCell.transform.Find("ItemIcon").GetComponent<Image>();
-            iconImage.sprite = icon[type];
+            iconImage.sprite = mat_sprites[i-1];
 
             // Set the text (Text component)
             TextMeshProUGUI cellDataText = newCell.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
             cellDataText.text = data_list[i];
 
-            Node newNode = new Node(newCell, type, data_list[i]);
-            cellsInColumn.Add(newNode);
+            GameObject line = Instantiate(linePrefab, linePanel);
+            line.transform.GetComponent<LineRendererUi>().CreateLine(target_cells[i-1], newCell, Color.magenta);
         }
     }
 

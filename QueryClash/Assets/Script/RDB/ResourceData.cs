@@ -10,6 +10,7 @@ public class ResourceData
     private QueryMaterial material;
     private GameObject cell;
     private QueryMaterialManager materialGenerator;
+    private Image materialImage;
 
     public ResourceData(string data, GameObject cellPrefab, Transform columnTransform)
     {
@@ -18,9 +19,9 @@ public class ResourceData
         cell.name = data;
 
         //Transform iconImage = cell.transform.Find("ItemIcon");
-        Image iconImage = cell.transform.Find("ItemIcon").GetComponent<Image>();
+        materialImage = cell.transform.Find("ItemIcon").GetComponent<Image>();
         materialGenerator = GameObject.FindAnyObjectByType<QueryMaterialManager>();
-        material = materialGenerator.GenerateQueryMaterial(iconImage);
+        material = materialGenerator.GenerateQueryMaterial(materialImage);
 
         // Set the text (Text component)
         TextMeshProUGUI cellDataText = cell.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
@@ -31,9 +32,29 @@ public class ResourceData
         //cell.GetComponent<RectTransform>().sizeDelta = new Vector2(10, 10);
     }
 
-    public QueryMaterial GetMaterial() {
-        cell.GetComponent<CellBehaviour>().call();
-        return material;
+    //public QueryMaterial GetMaterial() {
+    //    if (cell.GetComponent<CellBehaviour>().call())
+    //    {
+    //        material = materialGenerator.GenerateQueryMaterial(materialImage);
+    //        return material;
+    //    }
+    //    return null;
+    //}
+
+    public Sprite GetMaterial()
+    {
+        if (cell.GetComponent<CellBehaviour>().call())
+        {
+            Sprite gotMaterial = materialImage.sprite;
+            material = materialGenerator.GenerateQueryMaterial(materialImage);
+            return gotMaterial;
+        }
+        return null;
+    }
+
+    public GameObject getCell()
+    {
+        return cell;
     }
 
     public string getData()

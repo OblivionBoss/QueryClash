@@ -39,11 +39,16 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
     //    isCooldown = true;
     //}
 
-    public void call()
+    public bool call()
     {
-        icon.enabled = false;
-        cdText.enabled = true;
-        isCooldown = true;
+        if (!isCooldown)
+        {
+            icon.enabled = false;
+            cdText.enabled = true;
+            isCooldown = true;
+            return true;
+        }
+        return false;
     }
 
     private void NotCooldown()
