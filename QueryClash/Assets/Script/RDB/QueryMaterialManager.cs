@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,14 +13,13 @@ public enum QueryMaterialType
 public class QueryMaterialManager : MonoBehaviour
 {
     [SerializeField] private int randomSeed;
-    [SerializeField] private Sprite[] queryMaterials;
+    [SerializeField] private QueryMaterial[] queryMaterials;
 
     public QueryMaterial GenerateQueryMaterial(Image materialSlot)
     {
-        Array values = Enum.GetValues(typeof(QueryMaterialType));
-        int rand = UnityEngine.Random.Range(0, values.Length);
-        materialSlot.sprite = queryMaterials[rand];
-        return new QueryMaterial((QueryMaterialType)values.GetValue(rand));
+        int rand = UnityEngine.Random.Range(0, queryMaterials.Length);
+        materialSlot.sprite = queryMaterials[rand].icon;
+        return queryMaterials[rand];
         //return new QueryMaterial(Instantiate(queryMaterials[rand], materialSlot), (QueryMaterialType)values.GetValue(rand));
     }
 

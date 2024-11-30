@@ -41,15 +41,20 @@ public class ResourceData
     //    return null;
     //}
 
-    public Sprite GetMaterial()
+    public QueryMaterial GetMaterial(out Sprite icon)
     {
         if (cell.GetComponent<CellBehaviour>().call())
         {
-            Sprite gotMaterial = materialImage.sprite;
+            QueryMaterial gotMaterial = material;
+            icon = materialImage.sprite;
             material = materialGenerator.GenerateQueryMaterial(materialImage);
             return gotMaterial;
         }
-        return null;
+        else
+        {
+            icon = null;
+            return null;
+        }
     }
 
     public GameObject getCell()

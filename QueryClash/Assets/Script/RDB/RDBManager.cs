@@ -60,6 +60,8 @@ public class RDBManager : MonoBehaviour
     private ResourceDatabase resourceDatabase;
 
     private GameObject queryResult;
+    public InventoryManager inventoryManager;
+    private List<QueryMaterial> queryMaterialList = new List<QueryMaterial>();
 
     // Start is called before the first frame update
     void Start()
@@ -231,7 +233,13 @@ public class RDBManager : MonoBehaviour
                             {
                                 ResourceData queryMaterialCell = column_select_table.GetData(column_select, query_all_list[pk_idx][i], query_all_list[column_select_idx][i]);
                                 qc_list.Add(queryMaterialCell.getCell());
-                                sprite_list.Add(queryMaterialCell.GetMaterial());
+                                Sprite gotMatIcon;
+                                QueryMaterial material = queryMaterialCell.GetMaterial(out gotMatIcon);
+                                if (material != null)
+                                {
+                                    queryMaterialList.Add(material);
+                                }
+                                sprite_list.Add(gotMatIcon);
                             }
                             query_cell_list.Add(qc_list);
                             mat_sprites.Add(sprite_list);
@@ -253,6 +261,16 @@ public class RDBManager : MonoBehaviour
             throw e;
         }
         queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
+        AddQueryToInventory();
+    }
+
+    public void AddQueryToInventory()
+    {
+        foreach (QueryMaterial queryItem in queryMaterialList)
+        {
+            inventoryManager.AddItem(queryItem);
+        }
+        queryMaterialList.Clear();
     }
 
     public void getResource()
