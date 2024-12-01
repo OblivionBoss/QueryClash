@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RightBullet : MonoBehaviour
 {
-    public float bulletspeed;
+    public float bulletspeed = 1;
     public float deadZone;
-    public float Damage;
+    public float Atk = 10;
 
     void Update()
     {
@@ -20,16 +20,24 @@ public class RightBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.CompareTag("LeftTeam") && collision.gameObject.layer == 3)
+
+        Soldier s = collision.gameObject.GetComponent<Soldier>();
+        if (collision.gameObject.CompareTag("LeftTeam") && s.isPlaced)
         {
-            CapsuleUnit u = collision.gameObject.GetComponent<CapsuleUnit>();
-            if (u != null)
+
+            if (s != null)
             {
+                //Debug.Log($"Bullet Atk: {Atk}");
+                //Debug.Log($"Soldier CurrentHp before: {s.CurrentHp}");
+
                 // Reduce the HP of the collided unit
-                u.ReduceHp(Damage);
+                s.ReduceHp(Atk);
+
+                //Debug.Log($"Soldier CurrentHp after: {s.CurrentHp}");
             }
             Destroy(gameObject);
         }
     }
+
 
 }

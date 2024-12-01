@@ -58,7 +58,7 @@ public class GridData
 
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if(placedObjects.ContainsKey(gridPosition) == false)
+        if (placedObjects.ContainsKey(gridPosition) == false)
         {
             return -1;
         }

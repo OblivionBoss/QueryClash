@@ -44,14 +44,14 @@ public class RemovingState : IBuildingState
             selectedData = null;
         }
 
-        if(selectedData == null)
+        if (selectedData == null)
         {
 
         }
         else
         {
             gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition);
-            if(gameObjectIndex == -1)
+            if (gameObjectIndex == -1)
             {
                 return;
             }
@@ -66,7 +66,7 @@ public class RemovingState : IBuildingState
 
     private bool CheckIfSelectionIsValid(Vector3Int gridPosition)
     {
-        return (unitData.CanPlaceObjectAt(gridPosition,Vector2Int.one) && floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one));
+        return (unitData.CanPlaceObjectAt(gridPosition, Vector2Int.one) && floorData.CanPlaceObjectAt(gridPosition, Vector2Int.one));
     }
 
     public void UpdateState(Vector3Int gridPosition)
