@@ -44,6 +44,7 @@ public class PlacementState : IBuildingState
     public void Endstate()
     {
         previewSystem.StopShowingPreview();
+        
     }
 
     public void OnAction(Vector3Int gridPosition)
@@ -66,6 +67,7 @@ public class PlacementState : IBuildingState
             index);
 
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
+        Debug.Log("Place at " + gridPosition);
 
     }
 

@@ -30,6 +30,7 @@ public class RemovingState : IBuildingState
     public void Endstate()
     {
         previewSystem.StopShowingPreview();
+        
     }
 
     public void OnAction(Vector3Int gridPosition)
