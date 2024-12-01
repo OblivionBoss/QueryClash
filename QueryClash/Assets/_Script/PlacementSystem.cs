@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlacementSystem : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField] private ObjectPlacer objectPlacer;
 
+    //public GameObject uiElementToDestroy;
+    //public int unitID;
+
 
 
 
@@ -33,6 +38,10 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(true);
     }
 
+    //public void OnStartPlacement()
+    //{
+    //    StartPlacement(unitID, uiElementToDestroy);
+    //}
 
     public void StartPlacement(int ID)
     {

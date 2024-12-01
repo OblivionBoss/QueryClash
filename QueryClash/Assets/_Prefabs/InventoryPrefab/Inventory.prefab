@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3886792, g: 0.3886792, b: 0.3886792, a: 1}
+  m_Color: {r: 0, g: 0.69596624, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -894,6 +894,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3706461435467731752}
     m_Modifications:
+    - target: {fileID: 1480457236894829489, guid: 7961d144ecdb5114ca7ec4ab1f5ef742, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: be4f658dcb6533b4ebbfe2dacdce2970, type: 2}
     - target: {fileID: 5714271909433024079, guid: 7961d144ecdb5114ca7ec4ab1f5ef742, type: 3}
       propertyPath: m_Name
       value: MockRFA
@@ -1357,9 +1361,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7567638555942102263}
     m_Modifications:
+    - target: {fileID: 5690547147041888706, guid: 83f756fac119a6c449b0a56e943bfb8b, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 42c7c49cc8beb4b44ab54d1b488f5d76, type: 2}
     - target: {fileID: 5787167288353052960, guid: 83f756fac119a6c449b0a56e943bfb8b, type: 3}
       propertyPath: m_Name
       value: MockLFA
+      objectReference: {fileID: 0}
+    - target: {fileID: 6596735285728309657, guid: 83f756fac119a6c449b0a56e943bfb8b, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7759858103541590721, guid: 83f756fac119a6c449b0a56e943bfb8b, type: 3}
       propertyPath: m_Pivot.x

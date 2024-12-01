@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
-
-public class ItemScript : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
+public class InventoryItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
-
     public Image image;
     [HideInInspector] public Transform parentAfterDrag;
+
    
     public void OnBeginDrag(PointerEventData eventData)
     {

@@ -222,7 +222,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5787167288353052960}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f502d4a0b7979fa4e87c123dcc692ef8, type: 3}
+  m_Script: {fileID: 11500000, guid: 534c5247af0240447a330a62cc21c667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 2567539831334077192}
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 363970589692368516, guid: 9db118715a9e9004da4f5e8dd61740a2, type: 3}
         m_TargetAssemblyTypeName: PlacementSystem, Assembly-CSharp
         m_MethodName: StartPlacement
         m_Mode: 3
