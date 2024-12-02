@@ -36,20 +36,18 @@ public class PlacementSystem : MonoBehaviour
     }
 
 
-    public void StartPlacement(int ID)
+    public void StartPlacement(int ID, GameObject uiElementToDelete)
     {
-
-        // Debugging logs for null checks
-        if (grid == null) Debug.LogError("Grid is not assigned!");
-        if (preview == null) Debug.LogError("PreviewSystem is not assigned!");
-        if (database == null) Debug.LogError("ObjectsDatabase is not assigned!");
-        if (floorData == null) Debug.LogError("FloorData is null!");
-        if (unitData == null) Debug.LogError("UnitData is null!");
-        if (objectPlacer == null) Debug.LogError("ObjectPlacer is not assigned!");
         //StopPlacement();
         buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
+        bool placementComplete = true; // Replace with actual placement logic
+
+        if (placementComplete && uiElementToDelete != null)
+        {
+            Destroy(uiElementToDelete);
+        }
     }
 
     //For Delete Button

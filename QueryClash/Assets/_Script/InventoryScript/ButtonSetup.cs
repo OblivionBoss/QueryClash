@@ -16,7 +16,7 @@ public class ButtonSetup : MonoBehaviour
             button.onClick.RemoveAllListeners();
 
             // Add a listener and pass the int parameter (6)
-            button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex));
+            button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex, gameObject));
         }
         else
         {
