@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridData
+public class GridData 
 {
     Dictionary<Vector3Int, PlacementData> placedObjects = new();
 

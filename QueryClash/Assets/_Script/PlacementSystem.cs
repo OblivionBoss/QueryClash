@@ -26,9 +26,6 @@ public class PlacementSystem : MonoBehaviour
     //public GameObject uiElementToDestroy;
     //public int unitID;
 
-
-
-
     IBuildingState buildingState;
     private void Start()
     {
@@ -38,13 +35,17 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(true);
     }
 
-    //public void OnStartPlacement()
-    //{
-    //    StartPlacement(unitID, uiElementToDestroy);
-    //}
 
     public void StartPlacement(int ID)
     {
+
+        // Debugging logs for null checks
+        if (grid == null) Debug.LogError("Grid is not assigned!");
+        if (preview == null) Debug.LogError("PreviewSystem is not assigned!");
+        if (database == null) Debug.LogError("ObjectsDatabase is not assigned!");
+        if (floorData == null) Debug.LogError("FloorData is null!");
+        if (unitData == null) Debug.LogError("UnitData is null!");
+        if (objectPlacer == null) Debug.LogError("ObjectPlacer is not assigned!");
         //StopPlacement();
         buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;
