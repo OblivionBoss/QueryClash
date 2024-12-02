@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sniper
   icon: {fileID: 21300000, guid: 68d83e3834cc37544b36884b1328f9bd, type: 3}
-  stat: 100
+  score: 0
+  type: 1

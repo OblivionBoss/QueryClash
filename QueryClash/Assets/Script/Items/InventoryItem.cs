@@ -8,11 +8,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     [HideInInspector] public Item item;
     [HideInInspector] public Transform parentAfterDrag;
+    [HideInInspector] public bool isDestroy = false;
 
     public void InitializeItem(Item item)
     {
         this.item = item;
         image.sprite = item.icon;
+        if (item is QueryMaterial)
+        {
+            var material = (QueryMaterial) item;
+            image.color = material.GetQuality();
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -31,5 +37,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        if (isDestroy) Destroy(gameObject);
     }
 }

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e01d91695bfd78945bd585bda53dd770, type: 3}
-  m_Name: Frontline
+  m_Name: Cannon
   m_EditorClassIdentifier: 
-  name: Frontline
-  icon: {fileID: 21300000, guid: b20d39c45762cad4cadd89c784bd3cb8, type: 3}
+  name: Cannon
+  icon: {fileID: 21300000, guid: f622061a00ef3d943ae22a3ad1366271, type: 3}
   score: 0
-  type: 0
+  type: 3

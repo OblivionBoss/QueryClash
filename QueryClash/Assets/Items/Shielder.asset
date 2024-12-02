@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Shielder
   icon: {fileID: 21300000, guid: e2f02a91f114f074cace4a802aee98cd, type: 3}
-  stat: 100
+  score: 0
+  type: 2

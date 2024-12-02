@@ -27,17 +27,15 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
         if (isCooldown)
         {
             timeLeft -= Time.deltaTime;
-            cdText.text = timeLeft.ToString("#.00");
+            cdText.text = timeLeft.ToString("#0.00");
             if (timeLeft < 0 ) NotCooldown();
         }
     }
 
-    //public void OnPointerClick(PointerEventData eventData)
-    //{
-    //    icon.enabled = false;
-    //    cdText.enabled = true;
-    //    isCooldown = true;
-    //}
+    public bool IsCooldown()
+    {
+        return isCooldown;
+    }
 
     public bool call()
     {
