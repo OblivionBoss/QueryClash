@@ -34,5 +34,6 @@ public class LineRendererUi : MonoBehaviour
         tableCell = tablecell;
         queryCell = querycell;
         m_image.color = color;
+        m_image.raycastTarget = false;
     }
 }
