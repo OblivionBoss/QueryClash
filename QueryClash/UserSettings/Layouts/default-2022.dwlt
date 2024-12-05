@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1706.6667
     height: 869.3334
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Scene
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 0
     width: 288
     height: 546
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -368,7 +368,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 0c13ffff32faffffacfaffffdcfaffff0cfbffff2efbffff606c00009c6c0000c66d0000
+      m_ExpandedIDs: 0ad3ffff4ad3ffff66d3ffff76d3ffff86d3ffff8ed5ffffb6d5ffffded5ffff0ed6ffff22d6ffff2ad6ffff3ed6ffff46d6ffff5ad6ffff7ed6ffff9ed6ffffc2e5ffff0ce6fffffeeaffff1aebffff38ebffff2efbffffb8880000f6880000728a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -737,7 +737,7 @@ MonoBehaviour:
   m_Position:
     m_Target: {x: 848.0482, y: 544.18207, z: -4.627241}
     speed: 2
-    m_Value: {x: 838.95593, y: 548.0405, z: -4.912617}
+    m_Value: {x: 848.0482, y: 544.18207, z: -4.627241}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -789,7 +789,7 @@ MonoBehaviour:
   m_Size:
     m_Target: 605.6292
     speed: 2
-    m_Value: 634.1667
+    m_Value: 605.6292
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1977,9 +1977,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 247.66669}
-    m_SelectedIDs: 10730000
-    m_LastClickedID: 29456
-    m_ExpandedIDs: 00000000bc720000de720000e472000000ca9a3bffffff7f
+    m_SelectedIDs: 36730000
+    m_LastClickedID: 29494
+    m_ExpandedIDs: 00000000e27200000a73000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2007,7 +2007,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000bc720000
+    m_ExpandedIDs: 00000000e2720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2118,9 +2118,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 560.6667
-    width: 1207.6666
-    height: 310.3333
+    y: 618.6667
+    width: 1247.6666
+    height: 252.33331
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
