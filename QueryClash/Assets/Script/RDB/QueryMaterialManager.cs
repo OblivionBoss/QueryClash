@@ -1,25 +1,19 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-
-public enum QueryMaterialType
-{
-    Frontline,
-    Sniper,
-    Shielder
-}
 
 public class QueryMaterialManager : MonoBehaviour
 {
     [SerializeField] private int randomSeed;
-    [SerializeField] private Sprite[] queryMaterials;
+    [SerializeField] private QueryMaterial[] queryMaterials;
 
     public QueryMaterial GenerateQueryMaterial(Image materialSlot)
     {
-        Array values = Enum.GetValues(typeof(QueryMaterialType));
-        int rand = UnityEngine.Random.Range(0, values.Length);
-        materialSlot.sprite = queryMaterials[rand];
-        return new QueryMaterial((QueryMaterialType)values.GetValue(rand));
+        int rand = UnityEngine.Random.Range(0, queryMaterials.Length);
+        QueryMaterial material = QueryMaterial.Instantiate(queryMaterials[rand]);
+        materialSlot.sprite = material.icon;
+        return material;
         //return new QueryMaterial(Instantiate(queryMaterials[rand], materialSlot), (QueryMaterialType)values.GetValue(rand));
     }
 

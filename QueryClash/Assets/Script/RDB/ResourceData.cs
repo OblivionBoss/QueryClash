@@ -12,6 +12,8 @@ public class ResourceData
     private QueryMaterialManager materialGenerator;
     private Image materialImage;
 
+    private int duplicateQueryCount = 0;
+
     public ResourceData(string data, GameObject cellPrefab, Transform columnTransform)
     {
         this.data = data;
@@ -41,23 +43,54 @@ public class ResourceData
     //    return null;
     //}
 
-    public Sprite GetMaterial()
+    public QueryMaterial GetMaterial(/*out Sprite icon*/)
     {
         if (cell.GetComponent<CellBehaviour>().call())
         {
-            Sprite gotMaterial = materialImage.sprite;
+            QueryMaterial gotMaterial = material;
+            //icon = materialImage.sprite;
             material = materialGenerator.GenerateQueryMaterial(materialImage);
             return gotMaterial;
         }
-        return null;
+        else
+        {
+            //icon = null;
+            return null;
+        }
     }
 
-    public GameObject getCell()
+    public bool IsCooldown()
+    {
+        return cell.GetComponent<CellBehaviour>().IsCooldown();
+    }
+
+    public bool Query(out Sprite icon)
+    {
+        bool isFisrtQuery = duplicateQueryCount == 0;
+        duplicateQueryCount++;
+        if (isFisrtQuery) icon = materialImage.sprite;
+        else icon = null;
+        return isFisrtQuery;
+    }
+
+    public int GetAndResetDuplicateQueryCount()
+    {
+        int count = duplicateQueryCount;
+        duplicateQueryCount = 0;
+        return count;
+    }
+
+    public QueryMaterial GetQueryMaterial()
+    {
+        return material;
+    }
+
+    public GameObject GetCell()
     {
         return cell;
     }
 
-    public string getData()
+    public string GetData()
     {
         return data;
     }

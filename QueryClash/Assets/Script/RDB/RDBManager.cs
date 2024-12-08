@@ -4,41 +4,8 @@ using Mono.Data.Sqlite;
 using System.Data;
 using TMPro;
 using UnityEngine.UI;
-using System.Collections;
-using System.Timers;
 using System;
 using System.Text.RegularExpressions;
-using System.Linq;
-
-public enum MaterialType
-{
-    Type1,
-    Type2,
-    Type3
-}
-
-public class Node
-{
-    public GameObject cell;
-    public MaterialType type;
-    public string data;
-    public float cooldown = 0;
-
-    public Node(GameObject cell, int type, string data)
-    {
-        this.cell = cell;
-        this.type = (MaterialType)type;
-        this.data = data;
-    }
-
-    public MaterialType getMaterial()
-    {
-        Image iconImage = cell.transform.Find("ItemIcon").GetComponent<Image>();
-        iconImage.sprite = null;
-        cooldown = 3;
-        return type;
-    }
-}
 
 public class RDBManager : MonoBehaviour
 {
@@ -49,17 +16,16 @@ public class RDBManager : MonoBehaviour
     public GameObject linePrefab;
     public Transform linePanel;
 
-    public TextMeshProUGUI database;
-    public Sprite[] icon;
     public string dbName = "URI=file:shop.db";
-
-    public Dictionary<string, List<Node>> resourceTable = new Dictionary<string, List<Node>>();
-
+    public InventoryManager inventoryManager;
     public TextMeshProUGUI output;
     public TMP_InputField query_command;
+    [SerializeField] private TMP_Dropdown chooseMatDropdown;
+    
     private ResourceDatabase resourceDatabase;
-
     private GameObject queryResult;
+    private List<QueryMaterial> queryMaterialList = new List<QueryMaterial>();
+    private MaterialType focusMaterialType;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +38,7 @@ public class RDBManager : MonoBehaviour
 
         resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab);
         queryResult = null;
+        GetFocusMaterial();
         //GameObject a = Instantiate(linePrefab, linePanel);
         //var b = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[0]).getTable();
         //var c = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[1]).getTable();
@@ -79,7 +46,7 @@ public class RDBManager : MonoBehaviour
         //GenerateQueryMaterialForAllTableResourceData();
 
         //database.text = debug_getDatabase(table_name, all_table_list);
-        debug_getResourceTable(resourceTable);
+        //debug_getResourceTable(resourceTable);
     }
 
     //public QueryMaterial GenerateQueryMaterial(Transform materialSlot)
@@ -98,6 +65,12 @@ public class RDBManager : MonoBehaviour
     //    }
     //}
 
+    public void GetFocusMaterial()
+    {
+        focusMaterialType = (MaterialType) chooseMatDropdown.value;
+        Debug.Log("focusMaterialType = " + focusMaterialType.ToString());
+    }
+
     public void Query()
     {
         if (queryResult != null)
@@ -114,6 +87,8 @@ public class RDBManager : MonoBehaviour
         List<List<string>> query_list = new List<List<string>>(); // idx [i][0] is a column name | idx [i][1] to [i][k] is a data
         List<List<GameObject>> query_cell_list = new List<List<GameObject>>(); // idx [i][0] to [i][k-1] is a query cell in table
         List<List<Sprite>> mat_sprites = new List<List<Sprite>>();
+        List<ResourceData> queryData_list = new List<ResourceData>();
+        int NumDiffTableQueryFocus = 0, NumMatOtherQueryFocus = 0, QueryFocusCount = 0, QueryEmptyCount = 0;
         try
         {
             using (var connection = new SqliteConnection(dbName))
@@ -123,7 +98,7 @@ public class RDBManager : MonoBehaviour
                 {
                     try // "Modify SQL Command" and "get column name list of first SELECT" for Material query
                     {
-                        command.CommandText = query_command.text + " LIMIT 1";
+                        command.CommandText = query_command.text;
                         IDataReader reader = command.ExecuteReader();
                         reader.Close();
 
@@ -199,12 +174,15 @@ public class RDBManager : MonoBehaviour
                             }
                             reader.Close();
                         }
+
+                        HashSet<string> DiffTableQueryFocusSet = new HashSet<string>();
+                        HashSet<MaterialType> MatOtherQueryFocusSet = new HashSet<MaterialType>();
                         foreach (string column_select in column_select_list)
                         {
                             ResourceTable column_select_table = resourceDatabase.GetResourceTableFromColumnName(column_select);
                             string pk = column_select_table.getPrimaryKey();
                             int column_select_idx = -1, pk_idx = -1;
-                            for (int i = 0; i < query_all_list.Count; i++)
+                            for (int i = 0; i < query_all_list.Count; i++) // find index of "column_select" and "pk of that col" in "query_all_list"
                             {
                                 if (column_select.Equals(query_all_list[i][0]))
                                 {
@@ -227,15 +205,47 @@ public class RDBManager : MonoBehaviour
                             query_list.Add(query_all_list[column_select_idx]);
                             List<GameObject> qc_list = new List<GameObject>();
                             List<Sprite> sprite_list = new List<Sprite>();
+                            bool isFound = false;
                             for (int i = 1; i < query_all_list[column_select_idx].Count; i++)
                             {
                                 ResourceData queryMaterialCell = column_select_table.GetData(column_select, query_all_list[pk_idx][i], query_all_list[column_select_idx][i]);
-                                qc_list.Add(queryMaterialCell.getCell());
-                                sprite_list.Add(queryMaterialCell.GetMaterial());
+                                qc_list.Add(queryMaterialCell.GetCell());
+                                Sprite gotMatIcon = null;
+                                //QueryMaterial material = queryMaterialCell.GetMaterial(out gotMatIcon);
+                                //if (material != null)
+                                //{
+                                //    queryMaterialList.Add(material);
+                                //}
+                                if (!queryMaterialCell.IsCooldown())
+                                {
+                                    if (queryMaterialCell.Query(out gotMatIcon))
+                                    {
+                                        queryData_list.Add(queryMaterialCell);
+                                        MaterialType matType = queryMaterialCell.GetQueryMaterial().type;
+                                        MatOtherQueryFocusSet.Add(matType);
+                                        if (matType.Equals(focusMaterialType))
+                                        {
+                                            QueryFocusCount++;
+                                            if (!isFound)
+                                            {
+                                                DiffTableQueryFocusSet.Add(column_select_table.getTableName());
+                                                isFound = true;
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    QueryEmptyCount++;
+                                }
+                                sprite_list.Add(gotMatIcon);
                             }
                             query_cell_list.Add(qc_list);
                             mat_sprites.Add(sprite_list);
                         }
+                        NumDiffTableQueryFocus = DiffTableQueryFocusSet.Count;
+                        NumMatOtherQueryFocus = MatOtherQueryFocusSet.Count;
+                        if (MatOtherQueryFocusSet.Contains(focusMaterialType)) NumMatOtherQueryFocus--;
                     }
                     catch (SqliteException e)
                     {
@@ -253,42 +263,48 @@ public class RDBManager : MonoBehaviour
             throw e;
         }
         queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
+        CalculateQueryMatScore(queryData_list, NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryEmptyCount);
+        AddQueryToInventory();
     }
 
-    public void getResource()
+    public void CalculateQueryMatScore(List<ResourceData> queryData_list, int NumDiffTableQueryFocus, int NumMatOtherQueryFocus, int QueryFocusCount, int QueryEmptyCount)
     {
-        var query_list = new List<List<string>>();
-        try
+        Debug.Log($"{NumDiffTableQueryFocus}, {NumMatOtherQueryFocus}, {QueryFocusCount}, {QueryEmptyCount}");
+        foreach (ResourceData queryCell in queryData_list)
         {
-            Query1(query_list);
-            foreach (var col in query_list) {
-                List<Node> column;
-                string key = col[0];
-                if (resourceTable.TryGetValue(key, out column))
-                {
-                    foreach (Node node in column)
-                    {
-                        for (int i = 1; i< col.Count; i++)
-                        {
-                            if (node.data.Equals(col[i]))
-                            {
-                                node.getMaterial();
-                                col.Remove(col[i]);
-                                break;
-                            }
-                        }
-                    }
-                    // maybe col.Count > 1
-                }
+            int duplicateQueryCount = queryCell.GetAndResetDuplicateQueryCount() - 1;
+            QueryMaterial material = queryCell.GetMaterial();
+            if (material != null)
+            {
+                material.score = ScoreFunction(NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryEmptyCount, duplicateQueryCount);
+                queryMaterialList.Add(material);
             }
         }
-        catch
-        {
-
-        }
     }
 
-    public void Query1(List<List<string>> query_list)
+    private float ScoreFunction(float NumDiffTableQueryFocus, float NumMatOtherQueryFocus, float QueryFocusCount, float QueryEmptyCount, float duplicateQueryCount)
+    {
+        float a = 100f, b = 500f, c = 0.5f, d = 0.5f, e = 0.5f;
+        float T = NumDiffTableQueryFocus;
+        float O = NumMatOtherQueryFocus;
+        float F = QueryFocusCount;
+        float E = QueryEmptyCount;
+        float D = duplicateQueryCount;
+        float score = (a * T + b * F * F) / ((c * O * O + 1) * (d * D + 1) * (e * E + 1));
+        Debug.Log(score);
+        return score;
+    }
+
+    public void AddQueryToInventory()
+    {
+        foreach (QueryMaterial queryItem in queryMaterialList)
+        {
+            inventoryManager.AddItem(queryItem);
+        }
+        queryMaterialList.Clear();
+    }
+
+    public void Query1()
     {
         string temp = "";
 
@@ -307,10 +323,6 @@ public class RDBManager : MonoBehaviour
                         temp += "| ";
                         foreach (DataRow col in schema.Rows)
                         {
-                            var col_list = new List<string>();
-                            col_list.Add(col.Field<string>("ColumnName"));
-                            query_list.Add(col_list);
-
                             temp += col.Field<string>("ColumnName") + " | ";
                         }
                         temp += "\n";
@@ -320,7 +332,6 @@ public class RDBManager : MonoBehaviour
                             temp += "| ";
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                query_list[i].Add(reader[i].ToString());
                                 temp += reader[i] + " | ";
                             }
                             temp += "\n";
@@ -399,25 +410,25 @@ public class RDBManager : MonoBehaviour
         }
     }
 
-    private void debug_getResourceTable(Dictionary<string, List<Node>> resourceTable)
-    {
-        foreach (var item in resourceTable)
-        {
-            List<Node> temp;
-            string key = item.Key;
-            string p = key;
-            if (resourceTable.TryGetValue(key, out temp))
-            {
-                foreach (var cell in temp)
-                {
-                    var c = cell.cell;
-                    TextMeshProUGUI cellDataText = c.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
-                    p += cellDataText.text + " ";
-                }
-            }
-            Debug.Log(p);
-        }
-    }
+    //private void debug_getResourceTable(Dictionary<string, List<Node>> resourceTable)
+    //{
+    //    foreach (var item in resourceTable)
+    //    {
+    //        List<Node> temp;
+    //        string key = item.Key;
+    //        string p = key;
+    //        if (resourceTable.TryGetValue(key, out temp))
+    //        {
+    //            foreach (var cell in temp)
+    //            {
+    //                var c = cell.cell;
+    //                TextMeshProUGUI cellDataText = c.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
+    //                p += cellDataText.text + " ";
+    //            }
+    //        }
+    //        Debug.Log(p);
+    //    }
+    //}
 
     private string debug_getDatabase(List<string> table_name, List<List<List<string>>> all_table_list)
     {

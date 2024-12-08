@@ -32,11 +32,16 @@ public class ResourceTable
         return primaryKey;
     }
 
+    public string getTableName()
+    {
+        return tableName;
+    }
+
     public ResourceData GetData(string column, string pk_id, string dataKey)
     {
         List<ResourceData> pk_column_datas;
         columnList.TryGetValue(primaryKey, out pk_column_datas);
-        int data_idx = pk_column_datas.FindIndex(x => x.getData().Equals(pk_id));
+        int data_idx = pk_column_datas.FindIndex(x => x.GetData().Equals(pk_id));
         if (data_idx < 0)
         {
             Debug.LogError($"pk_id {pk_id} does not exists in {tableName}");
@@ -52,7 +57,7 @@ public class ResourceTable
             List<ResourceData> column_datas;
             columnList.TryGetValue(column, out column_datas);
             ResourceData data = column_datas[data_idx];
-            if (data.getData().Equals(dataKey)) { return data; }
+            if (data.GetData().Equals(dataKey)) { return data; }
             else
             {
                 Debug.LogError($"{dataKey} not found in {tableName}");
