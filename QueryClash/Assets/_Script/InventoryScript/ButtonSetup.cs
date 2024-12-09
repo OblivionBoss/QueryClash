@@ -13,7 +13,7 @@ public class ButtonSetup : MonoBehaviour
         if (placementSystem != null && button != null)
         {
             // Clear existing listeners
-            button.onClick.RemoveAllListeners();
+            //button.onClick.RemoveAllListeners();
 
             // Add a listener and pass the int parameter (6)
             button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex, gameObject));

@@ -40,4 +40,6 @@ public class InventoryManager : MonoBehaviour
         InventoryItem inventoryItem = newItem.GetComponent<InventoryItem>();
         inventoryItem.InitializeItem(item);
     }
+
+
 }

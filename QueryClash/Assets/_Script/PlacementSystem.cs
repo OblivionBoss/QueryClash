@@ -44,10 +44,11 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement;
         bool placementComplete = true; // Replace with actual placement logic
 
-        if (placementComplete && uiElementToDelete != null)
-        {
-            Destroy(uiElementToDelete);
-        }
+        //When click on button, the botton will be delete
+        //if (placementComplete && uiElementToDelete != null)
+        //{
+        //    Destroy(uiElementToDelete);
+        //}
     }
 
     //For Delete Button
