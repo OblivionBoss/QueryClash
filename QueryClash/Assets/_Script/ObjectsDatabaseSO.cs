@@ -9,8 +9,6 @@ public class ObjectsDatabaseSO : ScriptableObject
 {
     public List<ObjectData> objectsData;
 
-
-
 }
 
 

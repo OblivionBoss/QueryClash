@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridData
+public class GridData 
 {
     Dictionary<Vector3Int, PlacementData> placedObjects = new();
 
@@ -58,7 +58,7 @@ public class GridData
 
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if(placedObjects.ContainsKey(gridPosition) == false)
+        if (placedObjects.ContainsKey(gridPosition) == false)
         {
             return -1;
         }

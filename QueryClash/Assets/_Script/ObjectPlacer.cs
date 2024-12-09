@@ -16,7 +16,7 @@ public class ObjectPlacer : MonoBehaviour
         placedGameObjects.Add(newObject);
 
         // Check if the placed object has a CapsuleUnit script
-        CapsuleUnit unit = newObject.GetComponent<CapsuleUnit>();
+        Unit unit = newObject.GetComponent<Unit>();
         if (unit != null)
         {
             // Call the OnPlaced method of the CapsuleUnit
@@ -28,7 +28,7 @@ public class ObjectPlacer : MonoBehaviour
 
     internal void RemoveOBjectAt(int gameObjectIndex)
     {
-        if(placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
+        if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
         {
             return;
         }

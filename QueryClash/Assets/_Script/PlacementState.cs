@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlacementState : IBuildingState 
+public class PlacementState : IBuildingState
 {
     private int selectedObjectIndex = -1;
     int ID;
@@ -44,10 +44,11 @@ public class PlacementState : IBuildingState
     public void Endstate()
     {
         previewSystem.StopShowingPreview();
+        
     }
 
     public void OnAction(Vector3Int gridPosition)
-    { 
+    {
 
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
         if (placementValidity == false)
@@ -66,6 +67,7 @@ public class PlacementState : IBuildingState
             index);
 
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
+        Debug.Log("Place at " + gridPosition);
 
     }
 
@@ -83,6 +85,5 @@ public class PlacementState : IBuildingState
 
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
     }
-
 
 }

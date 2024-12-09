@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6979271884044342262}
-  - component: {fileID: 5901930988743585887}
   - component: {fileID: 5933873713207359786}
   m_Layer: 0
   m_Name: CapsuleParent
@@ -35,22 +34,6 @@ Transform:
   - {fileID: 5175476242876760088}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5901930988743585887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4750715023441005585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f1eb70e92722e24d9c798c65d8a3987, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHp: 100
-  CurrentHp: 100
-  bullet: {fileID: 4760652087481901620, guid: f6d75f09d1d1e2f46ac2bd403cfe77b1, type: 3}
-  spawnRate: 1
 --- !u!136 &5933873713207359786
 CapsuleCollider:
   m_ObjectHideFlags: 0
