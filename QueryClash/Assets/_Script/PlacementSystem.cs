@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class PlacementSystem : MonoBehaviour
 {
@@ -21,8 +23,8 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField] private ObjectPlacer objectPlacer;
 
-
-
+    //public GameObject uiElementToDestroy;
+    //public int unitID;
 
     IBuildingState buildingState;
     private void Start()
@@ -34,21 +36,29 @@ public class PlacementSystem : MonoBehaviour
     }
 
 
-    public void StartPlacement( int ID )
+    public void StartPlacement(int ID, GameObject uiElementToDelete)
     {
         //StopPlacement();
-        
         buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
+        bool placementComplete = true; // Replace with actual placement logic
+
+        //When click on button, the botton will be delete
+        //if (placementComplete && uiElementToDelete != null)
+        //{
+        //    Destroy(uiElementToDelete);
+        //}
     }
 
+    //For Delete Button
     public void StartRemoving()
     {
         StopPlacement();
         gridVisualization.SetActive(true);
         buildingState = new RemovingState(grid, preview, floorData, unitData, objectPlacer);
-
+        inputManager.OnClicked += PlaceStructure;
+        inputManager.OnExit += StopPlacement;
     }
 
     private void PlaceStructure()
@@ -77,12 +87,12 @@ public class PlacementSystem : MonoBehaviour
 
     private void StopPlacement()
     {
-        if(buildingState == null)
+        if (buildingState == null)
         {
             return;
         }
         //gridVisualization.SetActive(false);
-        buildingState.Endstate();  
+        buildingState.Endstate();
         inputManager.OnClicked -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
         lastDetectedPosition = Vector3Int.zero;
@@ -91,22 +101,23 @@ public class PlacementSystem : MonoBehaviour
 
     private void Update()
     {
-        if(buildingState == null)
+        if (buildingState == null)
         {
-            return ; 
+            return;
         }
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        if(lastDetectedPosition != gridPosition)
+        if (lastDetectedPosition != gridPosition)
         {
             buildingState.UpdateState(gridPosition);
             lastDetectedPosition = gridPosition;
         }
 
-        
+
     }
 
+    //For delete unit soldier when it died
     public void RemoveUnitAt(Vector3Int gridPosition)
     {
         // Check if there is a unit at the specified grid position

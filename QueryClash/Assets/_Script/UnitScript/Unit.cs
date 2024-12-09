@@ -4,26 +4,46 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public float MaxHp;
-    public float CurrentHp;
+    private PlacementSystem placementSystem;
+    public bool isPlaced = false;
+    public float grade;
 
-    void Start()
+    public void Start()
     {
-        CurrentHp = MaxHp;
+        placementSystem = GameObject.FindObjectOfType<PlacementSystem>();
+
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
-        
+
     }
 
-    public void ReduceHp(float Damage)
+
+    public void RemoveUnit(Vector3Int gridPosition)
     {
-        CurrentHp -= Damage;
-        if (CurrentHp <= 0)
+        // Call RemovingState logic directly
+        if (placementSystem != null)
         {
-            Destroy(gameObject);
+            placementSystem.RemoveUnitAt(gridPosition);
         }
+
+        // Destroy the unit GameObject
+        Destroy(gameObject);
+        Debug.Log("Call Remove Unit Function");
     }
+
+    public virtual void OnPlaced()
+    {
+        isPlaced = true;
+
+    }
+
+    public void SetGrade(int Grade)
+    {
+        this.grade = Grade;
+    }
+
+
 }
