@@ -30,7 +30,10 @@ public class Soldier : Unit
 
     public void HandleBulletSpawning()
     {
-        bulletTimer += Time.deltaTime;
+        if (isPlaced)
+        {
+            bulletTimer += Time.deltaTime;
+        }
 
         // Check if it's time to spawn a bullet
         if (bulletTimer >= spawnRate)
@@ -59,6 +62,7 @@ public class Soldier : Unit
     public override void OnPlaced()
     {
         base.OnPlaced();
+        SpawnBullet();
         bulletTimer = 1;
     }
 
