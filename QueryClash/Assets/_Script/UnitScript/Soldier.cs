@@ -63,7 +63,7 @@ public class Soldier : Unit
     {
         base.OnPlaced();
         SpawnBullet();
-        bulletTimer = 1;
+        bulletTimer = 1f;
     }
 
     public virtual void ReduceHp(float damage)

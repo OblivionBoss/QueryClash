@@ -7,7 +7,7 @@ public class LeftFrontline : Soldier
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
-
+    private Animator childAnimator;
     void Start()
     {
         base.Start();
@@ -28,8 +28,20 @@ public class LeftFrontline : Soldier
     public override void OnPlaced()
     {
         base.OnPlaced();
+        if (childAnimator == null) // Reassign if null
+        {
+            childAnimator = GetComponentInChildren<Animator>();
+        }
+        if (childAnimator != null)
+        {
+            childAnimator.SetBool("Shooting", true);
+            Debug.Log("Set shooting = true");
+        }
+        else
+        {
+            Debug.LogWarning("Animator reference is null in OnPlaced!");
+        }
 
-        //gameObject.layer = 3;
     }
 
     public void ActivateSkill()

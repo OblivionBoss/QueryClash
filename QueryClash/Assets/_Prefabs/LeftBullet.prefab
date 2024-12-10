@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletspeed: 10
   deadZone: 20
-  Atk: 10
+  Atk: 12
 --- !u!54 &7164743656348181915
 Rigidbody:
   m_ObjectHideFlags: 0
