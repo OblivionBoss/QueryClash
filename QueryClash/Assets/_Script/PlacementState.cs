@@ -12,6 +12,7 @@ public class PlacementState : IBuildingState
     GridData floorData;
     GridData unitData;
     ObjectPlacer objectPlacer;
+    //GameObject uiElementToDelete;
 
     public PlacementState(int iD,
                           Grid grid,
@@ -20,6 +21,7 @@ public class PlacementState : IBuildingState
                           GridData floorData,
                           GridData unitData,
                           ObjectPlacer objectPlacer)
+                          //GameObject uiElementToDelete
     {
         ID = iD;
         this.grid = grid;
@@ -28,6 +30,7 @@ public class PlacementState : IBuildingState
         this.floorData = floorData;
         this.unitData = unitData;
         this.objectPlacer = objectPlacer;
+       // this.uiElementToDelete = uiElementToDelete;
 
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex > -1)
@@ -38,13 +41,13 @@ public class PlacementState : IBuildingState
         }
         else
             throw new System.Exception($"No object with ID {iD}");
-
+        
     }
 
     public void Endstate()
     {
         previewSystem.StopShowingPreview();
-        
+        //GameObject.Destroy(uiElementToDelete);
     }
 
     public void OnAction(Vector3Int gridPosition)
