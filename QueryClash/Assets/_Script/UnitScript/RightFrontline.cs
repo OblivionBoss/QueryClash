@@ -11,8 +11,8 @@ public class RightFrontline : Soldier
     void Start()
     {
         base.Start();
-        MaxHp = 140f;         // Set specific MaxHp for LeftFrontline
-        spawnRate = 1f;       // Set specific spawn rate How often to spawn bullets (in seconds)
+        MaxHp = 150f;         // Set specific MaxHp for LeftFrontline
+        spawnRate = 0.8f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 10;

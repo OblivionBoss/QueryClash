@@ -29,5 +29,6 @@ public class ObjectData
     [field: SerializeField]
     public GameObject Prefab { get; private set; }
 
+    public float Grade;
 
 }
