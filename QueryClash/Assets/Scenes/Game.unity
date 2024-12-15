@@ -18926,6 +18926,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 635092489}
     m_Modifications:
+    - target: {fileID: 256848858085143458, guid: 8fccca88e4f142348b2e0db0baacafa9, type: 3}
+      propertyPath: grade
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 923522247619358969, guid: 8fccca88e4f142348b2e0db0baacafa9, type: 3}
       propertyPath: m_Name
       value: RFAButton
@@ -20065,6 +20069,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1871419445}
     m_Modifications:
+    - target: {fileID: 3888057869785757564, guid: fdff6138214f67042a7581a89d8c6956, type: 3}
+      propertyPath: grade
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6471649979684407356, guid: fdff6138214f67042a7581a89d8c6956, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

@@ -5,6 +5,7 @@ public class ButtonSetup : MonoBehaviour
 {
     public Button button;
     public int prefabIndex;
+    public int grade;
     void Start()
     {
         // Find the PlacementSystem in the scene
@@ -16,7 +17,7 @@ public class ButtonSetup : MonoBehaviour
             //button.onClick.RemoveAllListeners();
 
             // Add a listener and pass the int parameter (6)
-            button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex, gameObject));
+            button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex, gameObject, grade));
         }
         else
         {
