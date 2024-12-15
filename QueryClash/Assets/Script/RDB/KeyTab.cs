@@ -28,7 +28,7 @@ public class KeyTab : MonoBehaviour
         }
         else
         {
-            panel.position = new Vector3(-1920, 0);
+            panel.position = new Vector3(-Screen.width, 0);
             isOpen = false;
         }
     }
