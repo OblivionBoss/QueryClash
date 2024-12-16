@@ -9,7 +9,7 @@ public class LeftBullet : MonoBehaviour
     public float Atk = 10;
 
     void Update()
-    {
+    {   
         transform.position = transform.position + (Vector3.right * bulletspeed) * Time.deltaTime;
         if (transform.position.x > deadZone)
         {
@@ -37,7 +37,5 @@ public class LeftBullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-
 
 }
