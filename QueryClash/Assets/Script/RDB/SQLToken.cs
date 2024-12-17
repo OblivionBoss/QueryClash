@@ -9,6 +9,7 @@ public class SQLToken : MonoBehaviour, IPointerClickHandler
     public HorizontalLayoutGroup horizontalForRightPad;
     public TextMeshProUGUI tokenText;
     public RectTransform rectTransform;
+    public int tokenIndex;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -20,8 +21,7 @@ public class SQLToken : MonoBehaviour, IPointerClickHandler
         if (this.keyboardManager == null)
         {
             this.keyboardManager = keyboardManager;
-        }
-            
+        }  
     }
 
     void Awake()
