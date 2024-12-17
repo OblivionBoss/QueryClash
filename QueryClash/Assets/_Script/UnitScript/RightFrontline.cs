@@ -12,7 +12,7 @@ public class RightFrontline : Soldier
     {
         base.Start();
         MaxHp = 150f;         // Set specific MaxHp for LeftFrontline
-        spawnRate = 0.8f;       // Set specific spawn rate How often to spawn bullets (in seconds)
+        spawnRate = 1.2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 10;
@@ -60,6 +60,11 @@ public class RightFrontline : Soldier
         {
             Debug.Log("Skill activated");
             CurrentHp += 50;
+            if (CurrentHp > MaxHp)
+            {
+                CurrentHp = MaxHp;
+            }
+
             Debug.Log("Skill ended");
             ResetSkill();
             //skillDuration += Time.deltaTime; // Start counting skill duration
@@ -79,7 +84,7 @@ public class RightFrontline : Soldier
 
     public void ResetSkill()
     {
-        spawnRate = 1f; // Reset spawn rate to default
+        spawnRate = 1.2f; // Reset spawn rate to default
         skillCooldownRemaining = 0f; // Reset cooldown timer
         skillDuration = 0f; // Reset skill duration
     }

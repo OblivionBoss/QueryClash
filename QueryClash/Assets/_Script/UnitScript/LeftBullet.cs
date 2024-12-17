@@ -38,4 +38,10 @@ public class LeftBullet : MonoBehaviour
         }
     }
 
+    public void SetBulletParams(float atk, float speed)
+    {
+        Atk = atk;
+        bulletspeed = speed;
+    }
+
 }
