@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
+using System.IO;
 
 public class RDBManager : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class RDBManager : MonoBehaviour
     public GameObject linePrefab;
     public Transform linePanel;
 
-    public string dbName = "URI=file:shop.db";
+    public string dbName;
+    public string tempDB;
     public InventoryManager inventoryManager;
     public TextMeshProUGUI output;
     public TMP_InputField query_command;
@@ -35,6 +37,9 @@ public class RDBManager : MonoBehaviour
         //var all_table_list = new List<List<List<string>>>();
         //getDatabase(dbName, table_name, all_table_list);
         //GenerateAllTables(table_name, all_table_list);
+
+        dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
+        Debug.Log(dbName);
 
         resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab);
         queryResult = null;
@@ -284,13 +289,14 @@ public class RDBManager : MonoBehaviour
 
     private float ScoreFunction(float NumDiffTableQueryFocus, float NumMatOtherQueryFocus, float QueryFocusCount, float QueryEmptyCount, float duplicateQueryCount)
     {
-        float a = 100f, b = 500f, c = 0.5f, d = 0.5f, e = 0.5f;
-        float T = NumDiffTableQueryFocus;
-        float O = NumMatOtherQueryFocus;
-        float F = QueryFocusCount;
-        float E = QueryEmptyCount;
-        float D = duplicateQueryCount;
-        float score = (a * T + b * F * F) / ((c * O * O + 1) * (d * D + 1) * (e * E + 1));
+        float a = 0.5f, b = 50f, c = 0.2f, d = 100f, e = 100f;
+        float T = NumDiffTableQueryFocus; // >= 0
+        float O = NumMatOtherQueryFocus; // 0 <= O <= 4
+        float F = QueryFocusCount; // >= 0
+        float E = QueryEmptyCount; // >= 0
+        float D = duplicateQueryCount; // >= 0
+        Debug.Log("T = " + T + " F = " + F + " O = " + O + " D = " + D + " E = " + E);
+        float score = (a * T) * (b * F * F) / (c * O + 1) - (d * D) - (e * E);
         Debug.Log(score);
         return score;
     }
