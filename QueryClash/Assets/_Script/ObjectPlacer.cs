@@ -9,7 +9,7 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField]
     private List<GameObject> placedGameObjects = new();
 
-    public int PlaceObject(GameObject prefab, Vector3 position)
+    public int PlaceObject(GameObject prefab, Vector3 position) // Placing an object according to position
     {
         GameObject newObject = Instantiate(prefab);
         newObject.transform.position = position;
@@ -26,7 +26,7 @@ public class ObjectPlacer : MonoBehaviour
         return placedGameObjects.Count - 1;
     }
 
-    internal void RemoveOBjectAt(int gameObjectIndex)
+    internal void RemoveOBjectAt(int gameObjectIndex) // Removing an object according to position
     {
         if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
         {
