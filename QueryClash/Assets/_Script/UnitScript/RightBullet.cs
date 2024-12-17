@@ -39,5 +39,10 @@ public class RightBullet : MonoBehaviour
         }
     }
 
+    public void SetBulletParams(float atk, float speed)
+    {
+        Atk = atk;
+        bulletspeed = speed;
+    }
 
 }

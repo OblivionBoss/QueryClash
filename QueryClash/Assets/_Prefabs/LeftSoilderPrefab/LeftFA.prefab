@@ -54,6 +54,7 @@ MonoBehaviour:
   bullet: {fileID: 4760652087481901620, guid: f6d75f09d1d1e2f46ac2bd403cfe77b1, type: 3}
   spawnRate: 0
   bulletTimer: 0
+  bulletSpawnSound: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
   skillCooldown: 10
   skillCooldownRemaining: 0
   skillDuration: 0
