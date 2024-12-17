@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
         => EventSystem.current.IsPointerOverGameObject();
 
 
-    public Vector3 GetSelectedMapPosition()
+    public Vector3 GetSelectedMapPosition() // Handle graphic when unit placing preview
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = sceneCamera.nearClipPlane;
