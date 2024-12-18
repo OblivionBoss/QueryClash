@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 49
+  controlID: 111
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: SceneView
+  m_Name: GameView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -220,7 +220,7 @@ MonoBehaviour:
     height: 464
   m_MinSize: {x: 202, y: 221}
   m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 16}
+  m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 16}
   - {fileID: 17}
@@ -228,8 +228,8 @@ MonoBehaviour:
   - {fileID: 19}
   - {fileID: 13}
   - {fileID: 12}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -277,8 +277,8 @@ MonoBehaviour:
     y: 0
     width: 412
     height: 722.8
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 22}
   m_Panes:
   - {fileID: 22}
@@ -476,9 +476,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b28c0000
-      m_LastClickedID: 0
-      m_ExpandedIDs: 00f8ffff30fbffff2a730000
+      m_SelectedIDs: 66740000
+      m_LastClickedID: 29798
+      m_ExpandedIDs: d4e1feff32e2fefffae4feffb0e7feff72f1feff1c1dffff66c7ffff7ac7ffff30fbffffda7200002a730000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -840,14 +840,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.08306076, y: -0.23117685, z: -0.22836995}
+    m_Target: {x: -1407.4236, y: 468.8954, z: 0.28020787}
     speed: 2
-    m_Value: {x: 960, y: 1068.825, z: 0}
+    m_Value: {x: -1407.4236, y: 468.8954, z: 0.28020787}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -875,15 +875,15 @@ MonoBehaviour:
       m_Size: {x: 1, y: 1}
     yGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
-        m_Value: 1
+        m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 1, y: 1}
     zGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
@@ -893,17 +893,17 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.60311776, y: -0.0040703933, z: 0.0030778402, w: -0.79764163}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0, y: 0, z: 0, w: 0.99999994}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 8.598103
+    m_Target: 1073.4336
     speed: 2
-    m_Value: 9.003249
+    m_Value: 1073.4336
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -917,7 +917,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.60311776, y: -0.0040703933, z: 0.0030778402, w: -0.79764163}
+  m_LastSceneViewRotation: {x: -0.32105345, y: 0.08479543, z: -0.028875463, w: -0.9428178}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -2043,7 +2043,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefab/RDB
+    - Assets/Plugins/CW/LeanGUI/Examples/Textures
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -2051,16 +2051,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefab/RDB
+  - Assets/Plugins/CW/LeanGUI/Examples/Textures
   m_LastFoldersGridSize: -1
   m_LastProjectPath: "D:\\CMU\\\u0E1B\u0E354\\Project\\QueryClash\\QueryClash"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 199}
-    m_SelectedIDs: d88b0000
-    m_LastClickedID: 35800
-    m_ExpandedIDs: 000000002a7d00002c7d0000587d00006c7d000000ca9a3b
+    scrollPos: {x: 0, y: 463}
+    m_SelectedIDs: 90ba0000
+    m_LastClickedID: 47760
+    m_ExpandedIDs: 000000002a7d00002c7d0000407d0000567d0000587d00006c7d0000727d000092ba000094ba000096ba000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -2116,7 +2116,7 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
-    m_ExpandedInstanceIDs: ea850000e480000010810000d6500100127e000016830000
+    m_ExpandedInstanceIDs: ea850000e480000010810000d6500100127e0000168300001a760000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
