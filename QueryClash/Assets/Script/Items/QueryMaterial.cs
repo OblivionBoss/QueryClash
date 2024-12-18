@@ -18,10 +18,10 @@ public class QueryMaterial : Item
     {
         if (quality == Quality.None)
         {
-            if (score > 800f) quality = Quality.Legendary;
-            else if (score > 600f) quality = Quality.Epic;
+            if (score > 1200f) quality = Quality.Legendary;
+            else if (score > 800f) quality = Quality.Epic;
             else if (score > 400f) quality = Quality.Rare;
-            else if (score > 200f) quality = Quality.Common;
+            else if (score > 0f) quality = Quality.Common;
             else quality = Quality.Gabbage;
         }
         Debug.Log(quality.ToString() + $" score = {score}");
