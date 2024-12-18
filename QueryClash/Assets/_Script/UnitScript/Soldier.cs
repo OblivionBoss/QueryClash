@@ -15,12 +15,22 @@ public class Soldier : Unit
 
     private Grid grid;
 
+    public AudioClip bulletSpawnSound; // Assign in the inspector
+    private AudioSource audioSource;
+
 
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
-        
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
     }
 
     public void Update()
@@ -30,7 +40,10 @@ public class Soldier : Unit
 
     public void HandleBulletSpawning()
     {
-        bulletTimer += Time.deltaTime;
+        if (isPlaced)
+        {
+            bulletTimer += Time.deltaTime;
+        }
 
         // Check if it's time to spawn a bullet
         if (bulletTimer >= spawnRate)
@@ -42,6 +55,14 @@ public class Soldier : Unit
 
     public void SpawnBullet()
     {
+        if (audioSource != null && bulletSpawnSound != null)
+        {
+            audioSource.PlayOneShot(bulletSpawnSound);
+        }
+        else
+        {
+            Debug.LogWarning("AudioSource or bulletSpawnSound is missing!");
+        }
         if (bullet != null && isPlaced == true)
         {
             GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
@@ -52,6 +73,7 @@ public class Soldier : Unit
                 spawnedBullet.transform.position.y +0.5f,
                 spawnedBullet.transform.position.z + 0.5f
             );
+            
         }
         
     }
@@ -59,7 +81,9 @@ public class Soldier : Unit
     public override void OnPlaced()
     {
         base.OnPlaced();
-        bulletTimer = 1;
+        SpawnBullet();
+
+        bulletTimer = 1f;
     }
 
     public virtual void ReduceHp(float damage)

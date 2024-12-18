@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LeftFrontline : Soldier
 {
+    public float skillCooldown = 10;
+    public float skillCooldownRemaining;
+    public float skillDuration;
+    private Animator childAnimator;
     void Start()
     {
         base.Start();
@@ -18,13 +22,65 @@ public class LeftFrontline : Soldier
     void Update()
     {
         base.Update();
+        ActivateSkill();
     }
 
     public override void OnPlaced()
     {
         base.OnPlaced();
+        if (childAnimator == null) // Reassign if null
+        {
+            childAnimator = GetComponentInChildren<Animator>();
+        }
+        if (childAnimator != null)
+        {
+            childAnimator.SetBool("Shooting", true);
+            Debug.Log("Set shooting = true");
+        }
+        else
+        {
+            Debug.LogWarning("Animator reference is null in OnPlaced!");
+        }
 
-        //gameObject.layer = 3;
     }
+
+    public void ActivateSkill()
+    {
+        if (!isPlaced)
+            return; // Do nothing if the soldier is not placed
+
+        // Increment cooldown timer if skill is not active
+        if (skillCooldownRemaining < skillCooldown)
+        {
+            skillCooldownRemaining += Time.deltaTime;
+        }
+
+        // Activate skill if cooldown has elapsed
+        if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
+        {
+            Debug.Log("Skill activated");
+            spawnRate = 0.5f;
+            skillDuration += Time.deltaTime; // Start counting skill duration
+        }
+        else if (skillDuration > 0) // Skill is active
+        {
+            skillDuration += Time.deltaTime;
+
+            // Check if skill duration has ended
+            if (skillDuration >= 3f)
+            {
+                ResetSkill();
+                Debug.Log("Skill ended");
+            }
+        }
+    }
+
+    public void ResetSkill()
+    {
+        spawnRate = 1f; // Reset spawn rate to default
+        skillCooldownRemaining = 0f; // Reset cooldown timer
+        skillDuration = 0f; // Reset skill duration
+    }
+
 
 }

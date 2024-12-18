@@ -32,23 +32,17 @@ public class PlacementSystem : MonoBehaviour
         //StopPlacement();
         floorData = new();
         unitData = new();
-        gridVisualization.SetActive(true);
+        //gridVisualization.SetActive(true);
     }
 
 
-    public void StartPlacement(int ID, GameObject uiElementToDelete)
+    public void StartPlacement(int ID, GameObject uiElementToDelete, int Grade)
     {
-        //StopPlacement();
-        buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer);
+        StopPlacement();
+        buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer, uiElementToDelete, Grade);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
-        bool placementComplete = true; // Replace with actual placement logic
-
-        //When click on button, the botton will be delete
-        //if (placementComplete && uiElementToDelete != null)
-        //{
-        //    Destroy(uiElementToDelete);
-        //}
+        
     }
 
     //For Delete Button
