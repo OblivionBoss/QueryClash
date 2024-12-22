@@ -79,13 +79,29 @@ public class PlacementState : IBuildingState
         GameObject.Destroy(uiElementToDelete);
     }
 
-    private bool CheckPlacementValidity(Vector3Int gridPositition, int selectedObjectIndex)
+    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : unitData;
+        // Retrieve the selected object's data
+        ObjectData selectedObjectData = database.objectsData[selectedObjectIndex];
 
-        return selectedData.CanPlaceObjectAt(gridPositition, database.objectsData[selectedObjectIndex].Size);
+        // Determine the grid data based on the ID
+        GridData selectedData = selectedObjectData.ID == 0 ? floorData : unitData;
 
+        // Add conditions for Prefab's tag
+        if (selectedObjectData.Prefab.CompareTag("LeftTeam") && gridPosition.x < 0)
+        {
+            return selectedData.CanPlaceObjectAt(gridPosition, selectedObjectData.Size);
+        }
+        else if (selectedObjectData.Prefab.CompareTag("RightTeam") && gridPosition.x >= 0)
+        {
+            return selectedData.CanPlaceObjectAt(gridPosition, selectedObjectData.Size);
+        }
+
+        // If none of the conditions are met, return false
+        return false;
     }
+
+
 
     public void UpdateState(Vector3Int gridPosition)
     {

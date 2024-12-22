@@ -59,10 +59,10 @@ public class Soldier : Unit
         {
             audioSource.PlayOneShot(bulletSpawnSound);
         }
-        else
-        {
-            Debug.LogWarning("AudioSource or bulletSpawnSound is missing!");
-        }
+        //else
+        //{
+        //    Debug.LogWarning("AudioSource or bulletSpawnSound is missing!");
+        //}
         if (bullet != null && isPlaced == true)
         {
             GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
