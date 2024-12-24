@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4511e4f20255a764fbf02f10f354791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletspeed: 20
+  bulletspeed: 15
   deadZone: -20
   Atk: 20
 --- !u!54 &501289135434280455
