@@ -35,7 +35,8 @@ public class ResourceDatabase
         return table;
     }
 
-    public ResourceDatabase(string dbName, Transform canvasParent, GameObject tablePrefab, GameObject colPrefab, GameObject cellPrefab)
+    public ResourceDatabase(string dbName, Transform canvasParent, GameObject tablePrefab,
+        GameObject colPrefab, GameObject cellPrefab, SQLTokenKeyboardManager keyboardManager)
     {
         resourceTables = new Dictionary<string, ResourceTable>();
         mapColumnToTable = new Dictionary<string, ResourceTable>();
@@ -62,7 +63,7 @@ public class ResourceDatabase
 
                     foreach (string table in tableNames)
                     {
-                        resourceTables.Add(table, new ResourceTable(dbName, table, canvasParent, tablePrefab, colPrefab, cellPrefab));
+                        resourceTables.Add(table, new ResourceTable(dbName, table, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager));
                     }
                 }
             }
