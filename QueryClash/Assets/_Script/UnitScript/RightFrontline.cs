@@ -21,13 +21,19 @@ public class RightFrontline : Soldier
 
     void Update()
     {
-        base.Update();
+        //base.Update();
+        HandleBulletSpawning();
         ActivateSkill();
     }
 
     public override void OnPlaced()
     {
         base.OnPlaced();
+
+        SpawnBullet();
+
+        bulletTimer = 0f;
+
         if (childAnimator == null) // Reassign if null
         {
             childAnimator = GetComponentInChildren<Animator>();

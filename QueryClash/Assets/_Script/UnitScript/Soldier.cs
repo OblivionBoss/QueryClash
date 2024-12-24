@@ -13,7 +13,7 @@ public class Soldier : Unit
     public float spawnRate; // How often to spawn bullets (in seconds)
     public float bulletTimer;
 
-    private Grid grid;
+    public Grid grid;
 
     public AudioClip bulletSpawnSound; // Assign in the inspector
     private AudioSource audioSource;
@@ -35,7 +35,7 @@ public class Soldier : Unit
 
     public void Update()
     {
-        HandleBulletSpawning();
+        //HandleBulletSpawning();
     }
 
     public void HandleBulletSpawning()
@@ -81,10 +81,9 @@ public class Soldier : Unit
     public override void OnPlaced()
     {
         base.OnPlaced();
-        SpawnBullet();
-
-        bulletTimer = 1f;
     }
+
+
 
     public virtual void ReduceHp(float damage)
     {

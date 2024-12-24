@@ -13,7 +13,7 @@ public class PlacementState : IBuildingState
     GridData unitData;
     ObjectPlacer objectPlacer;
     GameObject uiElementToDelete;
-    int grade;
+    float score;
 
     public PlacementState(int iD,
                           Grid grid,
@@ -23,7 +23,7 @@ public class PlacementState : IBuildingState
                           GridData unitData,
                           ObjectPlacer objectPlacer,
                           GameObject uiElementToDelete,
-                          int grade)
+                          float score)
                           
     {
         ID = iD;
@@ -34,7 +34,7 @@ public class PlacementState : IBuildingState
         this.unitData = unitData;
         this.objectPlacer = objectPlacer;
         this.uiElementToDelete = uiElementToDelete;
-        this.grade = grade;
+        this.score = score;
 
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
         if (selectedObjectIndex > -1)
@@ -64,7 +64,7 @@ public class PlacementState : IBuildingState
         }
         int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab,
             grid.CellToWorld(gridPosition),
-            grade);
+            score);
 
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ?
             floorData :

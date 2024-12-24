@@ -36,10 +36,10 @@ public class PlacementSystem : MonoBehaviour
     }
 
 
-    public void StartPlacement(int ID, GameObject uiElementToDelete, int Grade)
+    public void StartPlacement(int ID, GameObject uiElementToDelete, float score)
     {
         StopPlacement();
-        buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer, uiElementToDelete, Grade);
+        buildingState = new PlacementState(ID, grid, preview, database, floorData, unitData, objectPlacer, uiElementToDelete, score);
         inputManager.OnClicked += PlaceStructure;
         inputManager.OnExit += StopPlacement;
         
