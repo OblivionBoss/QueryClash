@@ -1,47 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftBullet : MonoBehaviour
+public class LeftBullet : Bullet
 {
-    public float bulletspeed = 1;
-    public float deadZone;
-    public float Atk = 10;
 
-    void Update()
-    {   
-        transform.position = transform.position + (Vector3.right * bulletspeed) * Time.deltaTime;
-        if (transform.position.x > deadZone)
+  
+
+    public override void Move()
+    {
+        transform.position += Vector3.right * bulletspeed * Time.deltaTime;
+    }
+
+    protected override void HandleCollision(Collider collision)
+    {
+        Soldier soldier = collision.gameObject.GetComponent<Soldier>();
+        if (collision.gameObject.CompareTag("RightTeam") && soldier != null && soldier.isPlaced)
         {
-            //Debug.Log("Bullet Deleted");
+            soldier.ReduceHp(Atk);
             Destroy(gameObject);
         }
     }
-
-    private void OnTriggerEnter(Collider collision)
-    {
-
-        Soldier s = collision.gameObject.GetComponent<Soldier>();
-        if (collision.gameObject.CompareTag("RightTeam") && s.isPlaced)
-        {
-            if (s != null)
-            {
-                //Debug.Log($"Bullet Atk: {Atk}");
-                //Debug.Log($"Soldier CurrentHp before: {s.CurrentHp}");
-
-                // Reduce the HP of the collided unit
-                s.ReduceHp(Atk);
-
-                //Debug.Log($"Soldier CurrentHp after: {s.CurrentHp}");
-            }
-            Destroy(gameObject);
-        }
-    }
-
-    public void SetBulletParams(float atk, float speed)
-    {
-        Atk = atk;
-        bulletspeed = speed;
-    }
-
 }

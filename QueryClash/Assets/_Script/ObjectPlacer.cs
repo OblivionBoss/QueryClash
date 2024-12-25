@@ -9,7 +9,7 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField]
     private List<GameObject> placedGameObjects = new();
 
-    public int PlaceObject(GameObject prefab, Vector3 position,int grade)
+    public int PlaceObject(GameObject prefab, Vector3 position,float score)
     {
         GameObject newObject = Instantiate(prefab);
         newObject.transform.position = position;
@@ -21,7 +21,7 @@ public class ObjectPlacer : MonoBehaviour
         {
             // Call the OnPlaced method of the CapsuleUnit
             unit.OnPlaced();
-            unit.SetGrade(grade);
+            unit.SetScore(score);
         }
 
         return placedGameObjects.Count - 1;
