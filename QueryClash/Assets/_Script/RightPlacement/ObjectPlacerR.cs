@@ -19,7 +19,7 @@ public class ObjectPlacerR : MonoBehaviour
         {
             // Call the OnPlaced method of the CapsuleUnit
             unit.OnPlaced();
-            unit.SetGrade(grade);
+            //unit.SetGrade(grade);
         }
 
         return placedGameObjects.Count - 1;

@@ -2,52 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftFrontline : Soldier
+public class Shielder1 : Soldier
 {
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
     private Animator childAnimator;
+
+    private float Defence = 0f;
+
+    // Start is called before the first frame update
     void Start()
     {
         base.Start();
-        MaxHp = 100f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 1f;       // Set specific spawn rate How often to spawn bullets (in seconds)
+        MaxHp = 1000f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
+        spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (1 + score / 1000); 
-
+        Atk = 0f;
     }
 
+    // Update is called once per frame
     void Update()
     {
         //base.Update();
-        HandleBulletSpawning();
         ActivateSkill();
     }
-
     public override void OnPlaced()
     {
-
         base.OnPlaced();
-
-        SpawnBullet();
-
-        bulletTimer = 0f;
-
-        if (childAnimator == null) // Reassign if null
-        {
-            childAnimator = GetComponentInChildren<Animator>();
-        }
-        if (childAnimator != null)
-        {
-            childAnimator.SetBool("Shooting", true);
-            Debug.Log("Set shooting = true");
-        }
-        else
-        {
-            Debug.LogWarning("Animator reference is null in OnPlaced!");
-        }
+        //if (childAnimator == null) // Reassign if null
+        //{
+        //    childAnimator = GetComponentInChildren<Animator>();
+        //}
+        //if (childAnimator != null)
+        //{
+        //    childAnimator.SetBool("Shooting", true);
+        //    Debug.Log("Set shooting = true");
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
+        //}
 
     }
 
@@ -66,7 +62,7 @@ public class LeftFrontline : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            spawnRate = 0.5f;
+            Defence = 0.5f;
             skillDuration += Time.deltaTime; // Start counting skill duration
         }
         else if (skillDuration > 0) // Skill is active
@@ -84,10 +80,22 @@ public class LeftFrontline : Soldier
 
     public void ResetSkill()
     {
-        spawnRate = 1f; // Reset spawn rate to default
+        Defence = 0f; // Reset spawn rate to default
         skillCooldownRemaining = 0f; // Reset cooldown timer
         skillDuration = 0f; // Reset skill duration
     }
 
+    public override void ReduceHp(float damage)
+    {
+        CurrentHp -= damage * (1-Defence);
+        if (CurrentHp <= 0)
+        {
+            
+            Vector3Int gridPosition = grid.WorldToCell(transform.position);
+
+            // Remove the unit from the PlacementSystem
+            RemoveUnit(gridPosition);
+        }
+    }
 
 }

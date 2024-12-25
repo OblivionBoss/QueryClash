@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class PathManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    public void Play() { SceneManager.LoadSceneAsync("GameLobby"); } // Go to game lobby
+    public void Play() {  } // Go to game lobby SceneManager.LoadSceneAsync("GameLobby");
 
     public void Quit() { Application.Quit(); } // Terminated application
 }
