@@ -13,7 +13,7 @@ public class Soldier : Unit
     public float spawnRate; // How often to spawn bullets (in seconds)
     public float bulletTimer;
 
-    public Grid grid;
+    private Grid grid;
 
     public AudioClip bulletSpawnSound; // Assign in the inspector
     private AudioSource audioSource;
@@ -35,7 +35,7 @@ public class Soldier : Unit
 
     public void Update()
     {
-        //HandleBulletSpawning();
+        HandleBulletSpawning();
     }
 
     public void HandleBulletSpawning()
@@ -53,46 +53,38 @@ public class Soldier : Unit
         }
     }
 
-        public void SpawnBullet()
+    public void SpawnBullet()
+    {
+        if (audioSource != null && bulletSpawnSound != null)
         {
-            if (audioSource != null && bulletSpawnSound != null)
-            {
-                audioSource.PlayOneShot(bulletSpawnSound);
-            }
-
-            if (bullet != null && isPlaced)
-            {
-                GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
-
-                Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
-            if (bulletComponent != null)
-            {
-                // Determine direction and dead zone based on the soldier's tag
-                if (gameObject.CompareTag("LeftTeam"))
-                {
-                    bulletComponent.Initialize(Atk, 100f, Vector3.right); // Bullets move right
-                }
-                else if (gameObject.CompareTag("RightTeam"))
-                {
-                    bulletComponent.Initialize(Atk, -100f, Vector3.left); // Bullets move left
-                }
-
-                //Debug.Log($"Spawned bullet from {gameObject.tag} with Atk: {bulletComponent.Atk}");
-            }
-            else
-            {
-                Debug.LogWarning("Spawned object does not have a Bullet component!");
-            }
+            audioSource.PlayOneShot(bulletSpawnSound);
         }
+        else
+        {
+            Debug.LogWarning("AudioSource or bulletSpawnSound is missing!");
         }
+        if (bullet != null && isPlaced == true)
+        {
+            GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
 
+            // Adjust the spawned bullet's position
+            spawnedBullet.transform.position = new Vector3(
+                spawnedBullet.transform.position.x + 0.5f,
+                spawnedBullet.transform.position.y +0.5f,
+                spawnedBullet.transform.position.z + 0.5f
+            );
+            
+        }
+        
+    }
 
     public override void OnPlaced()
     {
         base.OnPlaced();
+        SpawnBullet();
+
+        bulletTimer = 1f;
     }
-
-
 
     public virtual void ReduceHp(float damage)
     {

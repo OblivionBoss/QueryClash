@@ -11,29 +11,23 @@ public class RightFrontline : Soldier
     void Start()
     {
         base.Start();
-        MaxHp = 150f * (1 + score/1000);         // Set specific MaxHp for LeftFrontline
+        MaxHp = 150f;         // Set specific MaxHp for LeftFrontline
         spawnRate = 1.2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (1 + score / 1000);
+        Atk = 10;
         
     }
 
     void Update()
     {
-        //base.Update();
-        HandleBulletSpawning();
+        base.Update();
         ActivateSkill();
     }
 
     public override void OnPlaced()
     {
         base.OnPlaced();
-
-        SpawnBullet();
-
-        bulletTimer = 0f;
-
         if (childAnimator == null) // Reassign if null
         {
             childAnimator = GetComponentInChildren<Animator>();

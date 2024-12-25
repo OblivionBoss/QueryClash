@@ -1,18 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-public class ButtonSetup : MonoBehaviour, IPointerClickHandler
+public class ButtonSetup : MonoBehaviour
 {
     public Button button;
     public int prefabIndex;
-    public float score;
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
-    }
-
+    public int grade;
     void Start()
     {
         // Find the PlacementSystem in the scene
@@ -24,7 +17,7 @@ public class ButtonSetup : MonoBehaviour, IPointerClickHandler
             //button.onClick.RemoveAllListeners();
 
             // Add a listener and pass the int parameter (6)
-            button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex, gameObject, score));
+            button.onClick.AddListener(() => placementSystem.StartPlacement(prefabIndex, gameObject, grade));
         }
         else
         {

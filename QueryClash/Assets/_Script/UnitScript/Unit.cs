@@ -6,7 +6,7 @@ public class Unit : MonoBehaviour
 {
     private PlacementSystem placementSystem;
     public bool isPlaced = false;
-    public float score;
+    public float grade;
 
     public void Start()
     {
@@ -40,9 +40,9 @@ public class Unit : MonoBehaviour
 
     }
 
-    public void SetScore(float score)
+    public void SetGrade(int Grade)
     {
-        this.score = score;
+        this.grade = Grade;
     }
 
 
