@@ -1,11 +1,18 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ButtonSetup : MonoBehaviour
+public class ButtonSetup : MonoBehaviour, IPointerClickHandler
 {
     public Button button;
     public int prefabIndex;
     public float score;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        throw new System.NotImplementedException();
+    }
+
     void Start()
     {
         // Find the PlacementSystem in the scene
