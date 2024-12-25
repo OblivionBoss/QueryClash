@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
+using System.IO;
 
 public class RDBManager : MonoBehaviour
 {
@@ -20,15 +21,13 @@ public class RDBManager : MonoBehaviour
     public string tempDB;
     public InventoryManager inventoryManager;
     public TextMeshProUGUI output;
-    public TMP_InputField textInputField;
+    public TMP_InputField query_command;
     [SerializeField] private TMP_Dropdown chooseMatDropdown;
     
     private ResourceDatabase resourceDatabase;
     private GameObject queryResult;
     private List<QueryMaterial> queryMaterialList = new List<QueryMaterial>();
     private MaterialType focusMaterialType;
-
-    public SQLTokenKeyboardManager keyboardManager;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +41,7 @@ public class RDBManager : MonoBehaviour
         dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
         Debug.Log(dbName);
 
-        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager);
+        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab);
         queryResult = null;
         GetFocusMaterial();
         //GameObject a = Instantiate(linePrefab, linePanel);
@@ -55,21 +54,29 @@ public class RDBManager : MonoBehaviour
         //debug_getResourceTable(resourceTable);
     }
 
+    //public QueryMaterial GenerateQueryMaterial(Transform materialSlot)
+    //{
+    //    Array values = Enum.GetValues(typeof(QueryMaterialType));
+    //    int rand = UnityEngine.Random.Range(0, values.Length);
+    //    return new QueryMaterial(Instantiate(queryMaterials[rand], materialSlot), (QueryMaterialType)values.GetValue(rand));
+    //}
+
+    //public void GenerateQueryMaterialForAllTableResourceData()
+    //{
+    //    string[] tables = resourceDatabase.GetTableNames();
+    //    foreach (string table in tables)
+    //    {
+    //        resourceDatabase.GetTable(table);
+    //    }
+    //}
+
     public void GetFocusMaterial()
     {
         focusMaterialType = (MaterialType) chooseMatDropdown.value;
         Debug.Log("focusMaterialType = " + focusMaterialType.ToString());
     }
 
-    public void ExecuteForInputText()
-    {
-        try { Query(textInputField.text); }
-        catch { }
-        try { Query1(textInputField.text); }
-        catch { }
-    }
-
-    public void Query(string query_command)
+    public void Query()
     {
         if (queryResult != null)
         {
@@ -96,11 +103,11 @@ public class RDBManager : MonoBehaviour
                 {
                     try // "Modify SQL Command" and "get column name list of first SELECT" for Material query
                     {
-                        command.CommandText = query_command;
+                        command.CommandText = query_command.text;
                         IDataReader reader = command.ExecuteReader();
                         reader.Close();
 
-                        string query_com = query_command;
+                        string query_com = query_command.text;
                         query_com = Regex.Replace(query_com, @"\n|\r", " ");
                         string[] parts = query_com.Split('(');
                         Regex regex = new Regex("(?i)select(?-i)(.*)(?i)from(?-i)");
@@ -303,7 +310,7 @@ public class RDBManager : MonoBehaviour
         queryMaterialList.Clear();
     }
 
-    public void Query1(string query_command)
+    public void Query1()
     {
         string temp = "";
 
@@ -314,7 +321,7 @@ public class RDBManager : MonoBehaviour
             {
                 using (var command = connection.CreateCommand())
                 {
-                    command.CommandText = query_command;
+                    command.CommandText = query_command.text;
 
                     using (IDataReader reader = command.ExecuteReader())
                     {
@@ -506,4 +513,75 @@ public class RDBManager : MonoBehaviour
             connection.Close();
         }
     }
+
+    //public void GenerateAllTables(List<string> table_name, List<List<List<string>>> all_table_list)
+    //{
+    //    for (int i = 0; i < table_name.Count; i++)
+    //    {
+    //        // Create a new table
+    //        GameObject newTable = Instantiate(tablePrefab, canvasParent);
+
+    //        TextMeshProUGUI tableNameText = newTable.transform.Find("TableName").Find("TableNameText").GetComponent<TextMeshProUGUI>();
+    //        tableNameText.text = table_name[i];
+
+    //        // You can optionally reposition the table or set its RectTransform
+    //        RectTransform tableRectTransform = newTable.GetComponent<RectTransform>();
+    //        tableRectTransform.anchoredPosition = new Vector2(i * 70, 0); // Stack tables vertically
+
+    //        Transform tableData = newTable.transform.Find("TableData");
+
+    //        // Create columns within the table
+    //        GenerateTableColumns(tableData, all_table_list[i]);
+    //    }
+    //}
+
+    //public void GenerateTableColumns(Transform tableData, List<List<string>> col_list)
+    //{
+    //    for (int i = 0; i < col_list.Count; i++)
+    //    {
+    //        // Create a new column
+    //        GameObject newColumn = Instantiate(colPrefab, tableData);
+
+    //        TextMeshProUGUI colNameText = newColumn.transform.Find("ColumnName").Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
+    //        colNameText.text = col_list[i][0];
+
+    //        Transform columnData = newColumn.transform.Find("ColumnData");
+
+    //        List<Node> cellsInColumn = new List<Node>();
+    //        // Create cells within the table
+    //        GenerateColumnCells(columnData, col_list[i], cellsInColumn);
+
+    //        try
+    //        {
+    //            resourceTable.Add(col_list[i][0], cellsInColumn);
+    //        }
+    //        catch
+    //        {
+    //            resourceTable.Add(col_list[i][0] + i, cellsInColumn);
+    //        }
+
+    //    }
+    //}
+
+    //public void GenerateColumnCells(Transform column, List<string> data_list, List<Node> cellsInColumn)
+    //{
+    //    for (int i = 1; i < data_list.Count; i++)
+    //    {
+    //        // Create a new cell
+    //        GameObject newCell = Instantiate(cellPrefab, column);
+
+    //        int type = UnityEngine.Random.Range(0, icon.Length);
+
+    //        // Set the icon (Image component)
+    //        Image iconImage = newCell.transform.Find("ItemIcon").GetComponent<Image>();
+    //        iconImage.sprite = icon[type];
+
+    //        // Set the text (Text component)
+    //        TextMeshProUGUI cellDataText = newCell.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
+    //        cellDataText.text = data_list[i];
+
+    //        Node newNode = new Node(newCell, type, data_list[i]);
+    //        cellsInColumn.Add(newNode);
+    //    }
+    //}
 }

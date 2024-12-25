@@ -11,7 +11,6 @@ public class ResourceTable
     private string tableName;
     private int numOfCol = 0;
     private string[] columnNameList;
-    private string[] columnDatatypeList;
     private Dictionary<string, List<ResourceData>> columnList;
     private string primaryKey = null;
     private List<Tuple<string, string, string>> foreignKeyList; // {this.colName, fk.tableName, fk.colName}
@@ -67,8 +66,8 @@ public class ResourceTable
         }
     }
 
-    public ResourceTable(string dbName, string tablename, Transform canvasParent, GameObject tablePrefab,
-        GameObject colPrefab, GameObject cellPrefab, SQLTokenKeyboardManager keyboardManager) // call constructor by ResourceDatabase Class
+    public ResourceTable(string dbName, string tablename, Transform canvasParent,
+        GameObject tablePrefab, GameObject colPrefab, GameObject cellPrefab) // call constructor by ResourceDatabase Class ONLY
     {
         tableName = tablename; // set table name
         columnList = new Dictionary<string, List<ResourceData>>();
@@ -77,10 +76,8 @@ public class ResourceTable
         resourceTable = RDBManager.Instantiate(tablePrefab, canvasParent);
         resourceTable.name = tableName;
 
-        Transform tableNameBox = resourceTable.transform.Find("TableName");
-        TextMeshProUGUI tableNameText = tableNameBox.Find("TableNameText").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI tableNameText = resourceTable.transform.Find("TableName").Find("TableNameText").GetComponent<TextMeshProUGUI>();
         tableNameText.text = tableName;
-        tableNameBox.GetComponent<TableTokenButton>().Setup(keyboardManager, tablename);
 
         // You can optionally reposition the table or set its RectTransform
         //RectTransform tableRectTransform = resourceTable.GetComponent<RectTransform>();
@@ -100,16 +97,10 @@ public class ResourceTable
                     using (IDataReader reader = command.ExecuteReader())
                     {
                         List<string> col_name_list = new List<string>();
-                        List<string> col_datatype_list = new List<string>();
                         while (reader.Read())
                         {
                             string col_name = reader[1].ToString();
                             col_name_list.Add(col_name);
-
-                            string col_datatype = reader[2].ToString();
-                            col_datatype_list.Add(col_datatype);
-                            Debug.Log($"{col_name} has type = {reader[2].ToString()}");
-
                             if (reader[5].ToString().Equals("1"))
                             {
                                 if (primaryKey == null)
@@ -126,7 +117,6 @@ public class ResourceTable
                         }
                         reader.Close();
                         columnNameList = col_name_list.ToArray();
-                        columnDatatypeList = col_datatype_list.ToArray();
                     }
 
                     // GET foreign key info OF this table FROM sqlite database
@@ -154,10 +144,8 @@ public class ResourceTable
                         col_gameobject_list[i] = RDBManager.Instantiate(colPrefab, tableData);
                         col_gameobject_list[i].name = columnNameList[i];
 
-                        Transform colNameBox = col_gameobject_list[i].transform.Find("ColumnName");
-                        TextMeshProUGUI colNameText = colNameBox.Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
+                        TextMeshProUGUI colNameText = col_gameobject_list[i].transform.Find("ColumnName").Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
                         colNameText.text = columnNameList[i];
-                        colNameBox.GetComponent<ColumnTokenButton>().Setup(keyboardManager, columnNameList[i]);
                     }
                     command.CommandText = "SELECT * FROM " + tablename;
                     using (IDataReader reader = command.ExecuteReader())
@@ -167,7 +155,7 @@ public class ResourceTable
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
                                 Transform columnData = col_gameobject_list[i].transform.Find("ColumnData");
-                                ResourceData data = new ResourceData(reader[i].ToString(), cellPrefab, columnData, columnDatatypeList[i], keyboardManager);
+                                ResourceData data = new ResourceData(reader[i].ToString(), cellPrefab, columnData);
                                 table_list[i].Add(data);
                             }
                         }

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ResourceData
 {
     private string data;
-    private string datatype;
     private QueryMaterial material;
     private GameObject cell;
     private QueryMaterialManager materialGenerator;
@@ -15,10 +14,9 @@ public class ResourceData
 
     private int duplicateQueryCount = 0;
 
-    public ResourceData(string data, GameObject cellPrefab, Transform columnTransform, string datatype, SQLTokenKeyboardManager keyboardManager)
+    public ResourceData(string data, GameObject cellPrefab, Transform columnTransform)
     {
         this.data = data;
-        this.datatype = datatype;
         cell = RDBManager.Instantiate(cellPrefab, columnTransform);
         cell.name = data;
 
@@ -28,10 +26,8 @@ public class ResourceData
         material = materialGenerator.GenerateQueryMaterial(materialImage);
 
         // Set the text (Text component)
-        Transform cellData = cell.transform.Find("DataText");
-        TextMeshProUGUI cellDataText = cellData.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI cellDataText = cell.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
         cellDataText.text = data;
-        cellData.GetComponent<CellTokenButton>().Setup(keyboardManager, data, datatype);
 
         //Node newNode = new Node(newCell, type, data_list[i]);
         //cellsInColumn.Add(newNode);

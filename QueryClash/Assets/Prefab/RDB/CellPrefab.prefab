@@ -312,7 +312,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1493557394519118592}
   - component: {fileID: 1398228398865787679}
-  - component: {fileID: 5452843089613375477}
   - component: {fileID: 5785297413129676802}
   m_Layer: 5
   m_Name: DataText
@@ -348,18 +347,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8197595872104205114}
   m_CullTransparentMesh: 1
---- !u!114 &5452843089613375477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8197595872104205114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd1d34a545018674183f571acc99fd48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5785297413129676802
 MonoBehaviour:
   m_ObjectHideFlags: 0

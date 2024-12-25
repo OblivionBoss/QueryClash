@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,51 +18,50 @@ public class SQLTokenKeyboardManager : MonoBehaviour
     public SQLLine LinePrefab;
     public SQLCursor CursorPrefab;
 
-    //public int MaxNumberOfLine = 20;
-    public float TokenScreenWidth;
-    public float TokenScreenHeight;
-    public float FontSize;
+    public int MaxNumberOfLine = 20;
+    public float TokenScreenWidth = 500;
+    private float TokenScreenHeight;
     private float TokenHeight; // Assume every token has the same height and equal to line height 
     private float LineHeadWidth;
     private int TokenPadding;
-
-    public RDBManager RDBManager;
-    public TextMeshProUGUI SQLtext;
-
-    public Color keywordColor;
-    public Color functionColor;
-    public Color operatorColor;
-    public Color tablenameColor;
-    public Color identifierColor;
-    public Color stringColor;
-    public Color numberColor;
+    public float FontSize;
 
     private List<Token> tokenList = new List<Token>();
     private List<SQLLine> lineList = new List<SQLLine>();
+    //private (bool isActive, bool isNewline)[] SQLlineflag;
 
     private int cursorPosition = -1; // cursor at line 0 head
     private SQLCursor cursor;
-    private RectTransform tokenScreenRect;
 
-    //void Awake()
-    //{
-    //    Setup();
-    //    GenerateLine(0, -1, -1);
-
-    //    cursor = Instantiate<SQLCursor>(CursorPrefab, TokenScreen);
-    //    cursor.rectTransform.anchoredPosition = new Vector2(LineHeadWidth, -(0 * TokenHeight));
-    //}
-
+    // Start is called before the first frame update
     void Start()
     {
-        Setup();
+        //SetupSize();
+        //GenerateLine(0, -1, -1);
+
+        //cursor = Instantiate<SQLCursor>(CursorPrefab, TokenScreen);
+        //cursor.rectTransform.anchoredPosition = new Vector2(LineHeadWidth, -(0 * TokenHeight));
+    }
+
+    void Awake()
+    {
+        SetupSize();
         GenerateLine(0, -1, -1);
 
         cursor = Instantiate<SQLCursor>(CursorPrefab, TokenScreen);
         cursor.rectTransform.anchoredPosition = new Vector2(LineHeadWidth, -(0 * TokenHeight));
+        //SetupSize();
+        //GenerateLines();
+
+        //cursor = Instantiate<SQLCursor>(CursorPrefab, TokenScreen);
+        //cursor.rectTransform.anchoredPosition = new Vector2(LineHeadWidth, -(0 * TokenHeight));
+
+        //SQLToken token = Instantiate<SQLToken>(TokenPrefab, TokenScreen);
+        //token.AddKeyboardManager(this);
+        //token.rectTransform.anchoredPosition = new Vector2(LineHeadWidth, -(0 * TokenHeight));
     }
 
-    private void Setup()
+    private void SetupSize()
     {
         // setup token
         // set font
@@ -95,9 +94,22 @@ public class SQLTokenKeyboardManager : MonoBehaviour
         // setup cursor
         CursorPrefab.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, TokenHeight);
         CursorPrefab.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, LineHeadWidth / 6);
+    }
 
-        // setup tokenscreen
-        tokenScreenRect = TokenScreen.GetComponent<RectTransform>();
+    private void GenerateLines()
+    {
+        //SQLlineflag = new (bool isActive, bool isNewline)[MaxNumberOfLine];
+        TokenScreen.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, TokenHeight * MaxNumberOfLine);
+        for (int i = 0; i < MaxNumberOfLine; i++)
+        {
+            SQLLine line = Instantiate<SQLLine>(LinePrefab, TokenScreen);
+            line.lineNumber = i;
+            line.rectTransform.anchoredPosition = new Vector2(0, -(i * TokenHeight));
+            line.keyboardManager = this;
+
+            //SQLlineflag[i] = (false, false);
+        }
+        //SQLlineflag[0] = (true, false);
     }
 
     private void GenerateLine(int linenum, int lineHeadToken, int lastToken)
@@ -135,7 +147,6 @@ public class SQLTokenKeyboardManager : MonoBehaviour
         DestroyLines();
         int line = 0;
         float totalTokenWidthAtCurrentLine = 0f;
-        if (cursorPosition == -1) SetCursorPosition(new Vector2(LineHeadWidth, 0));
         for (int i = 0; i < tokenList.Count; i++)
         {
             if (tokenList[i].newline)
@@ -156,7 +167,7 @@ public class SQLTokenKeyboardManager : MonoBehaviour
                     line++;
                     GenerateLine(line, i - 1, i);
                     tokenPosition = new Vector2(LineHeadWidth, -(line * TokenHeight));
-                    totalTokenWidthAtCurrentLine = tokenWidth;
+                    totalTokenWidthAtCurrentLine = tokenList[i].sqltoken.rectTransform.rect.width;
 
                     if (cursorPosition == i - 1) SetCursorPosition(new Vector2(LineHeadWidth, -(line * TokenHeight)));
                 }
@@ -178,33 +189,6 @@ public class SQLTokenKeyboardManager : MonoBehaviour
                 }
             }
         }
-
-        float requireHeight = lineList.Count * TokenHeight;
-        tokenScreenRect.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, requireHeight > TokenScreenHeight ? requireHeight : TokenScreenHeight);
-    }
-
-    public void Execute()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        foreach (var token in tokenList)
-        {
-            if (token.newline)
-            {
-                stringBuilder.Append('\n');
-            }
-            else
-            {
-                stringBuilder.Append(' ');
-                stringBuilder.Append(token.sqltoken.tokenText.text);
-                stringBuilder.Append(' ');
-            }
-        }
-        string query_command = stringBuilder.ToString();
-        SQLtext.text = query_command;
-        try { RDBManager.Query(query_command); }
-        catch { }
-        try { RDBManager.Query1(query_command); }
-        catch { }
     }
 
     private void insertToken(Token t)
@@ -222,47 +206,16 @@ public class SQLTokenKeyboardManager : MonoBehaviour
         }
     }
 
-    public void AddKeywordToken(string str)
+    public void AddToken(string str)
     {
-        AddToken(str, keywordColor);
-    }
+        SQLToken token = Instantiate<SQLToken>(TokenPrefab, TokenScreen);
+        token.AddKeyboardManager(this);
+        token.tokenText.text = str;
 
-    public void AddOperatorToken(string str)
-    {
-        AddToken(str, operatorColor);
-    }
-
-    public void AddTableNameToken(string str)
-    {
-        AddToken(str, tablenameColor);
-    }
-
-    public void AddColumnNameToken(string str)
-    {
-        AddToken(str, identifierColor);
-    }
-
-    public void AddStringToken(string str)
-    {
-        AddToken("\'" + str + "\'", stringColor);
-    }
-
-    public void AddNumberToken(string str)
-    {
-        AddToken(str, numberColor);
-    }
-
-    public void AddToken(string str, Color color)
-    {
-        SQLToken SQLtoken = Instantiate<SQLToken>(TokenPrefab, TokenScreen);
-        SQLtoken.AddKeyboardManager(this);
-        SQLtoken.tokenText.text = str;
-        SQLtoken.tokenText.color = color;
-
-        Token token = new Token();
-        token.newline = false;
-        token.sqltoken = SQLtoken;
-        insertToken(token);
+        Token t = new Token();
+        t.newline = false;
+        t.sqltoken = token;
+        insertToken(t);
 
         UpdateTokenScreen();
     }
@@ -270,47 +223,17 @@ public class SQLTokenKeyboardManager : MonoBehaviour
     // the real newline (\n...)
     public void AddNewLine()
     {
-        Token token = new Token();
-        token.newline = true;
-        token.sqltoken = null;
-        insertToken(token);
+        Token t = new Token();
+        t.newline = true;
+        t.sqltoken = null;
+        insertToken(t);
 
         UpdateTokenScreen();
     }
 
     public void DeleteToken()
     {
-        if (cursorPosition != -1)
-        {
-            Token token = tokenList[cursorPosition];
-            if (!token.newline)
-            {
-                Destroy(token.sqltoken.gameObject);
-            }
-            tokenList.RemoveAt(cursorPosition);
-            cursorPosition--;
 
-            UpdateTokenScreen();
-        }
-        Debug.Log($"token left {tokenList.Count}");
-    }
-
-    public void DeleteAllToken()
-    {
-        if (tokenList.Count == 0) return;
-
-        while (tokenList.Count > 0)
-        {
-            Token token = tokenList[tokenList.Count - 1];
-            if (!token.newline)
-            {
-                Destroy(token.sqltoken.gameObject);
-            }
-            tokenList.RemoveAt(tokenList.Count - 1);
-        }
-
-        cursorPosition = -1;
-        UpdateTokenScreen();
     }
 
     public void OnClickToken(SQLToken token)
@@ -353,16 +276,4 @@ public class SQLTokenKeyboardManager : MonoBehaviour
         cursorPosition = line.lineHeadToken;
         SetCursorPosition(new Vector2(LineHeadWidth, -(line.lineNumber * TokenHeight)));
     }
-
-    //private void GenerateLines()
-    //{
-    //    TokenScreen.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, TokenHeight * MaxNumberOfLine);
-    //    for (int i = 0; i < MaxNumberOfLine; i++)
-    //    {
-    //        SQLLine line = Instantiate<SQLLine>(LinePrefab, TokenScreen);
-    //        line.lineNumber = i;
-    //        line.rectTransform.anchoredPosition = new Vector2(0, -(i * TokenHeight));
-    //        line.keyboardManager = this;
-    //    }
-    //}
 }
