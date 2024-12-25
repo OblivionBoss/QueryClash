@@ -1,24 +1,51 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public abstract class Bullet : MonoBehaviour
 {
-    public float bulletspeed;
-    public float deadZone;
-    public float Damage;
-    // Start is called before the first frame update
-    void Start()
+    public float bulletspeed = 1;
+    public float deadZone {  get;  set; }
+    public float Atk { get; set; }
+    public Vector3 Direction { get; set; }
+    public virtual void Initialize(float atk,float deadZone, Vector3 direction)
     {
-        
+        Atk = atk;
+        this.deadZone = deadZone;
+        Direction = direction;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public abstract void Move();
+    private void Start()
     {
-        
+        transform.position = new Vector3(
+            transform.position.x + 0.5f,
+            transform.position.y + 0.5f,
+            transform.position.z + 0.5f
+        );
     }
 
-    
+    private void Update()
+    {
+        Move();
+        CheckDeadZone();
+    }
 
+    protected void CheckDeadZone()
+    {
+        if (Direction == Vector3.left && transform.position.x < deadZone)
+        {
+            Destroy(gameObject);
+        }
+        else if (Direction == Vector3.right && transform.position.x > deadZone)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        HandleCollision(collision);
+    }
+
+    protected abstract void HandleCollision(Collider collision);
 }
