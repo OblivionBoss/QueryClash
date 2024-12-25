@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -268,3 +268,4 @@ MonoBehaviour:
   horizontalForRightPad: {fileID: 5512212097764927174}
   tokenText: {fileID: 5855022198232012378}
   rectTransform: {fileID: 6912471692511521900}
+  tokenIndex: 0
