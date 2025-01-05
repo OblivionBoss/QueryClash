@@ -30,7 +30,7 @@ public class RightFrontline : Soldier
     {
         base.OnPlaced();
 
-        SpawnBullet();
+        
 
         bulletTimer = 0f;
 

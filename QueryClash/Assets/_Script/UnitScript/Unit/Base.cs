@@ -11,6 +11,7 @@ public class Base : Soldier
     {
         OnPlaced();
         CurrentHp = MaxHp;
+        isBase = true;
     }
 
     public override void ReduceHp(float damage)

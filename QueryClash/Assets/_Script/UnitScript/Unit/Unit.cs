@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour
     private PlacementSystem placementSystem;
     public bool isPlaced = false;
     public float score;
+    public bool isBase=false;
 
     public void Start()
     {

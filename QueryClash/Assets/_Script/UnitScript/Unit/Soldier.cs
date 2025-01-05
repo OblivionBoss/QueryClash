@@ -16,7 +16,7 @@ public class Soldier : Unit
     public Grid grid;
 
     public AudioClip bulletSpawnSound; // Assign in the inspector
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
 
     public void Start()
@@ -53,18 +53,18 @@ public class Soldier : Unit
         }
     }
 
-        public void SpawnBullet()
+    public virtual void SpawnBullet()
+    {
+        if (audioSource != null && bulletSpawnSound != null)
         {
-            if (audioSource != null && bulletSpawnSound != null)
-            {
-                audioSource.PlayOneShot(bulletSpawnSound);
-            }
+            audioSource.PlayOneShot(bulletSpawnSound);
+        }
 
-            if (bullet != null && isPlaced)
-            {
-                GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
+        if (bullet != null && isPlaced)
+        {
+            GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
 
-                Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
+            Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
             if (bulletComponent != null)
             {
                 // Determine direction and dead zone based on the soldier's tag
@@ -84,7 +84,7 @@ public class Soldier : Unit
                 Debug.LogWarning("Spawned object does not have a Bullet component!");
             }
         }
-        }
+    }
 
 
     public override void OnPlaced()

@@ -37,3 +37,19 @@ MonoBehaviour:
     <ID>k__BackingField: 6
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 2998909506348595374, guid: 92d48d3ed9dc52e4ea1d525fff7154a2, type: 3}
+  - <Name>k__BackingField: LeftSniper1
+    <ID>k__BackingField: 7
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1061754738404325796, guid: ca5583badd3515046847a85ab7bc304c, type: 3}
+  - <Name>k__BackingField: LeftSniper2
+    <ID>k__BackingField: 8
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2440581207878697010, guid: bbcea8bf8cb6c2f4eba9207d58ea7518, type: 3}
+  - <Name>k__BackingField: RightSniper1
+    <ID>k__BackingField: 9
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3433171850670955975, guid: ee13e259d70da4d4fad5e176dcedf3cf, type: 3}
+  - <Name>k__BackingField: RightSniper2
+    <ID>k__BackingField: 10
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5338803601836057856, guid: b99654dce673a9d4b8bbab1f442f9a35, type: 3}

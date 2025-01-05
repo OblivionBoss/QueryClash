@@ -31,7 +31,7 @@ public class LeftFrontline : Soldier
 
         base.OnPlaced();
 
-        SpawnBullet();
+        
 
         bulletTimer = 0f;
 
