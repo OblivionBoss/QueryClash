@@ -7,6 +7,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
 
     [HideInInspector] public Item item;
+    [HideInInspector] public CraftingSlot CraftingSlot;
     [HideInInspector] public Transform parentAfterDrag;
     [HideInInspector] public bool isDestroy = false;
 
@@ -37,6 +38,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         image.raycastTarget = true;
         transform.SetParent(parentAfterDrag);
+        if(CraftingSlot != null)
+        {
+            CraftingSlot.craftingManager.UpdateCrafting();
+        }
         if (isDestroy) Destroy(gameObject);
     }
 }

@@ -1,19 +1,20 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IDropHandler
+public class CraftingSlot : MonoBehaviour, IDropHandler
 {
+    public CraftingManager craftingManager;
+
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount == 0)
         {
             InventoryItem inventoryItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-            inventoryItem.parentAfterDrag = transform;
-            if (inventoryItem.CraftingSlot != null)
+            if (inventoryItem.item is QueryMaterial)
             {
-                inventoryItem.CraftingSlot.craftingManager.UpdateCrafting();
+                inventoryItem.parentAfterDrag = transform;
+                inventoryItem.CraftingSlot = this;
             }
-            inventoryItem.CraftingSlot = null;
         }
     }
 }
