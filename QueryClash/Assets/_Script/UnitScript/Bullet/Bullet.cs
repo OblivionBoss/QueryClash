@@ -8,6 +8,8 @@ public abstract class Bullet : MonoBehaviour
     public Vector3 Direction { get; set; }
     public string enemyTag { get; set; }
     public string thisTag { get; set; }
+
+    public bool isBuff = false;
     public virtual void Initialize(float atk, float deadZone, Vector3 direction, string enemyTag, string thisTag)
     {
         Atk = atk;
@@ -21,6 +23,7 @@ public abstract class Bullet : MonoBehaviour
     private void Start()
     {
         gameObject.tag = this.thisTag;
+        Debug.Log("This bullet Atk = " + Atk);
     }
 
     private void Update()

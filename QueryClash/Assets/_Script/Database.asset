@@ -69,3 +69,11 @@ MonoBehaviour:
     <ID>k__BackingField: 14
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 5073273974945322532, guid: f3c7ded99b1c2f448bb1fb7a1a0b34c0, type: 3}
+  - <Name>k__BackingField: LeftBuff
+    <ID>k__BackingField: 15
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7771839516360656773, guid: 0db1bab28a1d259489ec349ccc644ae2, type: 3}
+  - <Name>k__BackingField: RightBuff
+    <ID>k__BackingField: 16
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4431038140961165309, guid: e5a482dd047a83c4bbcd94c7f0fa100a, type: 3}

@@ -6595,8 +6595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 800584659}
-  prefabIndex: 14
-  score: 112
+  prefabIndex: 16
+  score: 1
 --- !u!114 &800584661
 MonoBehaviour:
   m_ObjectHideFlags: 0
