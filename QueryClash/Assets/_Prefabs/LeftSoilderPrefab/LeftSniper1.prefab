@@ -48,10 +48,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   score: 0
+  isBase: 0
   MaxHp: 0
   CurrentHp: 0
   Atk: 0
-  bullet: {fileID: 6151196057699222940, guid: ee5c5c2f296cab646bec1c78b5ce6a19, type: 3}
+  bullet: {fileID: 5170009361321505289, guid: b2e1e85c80323bb4d8cd3b22bea40b53, type: 3}
   spawnRate: 0
   bulletTimer: 0
   grid: {fileID: 0}
@@ -60,7 +61,7 @@ MonoBehaviour:
   skillCooldown: 15
   skillCooldownRemaining: 0
   skillDuration: 0
-  specialBullet: {fileID: 7085992351819932348, guid: 805bb8908e35fc240a5133d9dd427a51, type: 3}
+  specialBullet: {fileID: 9212756311256150864, guid: d5860ecc4e554fe499ec2dac3f550c50, type: 3}
 --- !u!65 &2850246799529853795
 BoxCollider:
   m_ObjectHideFlags: 0

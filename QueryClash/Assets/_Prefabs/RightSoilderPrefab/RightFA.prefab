@@ -49,14 +49,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   score: 0
+  isBase: 0
   MaxHp: 0
   CurrentHp: 0
   Atk: 0
-  bullet: {fileID: 5483396499707337005, guid: 33152263b6c1d34458be68909848bd7d, type: 3}
+  bullet: {fileID: 4644616734128304917, guid: 340aeeb34893a684bbebc745c559af22, type: 3}
   spawnRate: 0
   bulletTimer: 0
   grid: {fileID: 0}
   bulletSpawnSound: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
+  audioSource: {fileID: 0}
   skillCooldown: 10
   skillCooldownRemaining: 0
   skillDuration: 0

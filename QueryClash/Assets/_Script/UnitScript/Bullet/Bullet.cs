@@ -6,22 +6,19 @@ public abstract class Bullet : MonoBehaviour
     public float deadZone {  get;  set; }
     public float Atk { get; set; }
     public Vector3 Direction { get; set; }
-    public virtual void Initialize(float atk,float deadZone, Vector3 direction)
+    public string enemyTag { get; set; }
+    public virtual void Initialize(float atk, float deadZone, Vector3 direction, string enemyTag)
     {
         Atk = atk;
         this.deadZone = deadZone;
         Direction = direction;
-
+        this.enemyTag = enemyTag;
     }
 
     public abstract void Move();
     private void Start()
     {
-        transform.position = new Vector3(
-            transform.position.x + 0.5f,
-            transform.position.y + 0.5f,
-            transform.position.z + 0.5f
-        );
+        
     }
 
     private void Update()

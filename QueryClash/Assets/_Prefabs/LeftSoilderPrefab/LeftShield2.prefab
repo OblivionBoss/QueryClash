@@ -132,14 +132,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   score: 0
+  isBase: 0
   MaxHp: 0
   CurrentHp: 0
   Atk: 0
-  bullet: {fileID: 3429630295825437369, guid: 7a34fb25ad3660c4f896d206f183b568, type: 3}
+  bullet: {fileID: 7674632085815101502, guid: 5b325cb4ecae7dd449c3b2ad1846663f, type: 3}
   spawnRate: 0
   bulletTimer: 0
   grid: {fileID: 0}
   bulletSpawnSound: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
+  audioSource: {fileID: 0}
   HitCount: 0
 --- !u!65 &2926058797531089412
 BoxCollider:

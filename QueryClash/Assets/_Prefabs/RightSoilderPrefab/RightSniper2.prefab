@@ -135,7 +135,7 @@ MonoBehaviour:
   MaxHp: 0
   CurrentHp: 0
   Atk: 0
-  bullet: {fileID: 3639464312747923353, guid: ddae080f90dd1f743bf2afcfb4623af3, type: 3}
+  bullet: {fileID: 5170009361321505289, guid: b2e1e85c80323bb4d8cd3b22bea40b53, type: 3}
   spawnRate: 0
   bulletTimer: 0
   grid: {fileID: 0}
@@ -144,7 +144,7 @@ MonoBehaviour:
   skillCooldown: 15
   skillCooldownRemaining: 0
   skillDuration: 0
-  specialBullet: {fileID: 482491996518702690, guid: d0dfc920d140c8c438b8d4600ec4efab, type: 3}
+  specialBullet: {fileID: 3240522339232468482, guid: 8c930883c52393e428a51d3a4d2f9f12, type: 3}
 --- !u!65 &3582452114688268419
 BoxCollider:
   m_ObjectHideFlags: 0
