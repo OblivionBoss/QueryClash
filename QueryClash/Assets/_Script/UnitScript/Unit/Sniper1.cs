@@ -69,11 +69,11 @@ public class Sniper1 : Soldier
                 // Determine direction and dead zone based on the soldier's tag
                 if (gameObject.CompareTag("LeftTeam"))
                 {
-                    bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam"); // Bullets move right
+                    bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam", "LeftTeam"); // Bullets move right
                 }
                 else if (gameObject.CompareTag("RightTeam"))
                 {
-                    bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam"); // Bullets move left
+                    bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam", "RightTeam"); // Bullets move left
                 }
 
                 //Debug.Log($"Spawned bullet from {gameObject.tag} with Atk: {bulletComponent.Atk}");
@@ -92,11 +92,11 @@ public class Sniper1 : Soldier
                 // Determine direction and dead zone based on the soldier's tag
                 if (gameObject.CompareTag("LeftTeam"))
                 {
-                    bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam"); // Bullets move right
+                    bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam", "LeftTeam"); // Bullets move right
                 }
                 else if (gameObject.CompareTag("RightTeam"))
                 {
-                    bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam"); // Bullets move left
+                    bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam", "RightTeam"); // Bullets move left
                 }
 
                 //Debug.Log($"Spawned bullet from {gameObject.tag} with Atk: {bulletComponent.Atk}");

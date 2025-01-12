@@ -53,3 +53,19 @@ MonoBehaviour:
     <ID>k__BackingField: 10
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 5338803601836057856, guid: b99654dce673a9d4b8bbab1f442f9a35, type: 3}
+  - <Name>k__BackingField: LeftCannon
+    <ID>k__BackingField: 11
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1237414273113101344, guid: 38a35fe3a1582334fb725bb7b9989f72, type: 3}
+  - <Name>k__BackingField: RightCannon
+    <ID>k__BackingField: 12
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 631048177635867540, guid: 84d944b016e3c5a47901e21329f2c0dd, type: 3}
+  - <Name>k__BackingField: LeftLaser
+    <ID>k__BackingField: 13
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4585930216019193733, guid: c75489064fc30554b8c308571c88f541, type: 3}
+  - <Name>k__BackingField: RightLaser
+    <ID>k__BackingField: 14
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5073273974945322532, guid: f3c7ded99b1c2f448bb1fb7a1a0b34c0, type: 3}

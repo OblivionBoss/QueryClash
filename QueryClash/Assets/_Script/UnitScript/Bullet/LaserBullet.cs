@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SniperDrill : Bullet
+public class LaserBullet : Bullet
 {
     public override void Move()
     {
@@ -14,10 +14,11 @@ public class SniperDrill : Bullet
         Soldier soldier = collision.gameObject.GetComponent<Soldier>();
         if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == false)
         {
-            soldier.ReduceHp(Atk / 3);
+            soldier.ReduceHp(Atk);
         }
         else if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == true)
         {
+            soldier.ReduceHp(Atk);
             Destroy(gameObject);
         }
     }
