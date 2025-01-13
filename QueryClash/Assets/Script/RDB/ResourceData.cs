@@ -15,20 +15,25 @@ public class ResourceData
 
     private int duplicateQueryCount = 0;
 
-    public ResourceData(string data, GameObject cellPrefab, Transform columnTransform, string datatype, SQLTokenKeyboardManager keyboardManager)
+    public ResourceData(string data, GameObject cellPrefab, Transform columnTransform, string datatype, SQLTokenKeyboardManager keyboardManager, float width, float textHeight)
     {
         this.data = data;
         this.datatype = datatype;
         cell = RDBManager.Instantiate(cellPrefab, columnTransform);
         cell.name = data;
+        RectTransform cellRT = cell.GetComponent<RectTransform>();
+        //cellRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, width);
+        cellRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, textHeight + 40f);
+        Transform cellDataSlot = cell.transform.Find("DataTextSlot");
+        cellDataSlot.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, textHeight);
 
         //Transform iconImage = cell.transform.Find("ItemIcon");
-        materialImage = cell.transform.Find("ItemIcon").GetComponent<Image>();
+        materialImage = cell.transform.Find("ItemIcon").Find("MaterialIcon").GetComponent<Image>();
         materialGenerator = GameObject.FindAnyObjectByType<QueryMaterialManager>();
         material = materialGenerator.GenerateQueryMaterial(materialImage);
 
         // Set the text (Text component)
-        Transform cellData = cell.transform.Find("DataText");
+        Transform cellData = cellDataSlot.Find("DataText");
         TextMeshProUGUI cellDataText = cellData.GetComponent<TextMeshProUGUI>();
         cellDataText.text = data;
         cellData.GetComponent<CellTokenButton>().Setup(keyboardManager, data, datatype);

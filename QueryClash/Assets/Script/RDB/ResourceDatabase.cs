@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using TMPro;
 using Mono.Data.Sqlite;
-using System;
 
 public class ResourceDatabase
 {
@@ -36,7 +35,7 @@ public class ResourceDatabase
     }
 
     public ResourceDatabase(string dbName, Transform canvasParent, GameObject tablePrefab,
-        GameObject colPrefab, GameObject cellPrefab, SQLTokenKeyboardManager keyboardManager)
+        GameObject colPrefab, GameObject cellPrefab, SQLTokenKeyboardManager keyboardManager, TextMeshProUGUI textForSize)
     {
         resourceTables = new Dictionary<string, ResourceTable>();
         mapColumnToTable = new Dictionary<string, ResourceTable>();
@@ -63,7 +62,7 @@ public class ResourceDatabase
 
                     foreach (string table in tableNames)
                     {
-                        resourceTables.Add(table, new ResourceTable(dbName, table, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager));
+                        resourceTables.Add(table, new ResourceTable(dbName, table, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize));
                     }
                 }
             }

@@ -8,6 +8,7 @@ using TMPro;
 public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
 {
     [SerializeField] private Transform cellMaterial;
+    [SerializeField] private Transform cellMaterialSlot;
     [SerializeField] private Transform cellCooldownText;
     private bool isCooldown = false;
     private float timeLeft = 10;
@@ -17,7 +18,7 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
     // Start is called before the first frame update
     void Start()
     {
-        icon = cellMaterial.GetComponent<Image>();
+        icon = cellMaterialSlot.GetComponent<Image>();
         cdText = cellCooldownText.GetComponent<TextMeshProUGUI>();
     }
 

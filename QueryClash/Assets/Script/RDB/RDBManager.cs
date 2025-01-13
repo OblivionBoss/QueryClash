@@ -29,6 +29,7 @@ public class RDBManager : MonoBehaviour
     private MaterialType focusMaterialType;
 
     public SQLTokenKeyboardManager keyboardManager;
+    public TextMeshProUGUI textForSize;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,7 @@ public class RDBManager : MonoBehaviour
         dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
         Debug.Log(dbName);
 
-        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager);
+        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize);
         queryResult = null;
         GetFocusMaterial();
         //GameObject a = Instantiate(linePrefab, linePanel);
@@ -260,9 +261,9 @@ public class RDBManager : MonoBehaviour
             Debug.LogError("SQLite Connection ERROR -> " + e.Message);
             throw e;
         }
-        queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
         CalculateQueryMatScore(queryData_list, NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryEmptyCount);
         AddQueryToInventory();
+        queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
 
     public void CalculateQueryMatScore(List<ResourceData> queryData_list, int NumDiffTableQueryFocus, int NumMatOtherQueryFocus, int QueryFocusCount, int QueryEmptyCount)
@@ -397,11 +398,11 @@ public class RDBManager : MonoBehaviour
             GameObject newCell = Instantiate(cellPrefab, column);
 
             // Set the icon (Image component)
-            Image iconImage = newCell.transform.Find("ItemIcon").GetComponent<Image>();
+            Image iconImage = newCell.transform.Find("ItemIcon").Find("MaterialIcon").GetComponent<Image>();
             iconImage.sprite = mat_sprites[i-1];
 
             // Set the text (Text component)
-            TextMeshProUGUI cellDataText = newCell.transform.Find("DataText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI cellDataText = newCell.transform.Find("DataTextSlot").Find("DataText").GetComponent<TextMeshProUGUI>();
             cellDataText.text = data_list[i];
 
             GameObject line = Instantiate(linePrefab, linePanel);
