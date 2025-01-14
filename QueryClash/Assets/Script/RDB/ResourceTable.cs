@@ -81,15 +81,16 @@ public class ResourceTable
 
         Transform tableNameBox = resourceTable.transform.Find("TableName");
         TextMeshProUGUI tableNameText = tableNameBox.Find("TableNameText").GetComponent<TextMeshProUGUI>();
+        tableNameText.fontSize = 30f;
         tableNameText.text = tableName;
+        var tableNametextSize = FindTextSize(30f, tableName);
+        float tableNameHeight = tableNametextSize.Item2 * 1.5f;
+        RectTransform tableNameRT= tableNameBox.GetComponent<RectTransform>();
+        tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, tableNametextSize.Item1);
+        tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tableNameHeight);
         tableNameBox.GetComponent<TableTokenButton>().Setup(keyboardManager, tablename);
 
-        // You can optionally reposition the table or set its RectTransform
-        //RectTransform tableRectTransform = resourceTable.GetComponent<RectTransform>();
-        //tableRectTransform.anchoredPosition = new Vector2(i * 70, 0); // Stack tables vertically
-
         Transform tableData = resourceTable.transform.Find("TableData");
-
         using (var connection = new SqliteConnection(dbName))
         {
             connection.Open();
@@ -163,18 +164,12 @@ public class ResourceTable
 
                         Transform colNameBox = col_gameobject_list[i].transform.Find("ColumnName");
                         TextMeshProUGUI colNameText = colNameBox.Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
-                        colNameText.fontSize = 20;
+                        colNameText.fontSize = 20f;
                         colNameText.text = columnNameList[i];
-                        //TextMeshProUGUI colNameText = colNameBox.Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
-                        //colNameText.fontSize = 20;
-                        //colNameText.text = columnNameList[i];
-                        //colNameText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colNameText.preferredWidth);
-                        //colNameText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, colNameText.preferredHeight*2);
-                        //Debug.Log(colNameText.text + " fontsize = " + colNameText.fontSize + " width " + colNameText.preferredWidth + " height " + colNameText.preferredHeight);
-                        var textSize = FindTextSize(20f, columnNameList[i]);
-                        colMaxTextLength[i] = textSize.Item1;
-                        colNameHeight = textSize.Item2;
-                        colNameBox.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, colNameHeight * 1.5f);
+                        var colNameTextSize = FindTextSize(20f, columnNameList[i]);
+                        colMaxTextLength[i] = colNameTextSize.Item1;
+                        colNameHeight = colNameTextSize.Item2 * 1.5f;
+                        colNameBox.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, colNameHeight);
                         colNameBox.GetComponent<ColumnTokenButton>().Setup(keyboardManager, columnNameList[i]);
                     }
                     command.CommandText = "SELECT * FROM " + tablename;
@@ -184,34 +179,21 @@ public class ResourceTable
                         {
                             for (int i = 0; i < reader.FieldCount; i++)
                             {
-                                //Transform colNameBox = col_gameobject_list[i].transform.Find("ColumnName");
-                                //TextMeshProUGUI colNameText = colNameBox.Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
-                                //colNameText.fontSize = 16;
-                                //colNameText.text = reader[i].ToString();
-                                //colNameText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colNameText.preferredWidth);
-                                //colNameText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, colNameText.preferredHeight);
-                                //Debug.Log(colNameText.text + " fontsize = " + colNameText.fontSize + " width " + colNameText.preferredWidth + " height " + colNameText.preferredHeight);
                                 var textSize = FindTextSize(16f, reader[i].ToString());
                                 colMaxTextLength[i] = Mathf.Max(colMaxTextLength[i], textSize.Item1);
                                 dataTextHeight = textSize.Item2;
                                 tabledata_list[i].Add(reader[i].ToString());
-
-                                //Transform columnData = col_gameobject_list[i].transform.Find("ColumnData");
-                                //ResourceData data = new ResourceData(reader[i].ToString(), cellPrefab, columnData, columnDatatypeList[i], keyboardManager, 150f, 20f);
-                                //table_list[i].Add(data);
                             }
                         }
                         reader.Close();
                     }
+
+                    float columnDataHeight = 0f;
+                    if (tabledata_list.Length > 0) columnDataHeight = tabledata_list[0].Count * (dataTextHeight + 40f);
+                    float columnHeight = columnDataHeight + colNameHeight;
+
                     for (int i = 0; i < numOfCol; i++)
                     {
-                        //Transform colNameBox = col_gameobject_list[i].transform.Find("ColumnName");
-                        //TextMeshProUGUI colNameText = colNameBox.Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
-                        //colNameText.fontSize = 20;
-                        //colNameText.text = columnNameList[i];
-                        //colNameText.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colMaxTextLength[i]);
-                        //colNameBox.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, colNameHeight * 1.5f);
-
                         Transform columnData = col_gameobject_list[i].transform.Find("ColumnData");
                         foreach (string tabledata in tabledata_list[i])
                         {
@@ -219,15 +201,22 @@ public class ResourceTable
                             table_list[i].Add(data);
                         }
 
-
                         columnList.Add(columnNameList[i], table_list[i]);
                         RectTransform colPrefabRT = col_gameobject_list[i].GetComponent<RectTransform>();
                         colPrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colMaxTextLength[i]);
-                        colPrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tabledata_list[i].Count * (dataTextHeight + 40f) + colNameHeight * 1.5f);
+                        colPrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnHeight);
 
-                        columnData.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tabledata_list[i].Count * (dataTextHeight + 40f));
+                        columnData.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnDataHeight);
                         Debug.Log(columnNameList[i] + " MAXXXXXXXXXXX = " + colMaxTextLength[i]);
                     }
+
+                    float sumOfColLen = 0f;
+                    foreach (float len in colMaxTextLength) sumOfColLen += len;
+                    RectTransform tablePrefabRT = resourceTable.GetComponent<RectTransform>();
+                    tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, sumOfColLen);
+                    tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tableNameHeight + columnHeight);
+
+                    tableData.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnHeight);
                 }
             }
             catch (SqliteException e)
