@@ -988,6 +988,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1873799621}
+  - {fileID: 1318107487}
   - {fileID: 1586173693}
   - {fileID: 776474216}
   - {fileID: 906015194}
@@ -1698,7 +1699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 252823299}
-  prefabIndex: 10
+  prefabIndex: 204
   score: 1000
 --- !u!114 &252823299
 MonoBehaviour:
@@ -2958,6 +2959,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 34382469}
     m_Modifications:
+    - target: {fileID: 256848858085143458, guid: 8fccca88e4f142348b2e0db0baacafa9, type: 3}
+      propertyPath: prefabIndex
+      value: 202
+      objectReference: {fileID: 0}
     - target: {fileID: 923522247619358969, guid: 8fccca88e4f142348b2e0db0baacafa9, type: 3}
       propertyPath: m_Name
       value: RFAButton
@@ -4243,6 +4248,10 @@ PrefabInstance:
     - target: {fileID: 8346542944123550929, guid: 94e0105189f44b349b9b63910c84394e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8374723765327471418, guid: 94e0105189f44b349b9b63910c84394e, type: 3}
+      propertyPath: prefabIndex
+      value: 208
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6595,7 +6604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 800584659}
-  prefabIndex: 16
+  prefabIndex: 110
   score: 1
 --- !u!114 &800584661
 MonoBehaviour:
@@ -8577,6 +8586,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7290705240278524292, guid: c363e7246d2357245b2a324ed802e08d, type: 3}
+      propertyPath: prefabIndex
+      value: 207
+      objectReference: {fileID: 0}
     - target: {fileID: 7850743017497035470, guid: c363e7246d2357245b2a324ed802e08d, type: 3}
       propertyPath: m_Name
       value: RightShield1Button
@@ -9230,7 +9243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 1186910703}
-  prefabIndex: 9
+  prefabIndex: 203
   score: 100
 --- !u!114 &1186910703
 MonoBehaviour:
@@ -10402,6 +10415,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310753582}
   m_CullTransparentMesh: 1
+--- !u!1 &1318107486
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1318107487}
+  - component: {fileID: 1318107488}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1318107487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318107486}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 177239274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1318107488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318107486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7202d9213ea5cb14dbf78c57e485bfe0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectPlacer: {fileID: 906015193}
+  availablePositions: []
+  enemyIds: c9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000
+  database: {fileID: 11400000, guid: a53e0df391a921c47957f4679c72bca2, type: 2}
+  spawnInterval: 10
 --- !u!1 &1328041073
 GameObject:
   m_ObjectHideFlags: 0
@@ -11501,6 +11563,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1978452746}
     m_Modifications:
+    - target: {fileID: 112642147367614820, guid: 5852ad8b62c26fb4db01a83598ce84ef, type: 3}
+      propertyPath: prefabIndex
+      value: 107
+      objectReference: {fileID: 0}
     - target: {fileID: 4448315062394957494, guid: 5852ad8b62c26fb4db01a83598ce84ef, type: 3}
       propertyPath: m_Name
       value: LeftShield1Button
@@ -12770,6 +12836,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 471729168}
     m_Modifications:
+    - target: {fileID: 2249674046235149931, guid: b0396cff1320cdf4592dfa5c8a58c435, type: 3}
+      propertyPath: score
+      value: 108
+      objectReference: {fileID: 0}
     - target: {fileID: 7746724050696107342, guid: b0396cff1320cdf4592dfa5c8a58c435, type: 3}
       propertyPath: m_Name
       value: LShield2Button
@@ -13511,6 +13581,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 313835590}
     m_Modifications:
+    - target: {fileID: 3888057869785757564, guid: fdff6138214f67042a7581a89d8c6956, type: 3}
+      propertyPath: prefabIndex
+      value: 101
+      objectReference: {fileID: 0}
     - target: {fileID: 6471649979684407356, guid: fdff6138214f67042a7581a89d8c6956, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15896,6 +15970,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4870843354242434369, guid: 0986ef319921ca443a588104e66c4e2d, type: 3}
+      propertyPath: prefabIndex
+      value: 104
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15909,6 +15987,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1824978838}
     m_Modifications:
+    - target: {fileID: 6890379585083916307, guid: 648d64adfbca1d04ebe4ebaa2ed204e1, type: 3}
+      propertyPath: prefabIndex
+      value: 103
+      objectReference: {fileID: 0}
     - target: {fileID: 7630308198908285037, guid: 648d64adfbca1d04ebe4ebaa2ed204e1, type: 3}
       propertyPath: m_Name
       value: LSniperButton

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1238259246715350117}
   - component: {fileID: 5386642674759622206}
   m_Layer: 0
-  m_Name: LeftFA
+  m_Name: LeftFABurst
   m_TagString: LeftTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -9,6 +10,7 @@ public class Unit : MonoBehaviour
     public float score;
     public bool isBase=false;
 
+    public event Action OnDeath;
     public void Start()
     {
         placementSystem = GameObject.FindObjectOfType<PlacementSystem>();
@@ -25,14 +27,14 @@ public class Unit : MonoBehaviour
     public void RemoveUnit(Vector3Int gridPosition)
     {
         // Call RemovingState logic directly
-        if (placementSystem != null)
-        {
-            placementSystem.RemoveUnitAt(gridPosition);
-        }
+        placementSystem?.RemoveUnitAt(gridPosition);
 
-        // Destroy the unit GameObject
+        OnDeath?.Invoke();
+
+        // Destroy the GameObject
         Destroy(gameObject);
-        Debug.Log("Call Remove Unit Function");
+        Debug.Log($"Unit at {gridPosition} has been removed.");
+        
     }
 
     public virtual void OnPlaced()
