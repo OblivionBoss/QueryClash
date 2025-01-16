@@ -36,4 +36,15 @@ public class ObjectPlacer : MonoBehaviour
         Destroy(placedGameObjects[gameObjectIndex]);
         placedGameObjects[gameObjectIndex] = null;
     }
+
+    public GameObject GetPlacedObject(int index)
+    {
+        if (index < 0 || index >= placedGameObjects.Count)
+        {
+            Debug.LogWarning($"Index {index} is out of bounds.");
+            return null;
+        }
+
+        return placedGameObjects[index];
+    }
 }
