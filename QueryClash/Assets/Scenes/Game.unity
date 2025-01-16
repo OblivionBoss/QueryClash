@@ -9463,7 +9463,7 @@ MonoBehaviour:
   availablePositions: []
   enemyIds: c9000000ca000000cb000000cc000000cd000000ce000000cf000000d0000000d1000000d2000000
   database: {fileID: 11400000, guid: a53e0df391a921c47957f4679c72bca2, type: 2}
-  spawnInterval: 10
+  spawnInterval: 30
 --- !u!1 &637076063
 GameObject:
   m_ObjectHideFlags: 0
@@ -14458,7 +14458,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1795744937}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

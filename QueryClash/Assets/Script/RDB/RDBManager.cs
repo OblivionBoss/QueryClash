@@ -45,7 +45,7 @@ public class RDBManager : MonoBehaviour
         //GenerateAllTables(table_name, all_table_list);
 
         dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
-        Vector2[] company = {new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-436.53f, 99f), new Vector2(-44f, 214.76f)};
+        Vector2[] company = {new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f)};
         Debug.Log(dbName);
 
         resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
