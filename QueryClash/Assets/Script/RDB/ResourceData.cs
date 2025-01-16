@@ -35,6 +35,7 @@ public class ResourceData
         // Set the text (Text component)
         Transform cellData = cellDataSlot.Find("DataText");
         TextMeshProUGUI cellDataText = cellData.GetComponent<TextMeshProUGUI>();
+        cellDataText.fontSize = 16f;
         cellDataText.text = data;
         cellData.GetComponent<CellTokenButton>().Setup(keyboardManager, data, datatype);
 

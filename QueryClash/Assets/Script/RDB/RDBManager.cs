@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
+using GameKit.Dependencies.Utilities;
 
 public class RDBManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class RDBManager : MonoBehaviour
     public Transform canvasParent;
     public GameObject linePrefab;
     public Transform linePanel;
+    public GameObject queryErrorBoxPrefab;
 
     public string dbName;
     public string tempDB;
@@ -27,6 +29,8 @@ public class RDBManager : MonoBehaviour
     private GameObject queryResult;
     private List<QueryMaterial> queryMaterialList = new List<QueryMaterial>();
     private MaterialType focusMaterialType;
+
+    private GameObject queryErrorBox;
 
     public SQLTokenKeyboardManager keyboardManager;
     public TextMeshProUGUI textForSize;
@@ -41,9 +45,10 @@ public class RDBManager : MonoBehaviour
         //GenerateAllTables(table_name, all_table_list);
 
         dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
+        Vector2[] company = {new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-436.53f, 99f), new Vector2(-44f, 214.76f)};
         Debug.Log(dbName);
 
-        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize);
+        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
         queryResult = null;
         GetFocusMaterial();
         //GameObject a = Instantiate(linePrefab, linePanel);
@@ -80,6 +85,8 @@ public class RDBManager : MonoBehaviour
             }
             Destroy(queryResult);
         }
+        if (queryErrorBox != null) Destroy(queryErrorBox);
+
         string temp = "";
         string[] column_select_list = null;
         string modify_query_com = "";
@@ -95,51 +102,52 @@ public class RDBManager : MonoBehaviour
                 connection.Open();
                 using (var command = connection.CreateCommand())
                 {
-                    try // "Modify SQL Command" and "get column name list of first SELECT" for Material query
+                    try // Compile SQL Query Command
                     {
                         command.CommandText = query_command;
                         IDataReader reader = command.ExecuteReader();
                         reader.Close();
-
-                        string query_com = query_command;
-                        query_com = Regex.Replace(query_com, @"\n|\r", " ");
-                        string[] parts = query_com.Split('(');
-                        Regex regex = new Regex("(?i)select(?-i)(.*)(?i)from(?-i)");
-                        bool first = true;
-                        foreach (string s in parts)
-                        {
-                            Match col_section_match = regex.Match(s);
-                            if (col_section_match.Success)
-                            {
-                                string replace_com = Regex.Replace(s, @"(?i)select(?-i)(.*)(?i)from(?-i)", "SELECT * FROM");
-                                Debug.Log(s + " -> " + col_section_match.Success + " => " + col_section_match.ToString() + " >> " + replace_com);
-                                if (first)
-                                {
-                                    string first_sel = col_section_match.ToString();
-                                    first_sel = Regex.Replace(first_sel, @"\s+", "");
-                                    string col_name_list = first_sel.Remove(first_sel.Length - 4).Substring(6);
-                                    Debug.Log(col_name_list);
-                                    column_select_list = col_name_list.Split(',');
-                                    modify_query_com += replace_com;
-                                    first = false;
-                                }
-                                else
-                                {
-                                    modify_query_com += '(' + replace_com;
-                                }
-                            }
-                            else
-                            {
-                                modify_query_com += '(' + s;
-                                Debug.Log(s + " -> " + col_section_match.Success);
-                            }
-                        }
                     }
                     catch (SqliteException e)
                     {
                         temp = e.Message;
                         Debug.LogError(e);
-                        throw e;
+                        queryErrorBox = GenerateQueryErrorBox(e.Message);
+                    }
+
+                    // "Modify SQL Command" and "get column name list of first SELECT" for Material query
+                    string query_com = query_command;
+                    query_com = Regex.Replace(query_com, @"\n|\r", " ");
+                    string[] parts = query_com.Split('(');
+                    Regex regex = new Regex("(?i)select(?-i)(.*)(?i)from(?-i)");
+                    bool first = true;
+                    foreach (string s in parts)
+                    {
+                        Match col_section_match = regex.Match(s);
+                        if (col_section_match.Success)
+                        {
+                            string replace_com = Regex.Replace(s, @"(?i)select(?-i)(.*)(?i)from(?-i)", "SELECT * FROM");
+                            Debug.Log(s + " -> " + col_section_match.Success + " => " + col_section_match.ToString() + " >> " + replace_com);
+                            if (first)
+                            {
+                                string first_sel = col_section_match.ToString();
+                                first_sel = Regex.Replace(first_sel, @"\s+", "");
+                                string col_name_list = first_sel.Remove(first_sel.Length - 4).Substring(6);
+                                Debug.Log(col_name_list);
+                                column_select_list = col_name_list.Split(',');
+                                modify_query_com += replace_com;
+                                first = false;
+                            }
+                            else
+                            {
+                                modify_query_com += '(' + replace_com;
+                            }
+                        }
+                        else
+                        {
+                            modify_query_com += '(' + s;
+                            Debug.Log(s + " -> " + col_section_match.Success);
+                        }
                     }
 
                     try // using Modify SQL Command to Query
@@ -357,57 +365,137 @@ public class RDBManager : MonoBehaviour
         return Instantiate(tablePrefab, canvasParent);
     }
 
-    public GameObject GenerateQueryResultTable(List<List<string>> query_result, List<List<GameObject>> cell_list, List<List<Sprite>> mat_sprites)
+    private GameObject GenerateQueryErrorBox(string errorMessage)
+    {
+        GameObject queryErrorBox = Instantiate(queryErrorBoxPrefab, canvasParent);
+        queryErrorBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-280f, 500f);
+        queryErrorBox.transform.Find("ErrorTextBox").GetComponent<TextMeshProUGUI>().text = errorMessage;
+        return queryErrorBox;
+    }
+
+    private GameObject GenerateQueryResultTable(List<List<string>> query_result, List<List<GameObject>> cell_list, List<List<Sprite>> mat_sprites)
     {
         // Create a new table
         GameObject newTable = Instantiate(tablePrefab, canvasParent);
+        newTable.GetComponent<RectTransform>().anchoredPosition = new Vector2(-280f, 500f);
 
-        TextMeshProUGUI tableNameText = newTable.transform.Find("TableName").Find("TableNameText").GetComponent<TextMeshProUGUI>();
+        Transform tableNameBox = newTable.transform.Find("TableName");
+        TextMeshProUGUI tableNameText = tableNameBox.Find("TableNameText").GetComponent<TextMeshProUGUI>();
+        tableNameText.fontSize = 25f;
         tableNameText.text = "Query Result";
+        var tableNametextSize = FindTextSize(25f, "Query Result");
+        float tableNameWidth = tableNametextSize.Item1 * 1.2f;
+        float tableNameHeight = tableNametextSize.Item2 * 1.5f;
+        RectTransform tableNameRT = tableNameBox.GetComponent<RectTransform>();
+        tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, tableNameWidth);
+        tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tableNameHeight);
 
         Transform tableData = newTable.transform.Find("TableData");
 
         // Create columns within the table
-        GenerateTableColumns(tableData, query_result, cell_list, mat_sprites);
+        var colPair = GenerateTableColumns(tableData, query_result, cell_list, mat_sprites);
+        float[] colWidthList = colPair.Item1;
+        float columnHeight = colPair.Item2;
+
+        float sumOfColLen = 0f;
+        foreach (float len in colWidthList) sumOfColLen += len;
+        RectTransform tablePrefabRT = newTable.GetComponent<RectTransform>();
+        tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Max(sumOfColLen, tableNameWidth));
+        tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tableNameHeight + columnHeight);
+
+        tableData.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnHeight);
 
         return newTable;
     }
 
-    public void GenerateTableColumns(Transform tableData, List<List<string>> query_result, List<List<GameObject>> cell_list, List<List<Sprite>> mat_sprites)
+    private (float[], float) GenerateTableColumns(Transform tableData, List<List<string>> query_result,
+        List<List<GameObject>> cell_list, List<List<Sprite>> mat_sprites)
     {
+        // Find each column width
+        float[] colWidthList = new float[query_result.Count];
+        float colNameHeight = 20f;
+        float dataTextHeight = 15f;
+        int numRowToShow = Math.Min(10, query_result[0].Count - 1);
+        for (int i = 0; i < query_result.Count; i++)
+        {
+            var colTextSize = FindTextSize(20f, query_result[i][0]);
+            colWidthList[i] = colTextSize.Item1;
+            colNameHeight = colTextSize.Item2;
+            for (int j = 1; j <= numRowToShow; j++) // query_result[i].Count
+            {
+                var textSize = FindTextSize(16f, query_result[i][j]);
+                colWidthList[i] = Mathf.Max(colWidthList[i], textSize.Item1);
+                dataTextHeight = textSize.Item2;
+            }
+        }
+
+        colNameHeight *= 1.5f;
+        float columnDataHeight = 0f;
+        if (query_result.Count > 0) columnDataHeight = numRowToShow * (dataTextHeight + 40f);
+        float columnHeight = columnDataHeight + colNameHeight;
+        for (int i = 0; i < colWidthList.Length; i++) colWidthList[i] *= 1.2f;
+
         for (int i = 0; i < query_result.Count; i++)
         {
             // Create a new column
             GameObject newColumn = Instantiate(colPrefab, tableData);
 
-            TextMeshProUGUI colNameText = newColumn.transform.Find("ColumnName").Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
+            Transform colNameBox = newColumn.transform.Find("ColumnName");
+            TextMeshProUGUI colNameText = colNameBox.Find("ColumnNameText").GetComponent<TextMeshProUGUI>();
+            colNameText.fontSize = 20f;
             colNameText.text = query_result[i][0];
+            colNameBox.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, colNameHeight);
 
             Transform columnData = newColumn.transform.Find("ColumnData");
 
             // Create cells within the table
-            GenerateColumnCells(columnData, query_result[i], cell_list[i], mat_sprites[i]);
+            GenerateColumnCells(columnData, query_result[i], cell_list[i], mat_sprites[i], dataTextHeight, numRowToShow);
+
+            RectTransform colPrefabRT = newColumn.GetComponent<RectTransform>();
+            colPrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, colWidthList[i]);
+            colPrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnHeight);
+
+            columnData.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnDataHeight);
         }
+
+        return (colWidthList, columnHeight);
     }
 
-    public void GenerateColumnCells(Transform column, List<string> data_list, List<GameObject> target_cells, List<Sprite> mat_sprites)
+    private void GenerateColumnCells(Transform column, List<string> data_list, List<GameObject> target_cells,
+        List<Sprite> mat_sprites, float dataTextHeight, int numRowToShow)
     {
-        for (int i = 1; i < data_list.Count; i++)
+        for (int i = 1; i <= numRowToShow; i++) // data_list.Count
         {
             // Create a new cell
             GameObject newCell = Instantiate(cellPrefab, column);
+
+            RectTransform cellRT = newCell.GetComponent<RectTransform>();
+            cellRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dataTextHeight + 40f);
+            Transform cellDataSlot = newCell.transform.Find("DataTextSlot");
+            cellDataSlot.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dataTextHeight);
 
             // Set the icon (Image component)
             Image iconImage = newCell.transform.Find("ItemIcon").Find("MaterialIcon").GetComponent<Image>();
             iconImage.sprite = mat_sprites[i-1];
 
             // Set the text (Text component)
-            TextMeshProUGUI cellDataText = newCell.transform.Find("DataTextSlot").Find("DataText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI cellDataText = cellDataSlot.Find("DataText").GetComponent<TextMeshProUGUI>();
+            cellDataText.fontSize = 16f;
             cellDataText.text = data_list[i];
 
             GameObject line = Instantiate(linePrefab, linePanel);
             line.transform.GetComponent<LineRendererUi>().CreateLine(target_cells[i-1], newCell, Color.magenta);
         }
+    }
+
+    private (float, float) FindTextSize(float fontsize, string text)
+    {
+        textForSize.fontSize = fontsize;
+        textForSize.text = text;
+        textForSize.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, textForSize.preferredWidth);
+        textForSize.rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, textForSize.preferredHeight);
+        Debug.Log(textForSize.text + " fontsize = " + textForSize.fontSize + " width " + textForSize.preferredWidth + " height " + textForSize.preferredHeight);
+        return (textForSize.preferredWidth, textForSize.preferredHeight);
     }
 
     //private void debug_getResourceTable(Dictionary<string, List<Node>> resourceTable)

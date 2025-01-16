@@ -8,10 +8,10 @@ using TMPro;
 public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
 {
     [SerializeField] private Transform cellMaterial;
-    [SerializeField] private Transform cellMaterialSlot;
-    [SerializeField] private Transform cellCooldownText;
+    [SerializeField] private GameObject cellMaterialSlot;
+    [SerializeField] private GameObject cellCooldownText;
     private bool isCooldown = false;
-    private float timeLeft = 10;
+    private float timeLeft = 30;
     private Image icon;
     private TextMeshProUGUI cdText;
 
@@ -28,8 +28,8 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
         if (isCooldown)
         {
             timeLeft -= Time.deltaTime;
-            cdText.text = timeLeft.ToString("#0.00");
-            if (timeLeft < 0 ) NotCooldown();
+            cdText.text = timeLeft.ToString("#0");
+            if (timeLeft < 0) NotCooldown();
         }
     }
 
@@ -42,6 +42,9 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
     {
         if (!isCooldown)
         {
+            cellCooldownText.SetActive(true);
+            cellMaterialSlot.SetActive(false);
+
             icon.enabled = false;
             cdText.enabled = true;
             isCooldown = true;
@@ -52,9 +55,12 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
 
     private void NotCooldown()
     {
+        cellCooldownText.SetActive(false);
+        cellMaterialSlot.SetActive(true);
+
         icon.enabled = true;
         cdText.enabled = false;
         isCooldown = false;
-        timeLeft = 10;
+        timeLeft = 30f;
     }
 }

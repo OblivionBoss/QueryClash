@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
@@ -15,7 +14,7 @@ public class ResourceTable
     private Dictionary<string, List<ResourceData>> columnList;
     private string primaryKey = null;
     private List<Tuple<string, string, string>> foreignKeyList; // {this.colName, fk.tableName, fk.colName}
-    private GameObject resourceTable;
+    public GameObject resourceTable;
     private TextMeshProUGUI textForSize;
     // database.get("tableName").get("columnName")[i]
 
@@ -81,12 +80,13 @@ public class ResourceTable
 
         Transform tableNameBox = resourceTable.transform.Find("TableName");
         TextMeshProUGUI tableNameText = tableNameBox.Find("TableNameText").GetComponent<TextMeshProUGUI>();
-        tableNameText.fontSize = 30f;
+        tableNameText.fontSize = 25f;
         tableNameText.text = tableName;
-        var tableNametextSize = FindTextSize(30f, tableName);
+        var tableNametextSize = FindTextSize(25f, tableName);
+        float tableNameWidth = tableNametextSize.Item1 * 1.2f;
         float tableNameHeight = tableNametextSize.Item2 * 1.5f;
         RectTransform tableNameRT= tableNameBox.GetComponent<RectTransform>();
-        tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, tableNametextSize.Item1);
+        tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, tableNameWidth);
         tableNameRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tableNameHeight);
         tableNameBox.GetComponent<TableTokenButton>().Setup(keyboardManager, tablename);
 
@@ -191,6 +191,7 @@ public class ResourceTable
                     float columnDataHeight = 0f;
                     if (tabledata_list.Length > 0) columnDataHeight = tabledata_list[0].Count * (dataTextHeight + 40f);
                     float columnHeight = columnDataHeight + colNameHeight;
+                    for (int i = 0; i < colMaxTextLength.Length; i++) colMaxTextLength[i] *= 1.2f;
 
                     for (int i = 0; i < numOfCol; i++)
                     {
@@ -213,7 +214,7 @@ public class ResourceTable
                     float sumOfColLen = 0f;
                     foreach (float len in colMaxTextLength) sumOfColLen += len;
                     RectTransform tablePrefabRT = resourceTable.GetComponent<RectTransform>();
-                    tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, sumOfColLen);
+                    tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, Mathf.Max(sumOfColLen, tableNameWidth));
                     tablePrefabRT.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, tableNameHeight + columnHeight);
 
                     tableData.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, columnHeight);
