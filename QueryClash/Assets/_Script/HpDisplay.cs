@@ -23,7 +23,7 @@ public class HpDisplay : MonoBehaviour
     void Update()
     {
         // Update the text with the current HP values
-        leftHpText.text = $"{leftBaseScript.CurrentHp}";
-        rightHpText.text = $"{rightBaseScript.CurrentHp}";
+        leftHpText.text = leftBaseScript.CurrentHp.ToString("#0");
+        rightHpText.text = rightBaseScript.CurrentHp.ToString("#0");
     }
 }

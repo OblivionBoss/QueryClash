@@ -10,7 +10,7 @@ public class CraftingManager : MonoBehaviour
 
     public Transform[] UnitInventorySlots;
     public GameObject UnitIconPrefab;
-    //public GameObject[] UnitIconPrefabList;
+    public GameObject[] UnitIconPrefabList;
 
     //public UnitCraftingIcon[] UnitCraftingIconList;
     public Sprite[] UnitSpriteList;
@@ -96,7 +96,7 @@ public class CraftingManager : MonoBehaviour
                 amount++;
             }
         }
-        unitIndex = id + 1;
+        unitIndex = id;
         score = total / amount;
     }
 
@@ -139,12 +139,26 @@ public class CraftingManager : MonoBehaviour
     private void SetRecipe()
     {
         CraftingRecipe = new List<int[]>();
-        int[] frontline = { -1, 0, -1, -1, 0, -1, -1, 0, -1 };
-        CraftingRecipe.Add(frontline);
-        int[] frontline2 = { -1, -1, -1, 0, 0, 0, -1, -1, -1 };
-        CraftingRecipe.Add(frontline2);
-        int[] sheild = { -1, 2, -1, 2, 2, 2, -1, 2, -1 };
-        CraftingRecipe.Add(sheild);
+        int[] burst = { -1, 0, -1, -1, 0, -1, -1, 0, -1 };
+        CraftingRecipe.Add(burst);
+        int[] sustain = { -1, -1, -1, 0, 4, 0, -1, -1, -1 };
+        CraftingRecipe.Add(sustain);
+        int[] sniper1 = { -1, 1, -1, -1, 1, -1, -1, 1, -1 };
+        CraftingRecipe.Add(sniper1);
+        int[] sniper2 = { -1, -1, -1, 1, 1, 1, -1, -1, -1 };
+        CraftingRecipe.Add(sniper2);
+        int[] cannon = { 3, -1, 3, -1, 3, -1, 3, -1, 3 };
+        CraftingRecipe.Add(cannon);
+        int[] laser = { 3, -1, 3, -1, 1, -1, 3, -1, 3 };
+        CraftingRecipe.Add(laser);
+        int[] defensive = { 2, -1, 2, -1, 2, -1, -1, 2, -1 };
+        CraftingRecipe.Add(defensive);
+        int[] counterAtk = { -1, 2, -1, -1, 0, -1, 2, -1, 2 };
+        CraftingRecipe.Add(counterAtk);
+        int[] healer = { -1, 4, -1, 4, -1, 4, -1, 4, -1 };
+        CraftingRecipe.Add(healer);
+        int[] buffer = { 4, -1, 4, -1, -1, -1, 4, -1, 4 };
+        CraftingRecipe.Add(buffer);
     }
 
     void Start()
@@ -170,12 +184,12 @@ public class CraftingManager : MonoBehaviour
 
     void SpawnNewUnitIcon(Transform slot)
     {
-        GameObject newUnitIcon = Instantiate(UnitIconPrefab, slot);
+        GameObject newUnitIcon = Instantiate(UnitIconPrefabList[unitIndex], slot);
         ButtonSetup unit = newUnitIcon.GetComponent<ButtonSetup>();
-        unit.prefabIndex = unitIndex;
+        //unit.prefabIndex = unitIndex;
         unit.score = score;
         unit.unitInventorySlot = slot.GetComponent<Image>();
-        newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex - 1];
+        //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
         unit.unitInventorySlot.color = GetQuality(score);
     }
 
