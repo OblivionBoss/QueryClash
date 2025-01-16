@@ -1,6 +1,4 @@
 using UnityEngine;
-using System;
-using static UnityEngine.Rendering.DebugUI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -40,6 +38,4 @@ public class InventoryManager : MonoBehaviour
         InventoryItem inventoryItem = newItem.GetComponent<InventoryItem>();
         inventoryItem.InitializeItem(item);
     }
-
-
 }
