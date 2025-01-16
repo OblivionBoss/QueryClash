@@ -20,6 +20,7 @@ public class GetOppIP : MonoBehaviour
 
     public void GetIPv4() { 
         Opp_IP = inputField.text;
+        Opp_IP = "localhost";
         //TG.SetClientAddress(Opp_IP);
         //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress(Opp_IP);
         //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress();
