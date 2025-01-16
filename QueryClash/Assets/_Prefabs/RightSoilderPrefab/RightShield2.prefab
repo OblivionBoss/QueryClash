@@ -49,14 +49,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   score: 0
+  isBase: 0
   MaxHp: 0
   CurrentHp: 0
   Atk: 0
-  bullet: {fileID: 343566538313124214, guid: 88bc3daf83d9dc842b93c62a893f7e7b, type: 3}
+  bullet: {fileID: 7674632085815101502, guid: 5b325cb4ecae7dd449c3b2ad1846663f, type: 3}
   spawnRate: 0
   bulletTimer: 0
   grid: {fileID: 0}
   bulletSpawnSound: {fileID: 8300000, guid: 8401456349c492a489ed90469e317e43, type: 3}
+  audioSource: {fileID: 0}
   HitCount: 0
 --- !u!65 &1378041009446355801
 BoxCollider:
@@ -91,7 +93,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
