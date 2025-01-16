@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     
     private void Start()
     {
+        Random.InitState(System.DateTime.Now.Millisecond);
         InitializeAvailablePositions();
         StartCoroutine(SpawnEnemies());
     }
@@ -54,8 +55,10 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = availablePositions[Random.Range(0, availablePositions.Count)];
 
         // Randomly select an enemy ID
-        int randomEnemyIndex = Random.Range(0, enemyIds.Count);
-        int enemyId = enemyIds[randomEnemyIndex];
+        //int randomEnemyIndex = Random.Range(0, enemyIds.Count);
+        int enemyId = enemyIds[Random.Range(0, enemyIds.Count)];
+
+        Debug.Log($"Spawned enemy ID: {enemyId} at position: {spawnPosition}");
 
         // Get the enemy prefab from the database
         ObjectData enemyData = database.objectsData.Find(data => data.ID == enemyId);

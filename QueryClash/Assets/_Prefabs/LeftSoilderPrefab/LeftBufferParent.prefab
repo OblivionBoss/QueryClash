@@ -135,7 +135,12 @@ MonoBehaviour:
   MaxHp: 0
   CurrentHp: 0
   Atk: 0
+  bullet: {fileID: 0}
+  spawnRate: 0
+  bulletTimer: 0
   grid: {fileID: 0}
+  bulletSpawnSound: {fileID: 0}
+  audioSource: {fileID: 0}
   unitTag: 
 --- !u!65 &5790502034317616850
 BoxCollider:
@@ -156,5 +161,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 1, z: 1}
+  m_Size: {x: 0.4, y: 1, z: 0.8}
   m_Center: {x: 0.5, y: 0.5, z: 0.5}

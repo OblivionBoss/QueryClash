@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletspeed: 10
+  isBuff: 0
 --- !u!1001 &7130456656115795196
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -160,10 +161,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: AssaultBullet
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 665679080335323097, guid: c9ab977b76bfb484183787ff8187e016, type: 3}
-    - {fileID: 503503460155750303, guid: c9ab977b76bfb484183787ff8187e016, type: 3}
-    - {fileID: 6606172111179878211, guid: c9ab977b76bfb484183787ff8187e016, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
