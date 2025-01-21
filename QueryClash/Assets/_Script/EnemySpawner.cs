@@ -38,8 +38,9 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            SpawnEnemy(); // Spawn one enemy
+            
             yield return new WaitForSeconds(spawnInterval); // Wait for the next spawn
+            SpawnEnemy(); // Spawn one enemy
         }
     }
 

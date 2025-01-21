@@ -18,11 +18,13 @@ public class Soldier : Unit
     public AudioClip bulletSpawnSound; // Assign in the inspector
     public AudioSource audioSource;
 
+    public Timer timer;
 
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
+        timer = GameObject.FindObjectOfType<Timer>();
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -55,12 +57,12 @@ public class Soldier : Unit
 
     public virtual void SpawnBullet()
     {
-        if (audioSource != null && bulletSpawnSound != null)
+        if (audioSource != null && bulletSpawnSound != null && timer.isCountingDown == false)
         {
             audioSource.PlayOneShot(bulletSpawnSound);
         }
 
-        if (bullet != null && isPlaced)
+        if (bullet != null && isPlaced && timer.isCountingDown == false)
         {
             GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
 
