@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class Unit : MonoBehaviour
+public class Unit : MonoBehaviour 
 {
     private PlacementSystem placementSystem;
     public bool isPlaced = false;

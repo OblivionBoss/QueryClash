@@ -19,21 +19,7 @@ public class BuffSupport : Soldier
     public override void OnPlaced()
     {
         base.OnPlaced();
-        ApplyBuffToNearbyBullets();
-    }
-
-    private void ApplyBuffToNearbyBullets()
-    {
-        // Example: Increase Atk of bullets in a certain radius
-        Collider[] nearbyObjects = Physics.OverlapSphere(transform.position, 5f); // Adjust radius as needed
-        foreach (Collider col in nearbyObjects)
-        {
-            Bullet bullet = col.GetComponent<Bullet>();
-            if (bullet != null && bullet.gameObject.CompareTag(unitTag))
-            {
-                bullet.Atk += this.Atk; // Add this unit's Atk to bullets
-            }
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)
