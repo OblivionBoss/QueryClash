@@ -1,6 +1,7 @@
 using UnityEngine;
+using FishNet.Object;
 
-public abstract class Bullet : MonoBehaviour
+public abstract class Bullet : NetworkBehaviour
 {
     public float bulletspeed = 1;
     public float deadZone {  get;  set; }

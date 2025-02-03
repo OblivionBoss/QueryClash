@@ -20,7 +20,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3756201576086050218
 Transform:
   m_ObjectHideFlags: 0
@@ -114,14 +114,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4760652087481901620}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cee245cf3e750574ca75d49c81ecc75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   bulletspeed: 10
-  deadZone: 20
-  Atk: 12
+  isBuff: 0
 --- !u!54 &7164743656348181915
 Rigidbody:
   m_ObjectHideFlags: 0

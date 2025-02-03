@@ -24,6 +24,6 @@ public class GetOppIP : MonoBehaviour
         //TG.SetClientAddress(Opp_IP);
         //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress(Opp_IP);
         //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress();
-        SceneManager.LoadSceneAsync("Game"); 
+        SceneManager.LoadSceneAsync("GameFNetwork"); //SceneManager.LoadSceneAsync("Game"); 
     }
 }
