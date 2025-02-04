@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Base : Soldier
 {
-    public Image healthBar;
+    //public Image healthBar;
 
     
     // Start is called before the first frame update
@@ -26,4 +26,9 @@ public class Base : Soldier
             Destroy(gameObject);
         }
     }
+    public override void FindHealthBar()
+    {
+        // Do nothing, since healthBar is manually assigned
+    }
+
 }

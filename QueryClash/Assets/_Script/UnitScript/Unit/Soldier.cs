@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Soldier : Unit
 {
@@ -20,6 +22,8 @@ public class Soldier : Unit
 
     public Timer timer;
 
+    public Image healthBar;
+
     public void Start()
     {
         base.Start();
@@ -33,6 +37,9 @@ public class Soldier : Unit
                 audioSource = gameObject.AddComponent<AudioSource>();
             }
         }
+
+        FindHealthBar();
+
     }
 
     public void Update()
@@ -99,6 +106,7 @@ public class Soldier : Unit
     public virtual void ReduceHp(float damage)
     {
         CurrentHp -= damage;
+        healthBar.fillAmount = CurrentHp / MaxHp;
         if (CurrentHp <= 0)
         {
             //if (grid == null)
@@ -114,6 +122,24 @@ public class Soldier : Unit
         }
     }
 
-    
+    public virtual void FindHealthBar()
+    {
+        if (healthBar == null)
+        {
+            string healthBarPath = gameObject.CompareTag("LeftTeam") ?
+                "Left Healthbar Canvas/HealthBar" :
+                "Right Healthbar Canvas/HealthBar";
+
+            healthBar = transform.Find(healthBarPath)?.GetComponent<Image>();
+
+            if (healthBar == null)
+            {
+                Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
+            }
+        }
+    }
+
+
+
 
 }
