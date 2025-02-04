@@ -11,7 +11,7 @@ public class BuffSupport : Soldier
         base.Start();
         unitTag = gameObject.tag;
         MaxHp = 100f * (1 + score / 1000);
-        CurrentHp = MaxHp;
+        CurrentHp.Value = MaxHp;
         Atk = 5 * (1 + score / 1000);
     }
 

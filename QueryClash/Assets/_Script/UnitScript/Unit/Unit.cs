@@ -24,7 +24,7 @@ public class Unit : NetworkBehaviour
 
     }
 
-
+    [Server]
     public void RemoveUnit(Vector3Int gridPosition)
     {
         // Call RemovingState logic directly
@@ -33,7 +33,7 @@ public class Unit : NetworkBehaviour
         OnDeath?.Invoke();
 
         // Destroy the GameObject
-        Destroy(gameObject);
+        ServerManager.Despawn(gameObject);
         Debug.Log($"Unit at {gridPosition} has been removed.");
 
     }

@@ -151,7 +151,6 @@ MonoBehaviour:
   score: 0
   isBase: 0
   MaxHp: 0
-  CurrentHp: 0
   Atk: 0
   bullet: {fileID: 4161475629044281279, guid: 9c522e7676aaad84c8993aef2498d4d4, type: 3}
   spawnRate: 0

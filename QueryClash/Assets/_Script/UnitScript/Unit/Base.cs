@@ -16,19 +16,28 @@ public class Base : Soldier
     //    if (!base.IsOwner) GetComponent<Base>().enabled = false;
     //}
 
-    void Start()
+    //void Start()
+    //{
+    //    OnPlaced();
+    //    CurrentHp.Value = MaxHp;
+    //    isBase = true;
+    //}
+
+    public override void OnStartServer()
     {
+        base.OnStartServer();
         OnPlaced();
-        CurrentHp = MaxHp;
+        CurrentHp.Value = MaxHp;
         isBase = true;
     }
 
+    [Server]
     public override void ReduceHp(float damage)
     {
-        CurrentHp -= damage;
-        if (CurrentHp <= 0)
+        CurrentHp.Value -= damage;
+        if (CurrentHp.Value <= 0)
         {
-            Destroy(gameObject);
+            ServerManager.Despawn(gameObject);
         }
     }
 }

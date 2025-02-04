@@ -1,4 +1,5 @@
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class Soldier : Unit
 {
 
     public float MaxHp;
-    public float CurrentHp;
+    public readonly SyncVar<float> CurrentHp = new();
     public float Atk;
     public GameObject bullet;
 
@@ -88,7 +89,7 @@ public class Soldier : Unit
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
+    [Server]
     public void SpawnBulletServer()
     {
         if (ClientManager.Connection.IsHost)
@@ -127,10 +128,11 @@ public class Soldier : Unit
         base.OnPlaced();
     }
 
+    [Server]
     public virtual void ReduceHp(float damage)
     {
-        CurrentHp -= damage;
-        if (CurrentHp <= 0)
+        CurrentHp.Value -= damage;
+        if (CurrentHp.Value <= 0)
         {
             //if (grid == null)
             //{

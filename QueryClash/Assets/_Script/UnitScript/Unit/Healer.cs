@@ -31,7 +31,7 @@ public class Healer : Unit
             {
                 if (s != null && s.gameObject.tag == this.gameObject.tag) // Check tag match
                 {
-                    s.CurrentHp = Mathf.Min(s.MaxHp, s.CurrentHp + HealAmount);
+                    s.CurrentHp.Value = Mathf.Min(s.MaxHp, s.CurrentHp.Value + HealAmount);
                 }
             }
 

@@ -41,6 +41,9 @@ public class PlayerControl : NetworkBehaviour
 
             CraftingManager cm = GameObject.Find("CraftingManager").GetComponent<CraftingManager>();
             cm.isLeftTeam = ClientManager.Connection.IsHost;
+
+            HpDisplay hpd = GameObject.Find("HP UI Manager").GetComponent<HpDisplay>();
+            if (!ClientManager.Connection.IsHost) hpd.swapHpUi();
         }
         else { gameObject.GetComponent<PlayerControl>().enabled = false; }
     }

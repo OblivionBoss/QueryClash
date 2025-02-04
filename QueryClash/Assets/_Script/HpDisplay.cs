@@ -13,6 +13,8 @@ public class HpDisplay : MonoBehaviour
     private Base leftBaseScript;
     private Base rightBaseScript;
 
+    //public bool isLeftTeam;
+
     void Start()
     {
         // Get the Base script from the game objects
@@ -20,10 +22,17 @@ public class HpDisplay : MonoBehaviour
         rightBaseScript = rightBase.GetComponent<Base>();
     }
 
+    public void swapHpUi()
+    {
+        Vector3 leftHpPos = leftHpText.transform.localPosition;
+        leftHpText.transform.localPosition = rightHpText.transform.localPosition;
+        rightHpText.transform.localPosition = leftHpPos;
+    }
+
     void Update()
     {
         // Update the text with the current HP values
-        leftHpText.text = leftBaseScript.CurrentHp.ToString("#0");
-        rightHpText.text = rightBaseScript.CurrentHp.ToString("#0");
+        leftHpText.text = leftBaseScript.CurrentHp.Value.ToString("#0");
+        rightHpText.text = rightBaseScript.CurrentHp.Value.ToString("#0");
     }
 }
