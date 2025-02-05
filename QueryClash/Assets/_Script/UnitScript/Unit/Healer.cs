@@ -78,7 +78,7 @@ public class Healer : Unit
 
     private void Heal(Soldier soldier)
     {
-        soldier.CurrentHp = Mathf.Min(soldier.CurrentHp + healAmount, soldier.MaxHp);
+        soldier.HealingHp(healAmount);
         Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
     }
 

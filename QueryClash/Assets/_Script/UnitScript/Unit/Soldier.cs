@@ -122,6 +122,16 @@ public class Soldier : Unit
         }
     }
 
+    public virtual void HealingHp(float heal)
+    {
+        this.CurrentHp += heal;
+        if(CurrentHp >= MaxHp)
+        {
+            CurrentHp = MaxHp;
+        }
+        healthBar.fillAmount = CurrentHp / MaxHp;
+    }
+
     public virtual void FindHealthBar()
     {
         if (healthBar == null)
