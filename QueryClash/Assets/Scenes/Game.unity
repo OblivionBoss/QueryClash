@@ -4659,6 +4659,7 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: 9bdabc6edb220ac429041af6b44e9277, type: 2}
   gridVisualization: {fileID: 750504209}
   preview: {fileID: 385801218}
+  lastDetectedPosition: {x: 0, y: 0, z: 0}
   objectPlacer: {fileID: 1865548110}
 --- !u!1 &337701699
 GameObject:
@@ -14836,7 +14837,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1795744937}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
