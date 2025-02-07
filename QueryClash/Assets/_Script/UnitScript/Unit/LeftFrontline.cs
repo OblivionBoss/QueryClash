@@ -16,7 +16,6 @@ public class LeftFrontline : Soldier
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 10 * (1 + score / 1000); 
-
     }
 
     void Update()
@@ -28,10 +27,7 @@ public class LeftFrontline : Soldier
 
     public override void OnPlaced()
     {
-
         base.OnPlaced();
-
-        
 
         bulletTimer = 0f;
 
@@ -48,7 +44,6 @@ public class LeftFrontline : Soldier
         {
             Debug.LogWarning("Animator reference is null in OnPlaced!");
         }
-
     }
 
     public void ActivateSkill()

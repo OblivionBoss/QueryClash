@@ -62,11 +62,18 @@ public class ObjectPlacer : NetworkBehaviour
 
     internal void RemoveOBjectAt(int gameObjectIndex)
     {
+        RemoveOBjectAtNetwork(gameObjectIndex);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    internal void RemoveOBjectAtNetwork(int gameObjectIndex)
+    {
         if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
         {
+            Debug.LogWarning($"Can not remove unit at index = {gameObjectIndex}");
             return;
         }
-        Destroy(placedGameObjects[gameObjectIndex]);
+        ServerManager.Despawn(placedGameObjects[gameObjectIndex]);
         placedGameObjects[gameObjectIndex] = null;
     }
 

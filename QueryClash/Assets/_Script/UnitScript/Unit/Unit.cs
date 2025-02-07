@@ -18,12 +18,6 @@ public class Unit : NetworkBehaviour
 
     }
 
-    // Update is called once per frame
-    public void Update()
-    {
-
-    }
-
     [Server]
     public void RemoveUnit(Vector3Int gridPosition)
     {
@@ -41,15 +35,12 @@ public class Unit : NetworkBehaviour
     public virtual void OnPlaced()
     {
         isPlaced = true;
-
     }
 
     public void SetScore(float score)
     {
         this.score = score;
     }
-
-
 }
 
 

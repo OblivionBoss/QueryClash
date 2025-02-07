@@ -35,11 +35,6 @@ public class Soldier : Unit
         }
     }
 
-    public void Update()
-    {
-        //HandleBulletSpawning();
-    }
-
     public void HandleBulletSpawning()
     {
         if (isPlaced)
