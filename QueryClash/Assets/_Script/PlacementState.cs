@@ -51,7 +51,7 @@ public class PlacementState : IBuildingState
     public void Endstate()
     {
         previewSystem.StopShowingPreview();
-        //GameObject.Destroy(uiElementToDelete);
+        
     }
 
     public void OnAction(Vector3Int gridPosition)
@@ -76,7 +76,7 @@ public class PlacementState : IBuildingState
 
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
         Debug.Log("Place at " + gridPosition);
-        GameObject.Destroy(uiElementToDelete);
+        //GameObject.Destroy(uiElementToDelete);
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)

@@ -56,7 +56,7 @@ public class RightFrontline : Soldier
             return; // Do nothing if the soldier is not placed
 
         // Increment cooldown timer if skill is not active
-        if (skillCooldownRemaining < skillCooldown)
+        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown)
         {
             skillCooldownRemaining += Time.deltaTime;
         }

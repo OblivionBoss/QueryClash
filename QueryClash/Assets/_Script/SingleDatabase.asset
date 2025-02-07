@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fde88f846de4d24bb45ef6c65eba59f, type: 3}
+  m_Name: SingleDatabase
+  m_EditorClassIdentifier: 
+  objectsData:
+  - <Name>k__BackingField: LeftBurst
+    <ID>k__BackingField: 101
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5471519711665040105, guid: 9aa32879166fa414cb449c668e18b803, type: 3}
+  - <Name>k__BackingField: LeftSustain
+    <ID>k__BackingField: 102
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1151224364870612866, guid: 19cdbb517242e3244832fc99c7784689, type: 3}
+  - <Name>k__BackingField: LeftSniper1
+    <ID>k__BackingField: 103
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5796393125162087232, guid: 98d7e0ff93e7aa147b3896b7ef850e93, type: 3}
+  - <Name>k__BackingField: LeftSniper2
+    <ID>k__BackingField: 104
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7940257915591195452, guid: 309f0a86f59a00d4dac7204d2488fc04, type: 3}
+  - <Name>k__BackingField: LeftCannon
+    <ID>k__BackingField: 105
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7222675139726849517, guid: b5ffbda5b1b62e64da7ec2896d6606ef, type: 3}
+  - <Name>k__BackingField: LeftLaser
+    <ID>k__BackingField: 106
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6635039047865027677, guid: 715e195893a877040bc82bc61045fc23, type: 3}
+  - <Name>k__BackingField: LeftDefensive
+    <ID>k__BackingField: 107
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 939972512577148711, guid: 783b59dc5c76c4e4d98eee2ef3b1a301, type: 3}
+  - <Name>k__BackingField: LeftCounterAtk
+    <ID>k__BackingField: 108
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1879631892672888187, guid: 0bf2985b90f01b44ea588da627afe5ad, type: 3}
+  - <Name>k__BackingField: LeftHealer
+    <ID>k__BackingField: 109
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7217566984296368919, guid: 82b64fb5f1b076d4ca0d51b2f3892a94, type: 3}
+  - <Name>k__BackingField: LeftBuffer
+    <ID>k__BackingField: 110
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5955848881401779882, guid: bd40042e5a8222a4bafdbfa8eab32b2f, type: 3}
+  - <Name>k__BackingField: RightBurst
+    <ID>k__BackingField: 201
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3042256081001373072, guid: 22a5b9aaba545c24cba14fc490744b7b, type: 3}
+  - <Name>k__BackingField: RightSustain
+    <ID>k__BackingField: 202
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1024243572112132156, guid: e809da5c22b58ac4bbae7579d40982f7, type: 3}
+  - <Name>k__BackingField: RightSniper1
+    <ID>k__BackingField: 203
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2095031641800594346, guid: 67da62735c3daf746979eb9b7e7dc1d7, type: 3}
+  - <Name>k__BackingField: RightSniper2
+    <ID>k__BackingField: 204
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2727052937810191436, guid: 147943f95a102e64d8629365980ae1c3, type: 3}
+  - <Name>k__BackingField: RightCannon
+    <ID>k__BackingField: 205
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4856352909455531065, guid: 6fc9467ba1bfcef4eaa252a4cb0cb00e, type: 3}
+  - <Name>k__BackingField: RightLaser
+    <ID>k__BackingField: 206
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7781297490806286818, guid: 9f79aabeaf4cffb4795d67edaca13544, type: 3}
+  - <Name>k__BackingField: RightDefensive
+    <ID>k__BackingField: 207
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7871480062614393557, guid: ccccd5dc08b5b1d42b4093a16a4fc91f, type: 3}
+  - <Name>k__BackingField: RightCounterAtk
+    <ID>k__BackingField: 208
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4223672987726780156, guid: 3ca27e7db8227324b895127eb5508ff0, type: 3}
+  - <Name>k__BackingField: RightHealer
+    <ID>k__BackingField: 209
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3792373499563084385, guid: 5b1747281a0bdc04baedc3c86c2bace7, type: 3}
+  - <Name>k__BackingField: RightBuffer
+    <ID>k__BackingField: 210
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6437428359607094924, guid: 2d04210c162cf4e43ae6a83703ed4675, type: 3}
