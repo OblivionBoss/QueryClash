@@ -10,14 +10,14 @@ public class SingleHpDisplay : MonoBehaviour
     public GameObject leftBase; // Reference to the left Base object
     public GameObject rightBase; // Reference to the right Base object
 
-    private Base leftBaseScript;
-    private Base rightBaseScript;
+    private SingleBase leftBaseScript;
+    private SingleBase rightBaseScript;
 
     void Start()
     {
         // Get the Base script from the game objects
-        leftBaseScript = leftBase.GetComponent<Base>();
-        rightBaseScript = rightBase.GetComponent<Base>();
+        leftBaseScript = leftBase.GetComponent<SingleBase>();
+        rightBaseScript = rightBase.GetComponent<SingleBase>();
     }
 
     void Update()

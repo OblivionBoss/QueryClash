@@ -14,7 +14,7 @@ public class RightFrontline : Soldier
         MaxHp = 150f * (1 + score/1000);         // Set specific MaxHp for LeftFrontline
         spawnRate = 1.2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
+        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 10 * (1 + score / 1000);
         
     }
@@ -65,10 +65,10 @@ public class RightFrontline : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            CurrentHp += 50;
-            if (CurrentHp > MaxHp)
+            CurrentHp.Value += 50;
+            if (CurrentHp.Value > MaxHp)
             {
-                CurrentHp = MaxHp;
+                CurrentHp.Value = MaxHp;
             }
 
             Debug.Log("Skill ended");

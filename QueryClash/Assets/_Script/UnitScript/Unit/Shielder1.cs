@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class Shielder1 : Soldier
 {
@@ -18,7 +19,7 @@ public class Shielder1 : Soldier
         MaxHp = 1000f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
+        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 0f;
     }
 
@@ -85,17 +86,17 @@ public class Shielder1 : Soldier
         skillDuration = 0f; // Reset skill duration
     }
 
+    [Server]
     public override void ReduceHp(float damage)
     {
-        CurrentHp -= damage * (1-Defence);
-        if (CurrentHp <= 0)
+        CurrentHp.Value -= damage * (1-Defence);
+        if (CurrentHp.Value <= 0)
         {
-            
             Vector3Int gridPosition = grid.WorldToCell(transform.position);
 
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
+        ClientHealthBarUpdate();
     }
-
 }

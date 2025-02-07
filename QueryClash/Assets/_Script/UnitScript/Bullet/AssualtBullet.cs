@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class AssaultBullet : Bullet
 {
@@ -16,7 +17,7 @@ public class AssaultBullet : Bullet
         if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced)
         {
             soldier.ReduceHp(Atk);
-            Destroy(gameObject);
+            ServerManager.Despawn(gameObject);
         }
     }
 }

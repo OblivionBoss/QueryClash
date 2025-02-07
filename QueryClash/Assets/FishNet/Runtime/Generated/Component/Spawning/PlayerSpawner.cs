@@ -38,8 +38,11 @@ namespace FishNet.Component.Spawning
         /// <summary>
         /// Areas in which players may spawn.
         /// </summary>
-        [Tooltip("Areas in which players may spawn.")]
-        public Transform[] Spawns = new Transform[0];
+        //[Tooltip("Areas in which players may spawn.")]
+        //public Transform[] Spawns = new Transform[0];
+
+        public Vector3 playerPosition;
+        public Quaternion playerRotation;
         #endregion
 
         #region Private.
@@ -63,7 +66,6 @@ namespace FishNet.Component.Spawning
             if (_networkManager != null)
                 _networkManager.SceneManager.OnClientLoadedStartScenes -= SceneManager_OnClientLoadedStartScenes;
         }
- 
 
         /// <summary>
         /// Initializes this script for use.
@@ -93,11 +95,24 @@ namespace FishNet.Component.Spawning
                 return;
             }
 
-            Vector3 position;
-            Quaternion rotation;
-            SetSpawn(_playerPrefab.transform, out position, out rotation);
+            //Vector3 position;
+            //Quaternion rotation;
+            //SetSpawn(_playerPrefab.transform, out position, out rotation);
 
-            NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, position, rotation, true);
+            //NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, position, rotation, true);
+
+            if (InstanceFinder.ServerManager.Clients.Count > 2)
+            {
+                InstanceFinder.ClientManager.StopConnection();
+                return;
+            }
+
+            if (!conn.IsHost) {
+                playerPosition.z = 23.7f;
+                playerRotation.y = 180f;
+            }
+
+            NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, playerPosition, playerRotation, true);
             _networkManager.ServerManager.Spawn(nob, conn);
 
             //If there are no global scenes 
@@ -107,51 +122,47 @@ namespace FishNet.Component.Spawning
             OnSpawned?.Invoke(nob);
         }
 
-
         /// <summary>
         /// Sets a spawn position and rotation.
         /// </summary>
         /// <param name="pos"></param>
         /// <param name="rot"></param>
-        private void SetSpawn(Transform prefab, out Vector3 pos, out Quaternion rot)
-        {
-            //No spawns specified.
-            if (Spawns.Length == 0)
-            {
-                SetSpawnUsingPrefab(prefab, out pos, out rot);
-                return;
-            }
+        //private void SetSpawn(Transform prefab, out Vector3 pos, out Quaternion rot)
+        //{
+        //    //No spawns specified.
+        //    if (Spawns.Length == 0)
+        //    {
+        //        SetSpawnUsingPrefab(prefab, out pos, out rot);
+        //        return;
+        //    }
 
-            Transform result = Spawns[_nextSpawn];
-            if (result == null)
-            {
-                SetSpawnUsingPrefab(prefab, out pos, out rot);
-            }
-            else
-            {
-                pos = result.position;
-                rot = result.rotation;
-            }
+        //    Transform result = Spawns[_nextSpawn];
+        //    if (result == null)
+        //    {
+        //        SetSpawnUsingPrefab(prefab, out pos, out rot);
+        //    }
+        //    else
+        //    {
+        //        pos = result.position;
+        //        rot = result.rotation;
+        //    }
 
-            //Increase next spawn and reset if needed.
-            _nextSpawn++;
-            if (_nextSpawn >= Spawns.Length)
-                _nextSpawn = 0;
-        }
+        //    //Increase next spawn and reset if needed.
+        //    _nextSpawn++;
+        //    if (_nextSpawn >= Spawns.Length)
+        //        _nextSpawn = 0;
+        //}
 
-        /// <summary>
-        /// Sets spawn using values from prefab.
-        /// </summary>
-        /// <param name="prefab"></param>
-        /// <param name="pos"></param>
-        /// <param name="rot"></param>
-        private void SetSpawnUsingPrefab(Transform prefab, out Vector3 pos, out Quaternion rot)
-        {
-            pos = prefab.position;
-            rot = prefab.rotation;
-        }
-
+        ///// <summary>
+        ///// Sets spawn using values from prefab.
+        ///// </summary>
+        ///// <param name="prefab"></param>
+        ///// <param name="pos"></param>
+        ///// <param name="rot"></param>
+        //private void SetSpawnUsingPrefab(Transform prefab, out Vector3 pos, out Quaternion rot)
+        //{
+        //    pos = prefab.position;
+        //    rot = prefab.rotation;
+        //}
     }
-
-
 }

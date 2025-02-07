@@ -32,9 +32,9 @@ public class Healer : Unit
     public override void OnPlaced()
     {
         base.OnPlaced();
-        
-        StartCoroutine(HealOverTime()); 
-       
+
+        StartCoroutine(HealOverTime());
+
     }
 
     private IEnumerator HealOverTime()
@@ -68,13 +68,12 @@ public class Healer : Unit
         foreach (Collider collider in hitColliders)
         {
             Soldier soldier = collider.GetComponent<Soldier>();
-            if (soldier != null && soldier.CurrentHp > 0 && soldier.CurrentHp < soldier.MaxHp)
+            if (soldier != null && soldier.CurrentHp.Value > 0 && soldier.CurrentHp.Value < soldier.MaxHp)
             {
                 Heal(soldier);
             }
         }
     }
-
 
     private void Heal(Soldier soldier)
     {
@@ -86,9 +85,6 @@ public class Healer : Unit
     {
         Gizmos.color = Color.green; // Set color to green for the healing range
         //Vector3 offset = new Vector3(0.5f, 0.5f, 0.5f); // Define the offset
-        Gizmos.DrawWireSphere(transform.position , healRange); // Draw healing range sphere with offset
+        Gizmos.DrawWireSphere(transform.position, healRange); // Draw healing range sphere with offset
     }
-
-
-
 }
