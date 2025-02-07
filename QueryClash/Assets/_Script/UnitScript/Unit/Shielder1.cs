@@ -88,6 +88,7 @@ public class Shielder1 : Soldier
     public override void ReduceHp(float damage)
     {
         CurrentHp -= damage * (1-Defence);
+        healthBar.fillAmount = CurrentHp / MaxHp;
         if (CurrentHp <= 0)
         {
             
