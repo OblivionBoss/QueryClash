@@ -11,7 +11,6 @@ public class GetOppIP : MonoBehaviour
     public static GetOppIP getOppIP;
     public TMP_InputField inputField;
     public string Opp_IP;
-    public Tugboat TG;
 
     private void Awake() {
         if (getOppIP == null) { getOppIP = this; DontDestroyOnLoad(gameObject); }
@@ -20,8 +19,7 @@ public class GetOppIP : MonoBehaviour
 
     public void GetIPv4() { 
         Opp_IP = inputField.text;
-        Opp_IP = "localhost";
-        //TG.SetClientAddress(Opp_IP);
+        //Opp_IP = "localhost";
         //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress(Opp_IP);
         //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress();
         SceneManager.LoadSceneAsync("GameFNetwork"); //SceneManager.LoadSceneAsync("Game"); 

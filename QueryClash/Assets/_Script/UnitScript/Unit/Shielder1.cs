@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class Shielder1 : Soldier
 {
@@ -85,6 +86,7 @@ public class Shielder1 : Soldier
         skillDuration = 0f; // Reset skill duration
     }
 
+    [Server]
     public override void ReduceHp(float damage)
     {
         CurrentHp.Value -= damage * (1-Defence);
@@ -95,6 +97,6 @@ public class Shielder1 : Soldier
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
+        ClientHealthBarUpdate();
     }
-
 }

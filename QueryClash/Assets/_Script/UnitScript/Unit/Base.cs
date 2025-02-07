@@ -39,6 +39,17 @@ public class Base : Soldier
         {
             ServerManager.Despawn(gameObject);
         }
+        ClientHealthBarUpdate();
+    }
+
+    public override void HealingHp(float heal)
+    {
+
+    }
+
+    public override void FindHealthBar()
+    {
+        // Do nothing, since healthBar is manually assigned
     }
 }
 

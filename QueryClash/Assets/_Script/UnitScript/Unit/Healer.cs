@@ -1,79 +1,90 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class Healer : Unit
 {
-    public float HealAmount = 10f; // Amount to heal per second
-    public float HealDuration = 10f; // Duration for the healing effect (in seconds)
-    private Grid grid; // Reference to the grid
-    private float elapsedTime = 0f;
-    private HashSet<Soldier> unitsInRange = new HashSet<Soldier>();
+    public float healAmount = 10f;    // Amount healed per second
+    public float healDuration = 10f;  // Total healing duration
+    public float healInterval = 1f;   // Heal every second
+    public float healRange = 1.2f;      // Healing radius
 
+    private bool isHealing = false;
+    //public Timer timer;
+
+    public Grid grid;
+    public Timer timer;
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
-        HealAmount *= 1 + (score / 1000);
-        // Start the healing coroutine
-        StartCoroutine(HealUnitsInRange());
+        timer = GameObject.FindObjectOfType<Timer>();
+        //if (audioSource == null)
+        //{
+        //    audioSource = GetComponent<AudioSource>();
+        //    if (audioSource == null)
+        //    {
+        //        audioSource = gameObject.AddComponent<AudioSource>();
+        //    }
+        //}
     }
 
-    private IEnumerator HealUnitsInRange()
-    {
-        while (elapsedTime < HealDuration)
-        {
-            elapsedTime += 1f;
-
-            // Heal all units currently in range
-            foreach (Soldier s in unitsInRange)
-            {
-                if (s != null && s.gameObject.tag == this.gameObject.tag) // Check tag match
-                {
-                    s.CurrentHp.Value = Mathf.Min(s.MaxHp, s.CurrentHp.Value + HealAmount);
-                }
-            }
-
-            // Wait for 1 second before the next heal
-            yield return new WaitForSeconds(1f);
-        }
-        Vector3Int gridPosition = grid.WorldToCell(transform.position);
-        // Remove healer after healing duration
-        RemoveUnit(gridPosition);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Soldier s = other.GetComponent<Soldier>();
-        if (s != null && s != this && s.gameObject.tag == this.gameObject.tag)
-        {
-            unitsInRange.Add(s); // Add unit to the range list
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        Soldier s = other.GetComponent<Soldier>();
-        if (s != null && unitsInRange.Contains(s))
-        {
-            unitsInRange.Remove(s); // Remove unit when it exits the healing range
-        }
-    }
     public override void OnPlaced()
     {
         base.OnPlaced();
-        // Optionally, play an effect or sound when placed
+
+        StartCoroutine(HealOverTime());
+
     }
 
-    private void OnDrawGizmosSelected()
+    private IEnumerator HealOverTime()
     {
-        // Draw a sphere in the editor to visualize the trigger collider range
-        Gizmos.color = Color.green;
-        SphereCollider sphereCollider = GetComponent<SphereCollider>();
-        if (sphereCollider != null)
+        isHealing = true;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < healDuration)
         {
-            Gizmos.DrawWireSphere(transform.position, sphereCollider.radius);
+            HealNearbyUnits();
+            elapsedTime += healInterval;
+            yield return new WaitForSeconds(healInterval);
         }
+
+        isHealing = false;
+
+        Debug.Log($"{gameObject.name} finished healing and has been destroyed.");
+        Vector3Int gridPosition = grid.WorldToCell(transform.position);
+        RemoveUnit(gridPosition);
+
+    }
+
+    private void HealNearbyUnits()
+    {
+        Vector3 offset = new Vector3(0.5f, 0.5f, 0.5f);  // Define the offset
+        Vector3 adjustedPosition = transform.position + offset;  // Apply the offset to the position
+
+        // Use the adjusted position for the healing range
+        Collider[] hitColliders = Physics.OverlapSphere(adjustedPosition, healRange);
+
+        foreach (Collider collider in hitColliders)
+        {
+            Soldier soldier = collider.GetComponent<Soldier>();
+            if (soldier != null && soldier.CurrentHp.Value > 0 && soldier.CurrentHp.Value < soldier.MaxHp)
+            {
+                Heal(soldier);
+            }
+        }
+    }
+
+    private void Heal(Soldier soldier)
+    {
+        soldier.HealingHp(healAmount);
+        Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green; // Set color to green for the healing range
+        //Vector3 offset = new Vector3(0.5f, 0.5f, 0.5f); // Define the offset
+        Gizmos.DrawWireSphere(transform.position, healRange); // Draw healing range sphere with offset
     }
 }

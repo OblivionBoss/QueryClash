@@ -1,8 +1,7 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Soldier : Unit
 {
@@ -20,11 +19,15 @@ public class Soldier : Unit
     public AudioClip bulletSpawnSound; // Assign in the inspector
     public AudioSource audioSource;
 
+    public Timer timer;
+
+    public Image healthBar;
 
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
+        timer = GameObject.FindObjectOfType<Timer>();
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -33,6 +36,7 @@ public class Soldier : Unit
                 audioSource = gameObject.AddComponent<AudioSource>();
             }
         }
+        FindHealthBar();
     }
 
     public void HandleBulletSpawning()
@@ -52,35 +56,9 @@ public class Soldier : Unit
 
     public virtual void SpawnBullet()
     {
-        //if (audioSource != null && bulletSpawnSound != null)
-        //{
-        //    audioSource.PlayOneShot(bulletSpawnSound);
-        //}
-
-        if (bullet != null && isPlaced)
+        if (bullet != null && isPlaced && timer.isCountingDown == false)
         {
             SpawnBulletServer();
-            //GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
-
-            //Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
-            //if (bulletComponent != null)
-            //{
-            //    // Determine direction and dead zone based on the soldier's tag
-            //    if (gameObject.CompareTag("LeftTeam"))
-            //    {
-            //        bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam", "LeftTeam"); // Bullets move right
-            //    }
-            //    else if (gameObject.CompareTag("RightTeam"))
-            //    {
-            //        bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam", "RightTeam"); // Bullets move left
-            //    }
-
-            //    //Debug.Log($"Spawned bullet from {gameObject.tag} with Atk: {bulletComponent.Atk}");
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("Spawned object does not have a Bullet component!");
-            //}
         }
     }
 
@@ -129,19 +107,46 @@ public class Soldier : Unit
         CurrentHp.Value -= damage;
         if (CurrentHp.Value <= 0)
         {
-            //if (grid == null)
-            //{
-            //    Debug.LogError("Grid is not assigned to the unit!");
-            //    return;
-            //}
-            // Get the grid position of the unit
             Vector3Int gridPosition = grid.WorldToCell(transform.position);
 
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
+        ClientHealthBarUpdate();
     }
 
-    
+    [ObserversRpc]
+    public void ClientHealthBarUpdate()
+    {
+        healthBar.fillAmount = CurrentHp.Value / MaxHp;
+    }
 
+    [Server]
+    public virtual void HealingHp(float heal)
+    {
+        //this.CurrentHp.Value += heal;
+        CurrentHp.Value = Mathf.Min(MaxHp, CurrentHp.Value + heal);
+        //if (CurrentHp.Value >= MaxHp)
+        //{
+        //    CurrentHp.Value = MaxHp;
+        //}
+        healthBar.fillAmount = CurrentHp.Value / MaxHp;
+    }
+
+    public virtual void FindHealthBar()
+    {
+        if (healthBar == null)
+        {
+            string healthBarPath = gameObject.CompareTag("LeftTeam") ?
+                "Left Healthbar Canvas/HealthBar" :
+                "Right Healthbar Canvas/HealthBar";
+
+            healthBar = transform.Find(healthBarPath)?.GetComponent<Image>();
+
+            if (healthBar == null)
+            {
+                Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
+            }
+        }
+    }
 }

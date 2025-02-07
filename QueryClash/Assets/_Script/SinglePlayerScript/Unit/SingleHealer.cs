@@ -13,12 +13,12 @@ public class SingleHealer : SingleUnit
     //public Timer timer;
 
     public Grid grid;
-    public Timer timer;
+    public SingleTimer timer;
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
-        timer = GameObject.FindObjectOfType<Timer>();
+        timer = GameObject.FindObjectOfType<SingleTimer>();
         //if (audioSource == null)
         //{
         //    audioSource = GetComponent<AudioSource>();
@@ -67,7 +67,7 @@ public class SingleHealer : SingleUnit
 
         foreach (Collider collider in hitColliders)
         {
-            Soldier soldier = collider.GetComponent<Soldier>();
+            SingleSoldier soldier = collider.GetComponent<SingleSoldier>();
             if (soldier != null && soldier.CurrentHp > 0 && soldier.CurrentHp < soldier.MaxHp)
             {
                 Heal(soldier);
@@ -75,8 +75,7 @@ public class SingleHealer : SingleUnit
         }
     }
 
-
-    private void Heal(Soldier soldier)
+    private void Heal(SingleSoldier soldier)
     {
         soldier.HealingHp(healAmount);
         Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
@@ -88,7 +87,4 @@ public class SingleHealer : SingleUnit
         //Vector3 offset = new Vector3(0.5f, 0.5f, 0.5f); // Define the offset
         Gizmos.DrawWireSphere(transform.position , healRange); // Draw healing range sphere with offset
     }
-
-
-
 }
