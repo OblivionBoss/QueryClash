@@ -16,7 +16,7 @@ public class Shielder2 : Soldier
         MaxHp = 750f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
+        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 20f * (1 + score / 1000);
     }
 
@@ -56,9 +56,9 @@ public class Shielder2 : Soldier
 
     public override void ReduceHp(float damage)
     {
-        CurrentHp -= damage;
+        CurrentHp.Value -= damage;
         HitCount++;
-        if (CurrentHp <= 0)
+        if (CurrentHp.Value <= 0)
         {
             Vector3Int gridPosition = grid.WorldToCell(transform.position);
 

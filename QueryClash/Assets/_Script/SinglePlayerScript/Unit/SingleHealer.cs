@@ -75,7 +75,6 @@ public class SingleHealer : SingleUnit
         }
     }
 
-
     private void Heal(SingleSoldier soldier)
     {
         soldier.HealingHp(healAmount);
@@ -88,7 +87,4 @@ public class SingleHealer : SingleUnit
         //Vector3 offset = new Vector3(0.5f, 0.5f, 0.5f); // Define the offset
         Gizmos.DrawWireSphere(transform.position , healRange); // Draw healing range sphere with offset
     }
-
-
-
 }

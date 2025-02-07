@@ -1,6 +1,7 @@
 using UnityEngine;
+using FishNet.Object;
 
-public abstract class Bullet : MonoBehaviour
+public abstract class Bullet : NetworkBehaviour
 {
     public float bulletspeed = 1;
     public float deadZone {  get;  set; }
@@ -10,6 +11,8 @@ public abstract class Bullet : MonoBehaviour
     public string thisTag { get; set; }
 
     public bool isBuff = false;
+
+    [Server]
     public virtual void Initialize(float atk, float deadZone, Vector3 direction, string enemyTag, string thisTag)
     {
         Atk = atk;
@@ -17,14 +20,17 @@ public abstract class Bullet : MonoBehaviour
         Direction = direction;
         this.enemyTag = enemyTag;
         this.thisTag = thisTag;
-    }
-
-    public abstract void Move();
-    private void Start()
-    {
         gameObject.tag = this.thisTag;
         Debug.Log("This bullet Atk = " + Atk);
     }
+
+    public abstract void Move();
+
+    //private void Start()
+    //{
+    //    gameObject.tag = this.thisTag;
+    //    Debug.Log("This bullet Atk = " + Atk);
+    //}
 
     private void Update()
     {
@@ -46,8 +52,15 @@ public abstract class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        HandleCollision(collision);
+        if (IsServer)
+        {
+            HandleCollision(collision);
+        }
     }
 
-    protected abstract void HandleCollision(Collider collision);
+    [Server]
+    protected virtual void HandleCollision(Collider collision)
+    {
+        return;
+    }
 }

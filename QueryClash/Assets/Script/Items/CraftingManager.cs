@@ -9,8 +9,8 @@ public class CraftingManager : MonoBehaviour
     public Image unitCraftingIcon;
 
     public Transform[] UnitInventorySlots;
-    public GameObject UnitIconPrefab;
-    public GameObject[] UnitIconPrefabList;
+    public GameObject[] LeftUnitIconPrefabList;
+    public GameObject[] RightUnitIconPrefabList;
 
     //public UnitCraftingIcon[] UnitCraftingIconList;
     public Sprite[] UnitSpriteList;
@@ -19,6 +19,8 @@ public class CraftingManager : MonoBehaviour
     private int unitIndex;
     private float score;
     private List<InventoryItem> craftingMaterials;
+
+    public bool isLeftTeam;
 
     public void UpdateCrafting()
     {
@@ -184,7 +186,12 @@ public class CraftingManager : MonoBehaviour
 
     void SpawnNewUnitIcon(Transform slot)
     {
-        GameObject newUnitIcon = Instantiate(UnitIconPrefabList[unitIndex], slot);
+        GameObject newUnitIcon;
+        //newUnitIcon = Instantiate(UnitIconPrefabList[unitIndex], slot);
+
+        if (isLeftTeam) newUnitIcon = Instantiate(LeftUnitIconPrefabList[unitIndex], slot);
+        else newUnitIcon = Instantiate(RightUnitIconPrefabList[unitIndex], slot);
+
         ButtonSetup unit = newUnitIcon.GetComponent<ButtonSetup>();
         //unit.prefabIndex = unitIndex;
         unit.score = score;

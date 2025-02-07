@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6044236623573990134}
   - component: {fileID: 4382494578268516261}
   - component: {fileID: -5255940854049103623}
+  - component: {fileID: -8256049830509769557}
   m_Layer: 0
   m_Name: LeftSniper2
   m_TagString: LeftTeam
@@ -48,11 +49,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2bbda1d0e9022c4aadac4375b14f2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 0
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   isPlaced: 0
   score: 0
   isBase: 0
   MaxHp: 0
-  CurrentHp: 0
   Atk: 0
   bullet: {fileID: 5170009361321505289, guid: b2e1e85c80323bb4d8cd3b22bea40b53, type: 3}
   spawnRate: 0
@@ -183,6 +186,49 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8256049830509769557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2440581207878697010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
+  _componentConfiguration: 0
+  _synchronizeParent: 0
+  _packing:
+    Position: 1
+    Rotation: 1
+    Scale: 0
+  _interpolation: 2
+  _extrapolation: 2
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 1
+  _interval: 1
+  _synchronizePosition: 1
+  _positionSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeRotation: 0
+  _rotationSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeScale: 0
+  _scaleSnapping:
+    X: 0
+    Y: 0
+    Z: 0
 --- !u!1 &3455739186581672057
 GameObject:
   m_ObjectHideFlags: 0

@@ -98,5 +98,4 @@ public class SingleShielder1 : SingleSoldier
             RemoveUnit(gridPosition);
         }
     }
-
 }
