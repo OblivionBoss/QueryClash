@@ -16,11 +16,11 @@ MonoBehaviour:
   - <Name>k__BackingField: LeftBurst
     <ID>k__BackingField: 101
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 7332573549228132728, guid: bbd0e8f7ebcd5524a96f75b0dba731d6, type: 3}
+    <Prefab>k__BackingField: {fileID: 7332573549228132728, guid: 626a241881b6b264ba526253bf822348, type: 3}
   - <Name>k__BackingField: LeftSustain
     <ID>k__BackingField: 102
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 7714725056889709850, guid: 9896cb7056cfe36499dd0cf26c2f7cac, type: 3}
+    <Prefab>k__BackingField: {fileID: 7714725056889709850, guid: aa5b5f2428cb5fb4991d4424ea4b4ce7, type: 3}
   - <Name>k__BackingField: LeftSniper1
     <ID>k__BackingField: 103
     <Size>k__BackingField: {x: 1, y: 1}
@@ -32,11 +32,11 @@ MonoBehaviour:
   - <Name>k__BackingField: LeftCannon
     <ID>k__BackingField: 105
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1237414273113101344, guid: 38a35fe3a1582334fb725bb7b9989f72, type: 3}
+    <Prefab>k__BackingField: {fileID: 1237414273113101344, guid: 07ab073fbb3b4a94a8e293ca3a23a065, type: 3}
   - <Name>k__BackingField: LeftLaser
     <ID>k__BackingField: 106
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4585930216019193733, guid: c75489064fc30554b8c308571c88f541, type: 3}
+    <Prefab>k__BackingField: {fileID: 4585930216019193733, guid: b0042afe4965cd04ca177b45b59e6f53, type: 3}
   - <Name>k__BackingField: LeftDefensive
     <ID>k__BackingField: 107
     <Size>k__BackingField: {x: 1, y: 1}
@@ -44,15 +44,15 @@ MonoBehaviour:
   - <Name>k__BackingField: LeftCounterAtk
     <ID>k__BackingField: 108
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 8004512513631891132, guid: 054ff1a91b7f2bb45b401787aa363f47, type: 3}
+    <Prefab>k__BackingField: {fileID: 1061754738404325796, guid: ca5583badd3515046847a85ab7bc304c, type: 3}
   - <Name>k__BackingField: LeftHealer
     <ID>k__BackingField: 109
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 7332573549228132728, guid: bbd0e8f7ebcd5524a96f75b0dba731d6, type: 3}
+    <Prefab>k__BackingField: {fileID: 3822293651574785189, guid: 6203da8d08ca2e543babbcf954517e4f, type: 3}
   - <Name>k__BackingField: LeftBuffer
     <ID>k__BackingField: 110
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 7771839516360656773, guid: 0db1bab28a1d259489ec349ccc644ae2, type: 3}
+    <Prefab>k__BackingField: {fileID: 7771839516360656773, guid: 496f7c03e8450324cb66bb3891ae3443, type: 3}
   - <Name>k__BackingField: RightBurst
     <ID>k__BackingField: 201
     <Size>k__BackingField: {x: 1, y: 1}
@@ -88,7 +88,7 @@ MonoBehaviour:
   - <Name>k__BackingField: RightHealer
     <ID>k__BackingField: 209
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 4431038140961165309, guid: e5a482dd047a83c4bbcd94c7f0fa100a, type: 3}
+    <Prefab>k__BackingField: {fileID: 4934194383843506411, guid: f35f5928b4ff8964dabe43c233cb7075, type: 3}
   - <Name>k__BackingField: RightBuffer
     <ID>k__BackingField: 210
     <Size>k__BackingField: {x: 1, y: 1}
