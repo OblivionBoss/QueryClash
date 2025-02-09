@@ -4654,13 +4654,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c3fd0c811feff248af3beefe8163ac2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 1429856065}
-  grid: {fileID: 1016694466}
-  database: {fileID: 11400000, guid: 9bdabc6edb220ac429041af6b44e9277, type: 2}
-  gridVisualization: {fileID: 750504209}
-  preview: {fileID: 385801218}
-  lastDetectedPosition: {x: 0, y: 0, z: 0}
-  objectPlacer: {fileID: 1865548110}
 --- !u!1 &337701699
 GameObject:
   m_ObjectHideFlags: 0
@@ -14837,7 +14830,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1795744937}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -27768,7 +27761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1711472290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30997,7 +30990,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1dd55de31e6ef44bcbfd61166361d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placedGameObjects: []
 --- !u!1 &1866968179
 GameObject:
   m_ObjectHideFlags: 0
@@ -34210,6 +34202,10 @@ PrefabInstance:
     - target: {fileID: 3884080731598515410, guid: 6cfdbfe41722f534db6321a801766836, type: 3}
       propertyPath: m_Name
       value: RDenfensive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7563820403344740016, guid: 6cfdbfe41722f534db6321a801766836, type: 3}
+      propertyPath: prefabIndex
+      value: 107
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

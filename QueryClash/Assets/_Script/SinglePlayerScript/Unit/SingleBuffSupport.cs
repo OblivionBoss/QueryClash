@@ -29,7 +29,7 @@ public class SingleBuffSupport : SingleSoldier
 
     private void HandleGateCollision(Collider collision)
     {
-        Bullet bullet = collision.GetComponent<Bullet>();
+        SingleBullet bullet = collision.GetComponent<SingleBullet>();
         if (bullet != null && collision.gameObject.CompareTag(unitTag) && bullet.isBuff == false)
         {
             bullet.Atk += this.Atk;
