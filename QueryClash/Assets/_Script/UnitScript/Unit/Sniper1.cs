@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class Sniper1 : Soldier
 {
@@ -10,114 +9,79 @@ public class Sniper1 : Soldier
     private Animator childAnimator;
     private bool skillUsing;
     public GameObject specialBullet;
-    void Start()
+
+    public new void Start()
     {
         base.Start();
-        MaxHp = 80f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
+        MaxHp.Value = 80f * (1 + score / 1000);   // Set specific MaxHp for LeftFrontline
+        spawnRate = 2f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
+        bulletTimer = 0f;                   // Initialize bullet timer
+        CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
         Atk = 15 * (1 + score / 1000);
-
     }
 
+    [Server]
     void Update()
     {
-        //base.Update();
+        if (!ClientManager.Connection.IsHost) return;
         HandleBulletSpawning();
         ActivateSkill();
     }
 
     public override void OnPlaced()
     {
-
         base.OnPlaced();
         skillUsing = false;
-
         bulletTimer = 0f;
-
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
     }
 
-    public override void SpawnBullet()
+    [Server]
+    public override void SpawnBulletServer()
     {
-        if (audioSource != null && bulletSpawnSound != null)
+        if (skillUsing)
         {
-            audioSource.PlayOneShot(bulletSpawnSound);
-        }
-
-        if (bullet != null && isPlaced && skillUsing == false)
-        {
-            GameObject spawnedBullet = Instantiate(bullet, transform.position, transform.rotation);
-
-            Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
-            if (bulletComponent != null)
-            {
-                // Determine direction and dead zone based on the soldier's tag
-                if (gameObject.CompareTag("LeftTeam"))
-                {
-                    bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam", "LeftTeam"); // Bullets move right
-                }
-                else if (gameObject.CompareTag("RightTeam"))
-                {
-                    bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam", "RightTeam"); // Bullets move left
-                }
-
-                //Debug.Log($"Spawned bullet from {gameObject.tag} with Atk: {bulletComponent.Atk}");
-            }
-            else
-            {
-                Debug.LogWarning("Spawned object does not have a Bullet component!");
-            }
-        }else if (bullet != null && isPlaced && skillUsing == true)
-        {
-            GameObject spawnedBullet = Instantiate(specialBullet, transform.position, transform.rotation);
-
-            Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
-            if (bulletComponent != null)
-            {
-                // Determine direction and dead zone based on the soldier's tag
-                if (gameObject.CompareTag("LeftTeam"))
-                {
-                    bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam", "LeftTeam"); // Bullets move right
-                }
-                else if (gameObject.CompareTag("RightTeam"))
-                {
-                    bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam", "RightTeam"); // Bullets move left
-                }
-
-                //Debug.Log($"Spawned bullet from {gameObject.tag} with Atk: {bulletComponent.Atk}");
-            }
-            else
-            {
-                Debug.LogWarning("Spawned object does not have a Bullet component!");
-            }
+            SpawnSniperBulletServer(specialBullet);
             ResetSkill();
         }
+        else
+        {
+            SpawnSniperBulletServer(bullet);
+        }
     }
 
-  
+    [Server]
+    public void SpawnSniperBulletServer(GameObject bulletType)
+    {
+        GameObject spawnedBullet = Instantiate(bulletType, transform.position, transform.rotation);
+        ServerManager.Spawn(spawnedBullet, null);
 
+        Bullet bulletComponent = spawnedBullet.GetComponent<Bullet>();
+        if (bulletComponent != null)
+        {
+            // Determine direction and dead zone based on the soldier's tag
+            if (gameObject.CompareTag("LeftTeam"))
+            {
+                bulletComponent.Initialize(Atk, 100f, Vector3.right, "RightTeam", "LeftTeam"); // Bullets move right
+            }
+            else if (gameObject.CompareTag("RightTeam"))
+            {
+                bulletComponent.Initialize(Atk, -100f, Vector3.left, "LeftTeam", "RightTeam"); // Bullets move left
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Spawned object does not have a Bullet component!");
+        }
+        ClientSpawnBullet();
+    }
+
+    [Server]
     public void ActivateSkill()
     {
-        if (!isPlaced)
-            return; // Do nothing if the soldier is not placed
+        if (!isPlaced) return; // Do nothing if the soldier is not placed
 
         // Increment cooldown timer if skill is not active
-        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown)
+        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown.Value)
         {
             skillCooldownRemaining += Time.deltaTime;
         }
@@ -127,10 +91,10 @@ public class Sniper1 : Soldier
         {
             Debug.Log("Skill activated");
             skillUsing = true;
-            
         }
     }
 
+    [Server]
     public void ResetSkill()
     {
         skillCooldownRemaining = 0f; // Reset cooldown timer

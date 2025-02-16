@@ -1,44 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
-public class Timer : MonoBehaviour
+public class Timer : NetworkBehaviour
 {
     [SerializeField] TextMeshProUGUI timerText; // Reference to the UI Text component
-    public float elapsedTime = 0f; // Tracks the time after countdown ends
-    public float countDown; // Duration of the countdown in seconds
-    public bool isCountingDown = true; // Determines whether the countdown is active
+    public readonly SyncVar<float> elapsedTime = new SyncVar<float>(0f); // Tracks the time after countdown ends
+    public readonly SyncVar<float> countDown = new SyncVar<float>(15f); // Duration of the countdown in seconds
+    public readonly SyncVar<bool> isCountingDown = new SyncVar<bool>(true); // Determines whether the countdown is active
+    public readonly SyncVar<bool> isGameStart = new SyncVar<bool>(false); // Determines whether the game is start
 
+    [Server]
     void Update()
     {
-        if (isCountingDown)
+        if (!isGameStart.Value) return;
+
+        if (ClientManager.Connection.IsHost) UpdateTime();
+
+        if (isCountingDown.Value)
         {
-            // Decrease the countdown timer
-            countDown -= Time.deltaTime;
-
-            // Clamp to avoid negative values
-            if (countDown <= 0)
-            {
-                countDown = 0;
-                isCountingDown = false; // Switch to elapsed time mode
-            }
-
             // Display the countdown timer
-            int minutes = Mathf.FloorToInt(countDown / 60);
-            int seconds = Mathf.FloorToInt(countDown % 60);
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            DisplayTime(countDown.Value);
         }
         else
         {
-            // Start tracking and displaying elapsed time
-            timerText.text = "Start";
-            elapsedTime += Time.deltaTime;
-
-            int minutes = Mathf.FloorToInt(elapsedTime / 60);
-            int seconds = Mathf.FloorToInt(elapsedTime % 60);
-            
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            // Display the elapsed time
+            DisplayTime(elapsedTime.Value);
         }
+    }
+
+    [Server]
+    public void UpdateTime()
+    {
+        if (isCountingDown.Value)
+        {
+            // Decrease the countdown timer
+            countDown.Value -= Time.deltaTime;
+
+            // Clamp to avoid negative values
+            if (countDown.Value <= 0)
+            {
+                countDown.Value = 0;
+                isCountingDown.Value = false; // Switch to elapsed time mode
+            }
+        }
+        else
+        {
+            // Start tracking elapsed time
+            elapsedTime.Value += Time.deltaTime;
+        }
+    }
+
+    private void DisplayTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

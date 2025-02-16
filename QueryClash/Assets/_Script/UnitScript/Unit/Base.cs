@@ -22,29 +22,36 @@ public class Base : Soldier
     //    CurrentHp.Value = MaxHp;
     //    isBase = true;
     //}
+    public float baseHP;
 
-    public override void OnStartServer()
+    public override void OnStartClient()
     {
-        base.OnStartServer();
+        base.OnStartClient();
         OnPlaced();
-        CurrentHp.Value = MaxHp;
+        CurrentHp.Value = baseHP;
+        MaxHp.Value = baseHP;
         isBase = true;
     }
 
     [Server]
     public override void ReduceHp(float damage)
     {
-        CurrentHp.Value -= damage;
+        CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage);
         if (CurrentHp.Value <= 0)
         {
             ServerManager.Despawn(gameObject);
         }
-        ClientHealthBarUpdate();
+        healthBar.fillAmount = CurrentHp.Value / MaxHp.Value;
     }
 
     public override void HealingHp(float heal)
     {
+        // Do nothing
+    }
 
+    public override void HealthBarSetup()
+    {
+        // Do nothing
     }
 
     public override void FindHealthBar()
@@ -52,30 +59,3 @@ public class Base : Soldier
         // Do nothing, since healthBar is manually assigned
     }
 }
-
-
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-
-//public class Base : Soldier
-//{
-
-
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-//        OnPlaced();
-//        CurrentHp = MaxHp;
-//        isBase = true;
-//    }
-
-//    public override void ReduceHp(float damage)
-//    {
-//        CurrentHp -= damage;
-//        if (CurrentHp <= 0)
-//        {
-//            Destroy(gameObject);
-//        }
-//    }
-//}

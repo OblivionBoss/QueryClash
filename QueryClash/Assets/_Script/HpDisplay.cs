@@ -13,7 +13,11 @@ public class HpDisplay : MonoBehaviour
     private Base leftBaseScript;
     private Base rightBaseScript;
 
-    //public bool isLeftTeam;
+    public RectTransform leftHpRT;
+    public RectTransform rightHpRT;
+
+    public Image leftHpBar;
+    public Image rightHpBar;
 
     void Start()
     {
@@ -24,15 +28,26 @@ public class HpDisplay : MonoBehaviour
 
     public void swapHpUi()
     {
-        Vector3 leftHpPos = leftHpText.transform.localPosition;
-        leftHpText.transform.localPosition = rightHpText.transform.localPosition;
-        rightHpText.transform.localPosition = leftHpPos;
+        Vector3 leftHpBarPos = leftHpRT.transform.localPosition;
+        leftHpRT.transform.localPosition = rightHpRT.transform.localPosition;
+        rightHpRT.transform.localPosition = leftHpBarPos;
+
+        Color leftHpBarColor = leftHpBar.color;
+        leftHpBar.color = rightHpBar.color;
+        rightHpBar.color = leftHpBarColor;
+
+        leftHpBar.fillOrigin = 1;
+        rightHpBar.fillOrigin = 0;
+        
+        //Vector3 leftHpPos = leftHpText.transform.localPosition;
+        //leftHpText.transform.localPosition = rightHpText.transform.localPosition;
+        //rightHpText.transform.localPosition = leftHpPos;
     }
 
-    void Update()
-    {
-        // Update the text with the current HP values
-        leftHpText.text = leftBaseScript.CurrentHp.Value.ToString("#0");
-        rightHpText.text = rightBaseScript.CurrentHp.Value.ToString("#0");
-    }
+    //void Update()
+    //{
+    //    // Update the text with the current HP values
+    //    leftHpText.text = leftBaseScript.CurrentHp.Value.ToString("#0");
+    //    rightHpText.text = rightBaseScript.CurrentHp.Value.ToString("#0");
+    //}
 }

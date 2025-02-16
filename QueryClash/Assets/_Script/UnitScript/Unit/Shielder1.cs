@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
 
@@ -12,49 +10,30 @@ public class Shielder1 : Soldier
 
     private float Defence = 0f;
 
-    // Start is called before the first frame update
-    void Start()
+    public new void Start()
     {
         base.Start();
-        MaxHp = 1000f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
+        MaxHp.Value = 1000f * (1 + score / 1000); // Set specific MaxHp for LeftFrontline
+        spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
+        bulletTimer = 0f;                   // Initialize bullet timer
+        CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
         Atk = 0f;
     }
 
-    // Update is called once per frame
+    [Server]
     void Update()
     {
-        //base.Update();
-        ActivateSkill();
-    }
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
+        if (ClientManager.Connection.IsHost)
+            ActivateSkill();
     }
 
+    [Server]
     public void ActivateSkill()
     {
-        if (!isPlaced)
-            return; // Do nothing if the soldier is not placed
+        if (!isPlaced) return; // Do nothing if the soldier is not placed
 
         // Increment cooldown timer if skill is not active
-        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown)
+        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown.Value)
         {
             skillCooldownRemaining += Time.deltaTime;
         }
@@ -79,17 +58,18 @@ public class Shielder1 : Soldier
         }
     }
 
+    [Server]
     public void ResetSkill()
     {
-        Defence = 0f; // Reset spawn rate to default
-        skillCooldownRemaining = 0f; // Reset cooldown timer
-        skillDuration = 0f; // Reset skill duration
+        Defence = 0f;                   // Reset Defence to default
+        skillCooldownRemaining = 0f;    // Reset cooldown timer
+        skillDuration = 0f;             // Reset skill duration
     }
 
     [Server]
     public override void ReduceHp(float damage)
     {
-        CurrentHp.Value -= damage * (1-Defence);
+        CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage * (1 - Mathf.Min(0.9f, Defence)));
         if (CurrentHp.Value <= 0)
         {
             Vector3Int gridPosition = grid.WorldToCell(transform.position);
@@ -97,6 +77,6 @@ public class Shielder1 : Soldier
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
-        ClientHealthBarUpdate();
+        //ClientHealthBarUpdate();
     }
 }

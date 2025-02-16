@@ -57,7 +57,6 @@ MonoBehaviour:
   isPlaced: 0
   score: 0
   isBase: 0
-  MaxHp: 0
   Atk: 0
   bullet: {fileID: 4644616734128304917, guid: 340aeeb34893a684bbebc745c559af22, type: 3}
   spawnRate: 0
@@ -66,7 +65,9 @@ MonoBehaviour:
   bulletSpawnSound: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
   audioSource: {fileID: 0}
   timer: {fileID: 0}
-  healthBar: {fileID: 0}
+  healthRT: {fileID: 5970908555088746866}
+  healthBar: {fileID: 758545494049167627}
+  healthText: {fileID: 4438834497523134118}
   skillCooldown: 10
   skillCooldownRemaining: 0
   skillDuration: 0
@@ -228,7 +229,7 @@ MonoBehaviour:
   _spectatorInterpolation: 2
   _enableTeleport: 0
   _teleportThreshold: 1
-  <PrefabId>k__BackingField: 1
+  <PrefabId>k__BackingField: 19
   <SpawnableCollectionId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 11149856367260583252
   <SceneId>k__BackingField: 0
@@ -480,11 +481,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3272968130013038908, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
+--- !u!114 &758545494049167627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8223150584038825593, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
+  m_PrefabInstance: {fileID: 8689865874291033970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4438834497523134118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4972381417392941524, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
+  m_PrefabInstance: {fileID: 8689865874291033970}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5970908555088746866 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3045690411253227008, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
