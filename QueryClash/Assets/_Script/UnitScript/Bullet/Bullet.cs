@@ -1,61 +1,57 @@
 using UnityEngine;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
 public abstract class Bullet : NetworkBehaviour
 {
     public float bulletspeed = 1;
     public float deadZone {  get;  set; }
-    public float Atk { get; set; }
+    public readonly SyncVar<float> Atk = new SyncVar<float>();
     public Vector3 Direction { get; set; }
     public string enemyTag { get; set; }
     public string thisTag { get; set; }
 
-    public bool isBuff = false;
+    public readonly SyncVar<bool> isBuff = new SyncVar<bool>(false);
 
     [Server]
     public virtual void Initialize(float atk, float deadZone, Vector3 direction, string enemyTag, string thisTag)
     {
-        Atk = atk;
+        Atk.Value = atk;
         this.deadZone = deadZone;
         Direction = direction;
         this.enemyTag = enemyTag;
         this.thisTag = thisTag;
         gameObject.tag = this.thisTag;
-        Debug.Log("This bullet Atk = " + Atk);
+        Debug.Log("This bullet Atk = " + Atk.Value);
     }
 
     public abstract void Move();
 
-    //private void Start()
-    //{
-    //    gameObject.tag = this.thisTag;
-    //    Debug.Log("This bullet Atk = " + Atk);
-    //}
-
     private void Update()
     {
+        if (!ClientManager.Connection.IsHost) return;
         Move();
         CheckDeadZone();
     }
 
+    [Server]
     protected void CheckDeadZone()
     {
         if (Direction == Vector3.left && transform.position.x < deadZone)
         {
-            Destroy(gameObject);
+            ServerManager.Despawn(gameObject);
         }
         else if (Direction == Vector3.right && transform.position.x > deadZone)
         {
-            Destroy(gameObject);
+            ServerManager.Despawn(gameObject);
         }
     }
 
+    [Server]
     private void OnTriggerEnter(Collider collision)
     {
-        if (IsServer)
-        {
+        if (ClientManager.Connection.IsHost)
             HandleCollision(collision);
-        }
     }
 
     [Server]

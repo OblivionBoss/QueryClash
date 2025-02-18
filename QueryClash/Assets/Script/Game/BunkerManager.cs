@@ -3,8 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class BunkerManager : MonoBehaviour
 {
-    public GameObject leftBunker; // Assign the left bunker in the Inspector
-    public GameObject rightBunker; // Assign the right bunker in the Inspector
+    public Base leftBunker; // Assign the left bunker in the Inspector
+    public Base rightBunker; // Assign the right bunker in the Inspector
+    public Timer timer;
 
     private bool leftBunkerDestroyed = false;
     private bool rightBunkerDestroyed = false;
@@ -12,17 +13,18 @@ public class BunkerManager : MonoBehaviour
 
     void Update()
     {
+        if (!timer.isGameStart.Value || timer.isCountingDown.Value) return;
         // Check if the bunkers are destroyed
-        if (leftBunker == null && !leftBunkerDestroyed)
+        if (leftBunker.CurrentHp.Value <= 0 && !leftBunkerDestroyed)
         {
             leftBunkerDestroyed = true;
-            Debug.Log("Left bunker destroyed");
+            Debug.LogError("Left bunker destroyed");
         }
 
-        if (rightBunker == null && !rightBunkerDestroyed)
+        if (rightBunker.CurrentHp.Value <= 0 && !rightBunkerDestroyed)
         {
             rightBunkerDestroyed = true;
-            Debug.Log("Right bunker destroyed");
+            Debug.LogError("Right bunker destroyed");
         }
 
         // Check for the game-ending condition
@@ -43,4 +45,3 @@ public class BunkerManager : MonoBehaviour
         SceneManager.LoadScene("EndGame");
     }
 }
-

@@ -18,10 +18,7 @@ public class GridData
                 throw new Exception($"Dictionary already contains this cell position {pos}");
             }
             placedObjects[pos] = data;
-
         }
-
-
     }
 
     private List<Vector3Int> CalculatePostions(Vector3Int gridPosition, Vector2Int objectSize)
@@ -32,13 +29,10 @@ public class GridData
             for (int y = 0; y < objectSize.y; y++)
             {
                 returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
-
             }
         }
         return returnVal;
-
     }
-
 
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
     {
@@ -46,25 +40,15 @@ public class GridData
 
         foreach (var position in positionToOccupy)
         {
-            if (placedObjects.ContainsKey(position))
-            {
-                return false;
-            }
-
+            if (placedObjects.ContainsKey(position)) return false;
         }
         return true;
-
     }
 
     internal int GetRepresentationIndex(Vector3Int gridPosition)
     {
-        if (placedObjects.ContainsKey(gridPosition) == false)
-        {
-            return -1;
-        }
-
-        return placedObjects[gridPosition].PlaceObjectIndex;
-
+        if (placedObjects.ContainsKey(gridPosition) == false) return -1;
+        else return placedObjects[gridPosition].PlaceObjectIndex;
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition)
@@ -88,6 +72,4 @@ public class PlacementData
         ID = iD;
         PlaceObjectIndex = placeObjectIndex;
     }
-
-
 }

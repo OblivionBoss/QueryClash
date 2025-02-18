@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class LeftFrontline : Soldier
 {
@@ -8,19 +7,21 @@ public class LeftFrontline : Soldier
     public float skillCooldownRemaining;
     public float skillDuration;
     private Animator childAnimator;
-    void Start()
+
+    public new void Start()
     {
         base.Start();
-        MaxHp = 100f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 1f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (1 + score / 1000); 
+        MaxHp.Value = 100f * (1 + score / 1000);  // Set specific MaxHp for LeftFrontline
+        spawnRate = 1f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
+        bulletTimer = 0f;                   // Initialize bullet timer
+        CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
+        Atk = 10 * (1 + score / 1000);
     }
 
-    void Update()
+    [Server]
+    public void Update()
     {
-        //base.Update();
+        if (!ClientManager.Connection.IsHost) return;
         HandleBulletSpawning();
         ActivateSkill();
     }
@@ -46,13 +47,13 @@ public class LeftFrontline : Soldier
         }
     }
 
+    [Server]
     public void ActivateSkill()
     {
-        if (!isPlaced)
-            return; // Do nothing if the soldier is not placed
+        if (!isPlaced) return; // Do nothing if the soldier is not placed
 
         // Increment cooldown timer if skill is not active
-        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown)
+        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown.Value)
         {
             skillCooldownRemaining += Time.deltaTime;
         }
@@ -77,12 +78,11 @@ public class LeftFrontline : Soldier
         }
     }
 
+    [Server]
     public void ResetSkill()
     {
-        spawnRate = 1f; // Reset spawn rate to default
-        skillCooldownRemaining = 0f; // Reset cooldown timer
-        skillDuration = 0f; // Reset skill duration
+        spawnRate = 1f;                 // Reset spawn rate to default
+        skillCooldownRemaining = 0f;    // Reset cooldown timer
+        skillDuration = 0f;             // Reset skill duration
     }
-
-
 }

@@ -1,49 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class Laser : Soldier
 {
     private Animator childAnimator;
 
-
-
-    void Start()
+    public new void Start()
     {
         base.Start();
-        MaxHp = 200f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 2.5f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
+        MaxHp.Value = 200f * (1 + score / 1000);  // Set specific MaxHp for LeftFrontline
+        spawnRate = 2.5f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
+        bulletTimer = 0f;                   // Initialize bullet timer
+        CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
         Atk = 15 * (1 + score / 1000);
-
     }
+
+    [Server]
     void Update()
     {
-        //base.Update();
-        HandleBulletSpawning();
+        if (ClientManager.Connection.IsHost)
+            HandleBulletSpawning();
     }
 
     public override void OnPlaced()
     {
-
         base.OnPlaced();
-
         bulletTimer = 0f;
-
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
     }
 }

@@ -1,42 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEditor.Rendering;
 using FishNet.Object;
-using FishNet;
-using UnityEngine.SocialPlatforms.Impl;
-using UnityEngine.UIElements;
+using FishNet.Object.Synchronizing;
 
 public class ObjectPlacer : NetworkBehaviour
 {
-    [SerializeField]
-    private List<GameObject> placedGameObjects = new();
-    public ObjectPlacerNetwork objectPlacerNetwork;
+    private readonly SyncList<GameObject> placedGameObjects = new();
 
     public int PlaceObject(GameObject prefab, Vector3 position, float score)
     {
-        /*
-        GameObject newObject = Instantiate(prefab, position, Quaternion.identity);
-        ServerManager.Spawn(newObject, null);
-        //objectPlacerNetwork.OnPlacedServer(newObject);
-        //InstanceFinder.ServerManager.Spawn(newObject, null);
-        //newObject.transform.position = position;
-        placedGameObjects.Add(newObject);
-
-        // Check if the placed object has a CapsuleUnit script
-        Unit unit = newObject.GetComponent<Unit>();
-        if (unit != null)
-        {
-            // Call the OnPlaced method of the CapsuleUnit
-            unit.OnPlaced();
-            unit.SetScore(score);
-        }
-        */
         PlaceObjectServer(prefab, position, score);
-        //Debug.LogWarning("placedGameObjectsssssssssssssssssssssssssssssss = " + (placedGameObjects.Count - 1));
-        return placedGameObjects.Count - 1;
+
+        // {return placedGameObjects.Count} For deal with network delay only because placedGameObjects does not update instant after call function PlaceObjectServer
+        return placedGameObjects.Count;
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -44,9 +19,6 @@ public class ObjectPlacer : NetworkBehaviour
     {
         GameObject newObject = Instantiate(prefab, position, Quaternion.identity);
         ServerManager.Spawn(newObject, null);
-        //objectPlacerNetwork.OnPlacedServer(newObject);
-        //InstanceFinder.ServerManager.Spawn(newObject, null);
-        //newObject.transform.position = position;
         placedGameObjects.Add(newObject);
 
         // Check if the placed object has a CapsuleUnit script
@@ -57,7 +29,6 @@ public class ObjectPlacer : NetworkBehaviour
             unit.OnPlaced();
             unit.SetScore(score);
         }
-        //Debug.LogWarning("placedGameObjects serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr = " + (placedGameObjects.Count - 1));
     }
 
     internal void RemoveOBjectAt(int gameObjectIndex)
@@ -84,7 +55,6 @@ public class ObjectPlacer : NetworkBehaviour
             Debug.LogWarning($"Index {index} is out of bounds.");
             return null;
         }
-
         return placedGameObjects[index];
     }
 }

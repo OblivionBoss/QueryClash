@@ -14,7 +14,7 @@ public class RightSniDrill : Bullet
         Soldier soldier = collision.gameObject.GetComponent<Soldier>();
         if (collision.gameObject.CompareTag("LeftTeam") && soldier != null && soldier.isPlaced && soldier.isBase == false)
         {
-            soldier.ReduceHp(Atk/3);
+            soldier.ReduceHp(Atk.Value / 3);
             
         }else if(collision.gameObject.CompareTag("LeftTeam") && soldier != null && soldier.isPlaced && soldier.isBase == true)
         {

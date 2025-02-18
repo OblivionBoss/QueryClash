@@ -14,7 +14,7 @@ public class RightSniperSP : Bullet
         Base enemyBase = collision.gameObject.GetComponent<Base>();
         if (collision.gameObject.CompareTag("LeftTeam") && enemyBase != null && enemyBase.isPlaced)
         {
-            enemyBase.ReduceHp(Atk);
+            enemyBase.ReduceHp(Atk.Value);
             Destroy(gameObject);
         }
     }

@@ -12,7 +12,7 @@ public class RightBullet : Bullet
         Soldier soldier = collision.gameObject.GetComponent<Soldier>();
         if (collision.gameObject.CompareTag("LeftTeam") && soldier != null && soldier.isPlaced)
         {
-            soldier.ReduceHp(Atk);
+            soldier.ReduceHp(Atk.Value);
             Destroy(gameObject);
         }
     }
