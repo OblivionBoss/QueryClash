@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5885861720304771876}
   - component: {fileID: 4979617483002275736}
   - component: {fileID: 3605611702295264789}
+  - component: {fileID: 2516738523025668445}
   m_Layer: 0
   m_Name: 'LeftLaserParent '
   m_TagString: LeftTeam
@@ -173,7 +174,6 @@ MonoBehaviour:
   isPlaced: 0
   score: 0
   isBase: 0
-  MaxHp: 0
   Atk: 0
   bullet: {fileID: 7074091357237761129, guid: 2420ab68f33c800449442804085118bc, type: 3}
   spawnRate: 0
@@ -182,7 +182,9 @@ MonoBehaviour:
   bulletSpawnSound: {fileID: 8300000, guid: 06ada5590eba8d6489b36c6f3c54ff78, type: 3}
   audioSource: {fileID: 0}
   timer: {fileID: 0}
+  healthRT: {fileID: 0}
   healthBar: {fileID: 0}
+  healthText: {fileID: 0}
 --- !u!114 &4979617483002275736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +274,28 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     LocalScale: {x: 0, y: 0, z: 0}
+--- !u!114 &2516738523025668445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4585930216019193733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 3605611702295264789}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 2303616419135127264}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1001 &2209669959808926986
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -356,6 +380,11 @@ PrefabInstance:
 --- !u!4 &2214354038203393362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4684318955003992, guid: b655a1227e76c114e8a2fc8090ff0065, type: 3}
+  m_PrefabInstance: {fileID: 2209669959808926986}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2303616419135127264 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95215450363608042, guid: b655a1227e76c114e8a2fc8090ff0065, type: 3}
   m_PrefabInstance: {fileID: 2209669959808926986}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9003357120789676770

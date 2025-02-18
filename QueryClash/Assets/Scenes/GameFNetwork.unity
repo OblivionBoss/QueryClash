@@ -1896,7 +1896,7 @@ MonoBehaviour:
   healthRT: {fileID: 1583611985}
   healthBar: {fileID: 835224717}
   healthText: {fileID: 0}
-  baseHP: 1
+  baseHP: 1000
 --- !u!114 &178801499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13421,7 +13421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!328 &809567868
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -15492,7 +15492,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1795744937}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -18340,7 +18340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1048240723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24807,7 +24807,7 @@ MonoBehaviour:
   sceneCamera: {fileID: 978837728}
   placementLayermask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1032
 --- !u!1 &1487915319
 GameObject:
   m_ObjectHideFlags: 0
@@ -32889,7 +32889,7 @@ MonoBehaviour:
   healthRT: {fileID: 323561052}
   healthBar: {fileID: 1917187550}
   healthText: {fileID: 0}
-  baseHP: 1
+  baseHP: 1000
 --- !u!114 &1888291946
 MonoBehaviour:
   m_ObjectHideFlags: 0

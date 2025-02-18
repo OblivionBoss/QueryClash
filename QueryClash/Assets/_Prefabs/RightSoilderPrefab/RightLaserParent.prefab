@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 86420060322821872}
   - component: {fileID: -7103985452736652802}
   - component: {fileID: 224856684711573542}
+  - component: {fileID: 5790047845429225578}
   m_Layer: 0
   m_Name: RightLaserParent
   m_TagString: RightTeam
@@ -275,6 +276,28 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
+--- !u!114 &5790047845429225578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5073273974945322532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 224856684711573542}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 5002879600958162831}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1001 &4917513016118547185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -359,6 +382,11 @@ PrefabInstance:
 --- !u!4 &4913094715150898481 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4597695455954880, guid: 14719bbccb9258e4aa2752e2a2b87486, type: 3}
+  m_PrefabInstance: {fileID: 4917513016118547185}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5002879600958162831 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95499685077439870, guid: 14719bbccb9258e4aa2752e2a2b87486, type: 3}
   m_PrefabInstance: {fileID: 4917513016118547185}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5381897689017443108

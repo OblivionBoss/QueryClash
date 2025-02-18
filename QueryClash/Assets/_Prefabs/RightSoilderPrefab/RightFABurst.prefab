@@ -57,7 +57,6 @@ MonoBehaviour:
   isPlaced: 0
   score: 0
   isBase: 0
-  MaxHp: 0
   Atk: 0
   bullet: {fileID: 4644616734128304917, guid: 340aeeb34893a684bbebc745c559af22, type: 3}
   spawnRate: 0
@@ -66,7 +65,9 @@ MonoBehaviour:
   bulletSpawnSound: {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
   audioSource: {fileID: 0}
   timer: {fileID: 0}
+  healthRT: {fileID: 0}
   healthBar: {fileID: 0}
+  healthText: {fileID: 0}
   skillCooldown: 10
   skillCooldownRemaining: 0
   skillDuration: 0
@@ -246,7 +247,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7411914940324839725}
   _networkObjectCache: {fileID: 7411914940324839725}
   IgnoredParameters: []
-  _animator: {fileID: 0}
+  _animator: {fileID: 93743415465689761}
   _synchronizeWhenDisabled: 0
   _smoothFloats: 1
   _interpolation: 2
@@ -507,5 +508,10 @@ PrefabInstance:
 --- !u!4 &93743415456148739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
+  m_PrefabInstance: {fileID: 7163913386343963889}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &93743415465689761 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
   m_PrefabInstance: {fileID: 7163913386343963889}
   m_PrefabAsset: {fileID: 0}

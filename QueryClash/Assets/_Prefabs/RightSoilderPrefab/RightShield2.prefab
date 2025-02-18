@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -7126849508957664514}
   - component: {fileID: -5455741672540248297}
   - component: {fileID: 7718051164982010556}
+  - component: {fileID: 1279283757581075066}
   m_Layer: 0
   m_Name: RightShield2
   m_TagString: RightTeam
@@ -273,6 +274,28 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     LocalScale: {x: 0, y: 0, z: 0}
+--- !u!114 &1279283757581075066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2998909506348595374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 7718051164982010556}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 1967828984863807376}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1001 &1881934717542829932
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -353,6 +376,11 @@ PrefabInstance:
 --- !u!4 &1878653009067432282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408297863206454, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
+  m_PrefabInstance: {fileID: 1881934717542829932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1967828984863807376 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95380085654935804, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
   m_PrefabInstance: {fileID: 1881934717542829932}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7408452037324548858

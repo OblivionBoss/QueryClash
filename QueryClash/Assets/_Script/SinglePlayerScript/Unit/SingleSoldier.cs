@@ -33,7 +33,7 @@ public class SingleSoldier : SingleUnit
         timer = GameObject.FindObjectOfType<SingleTimer>();
         if (timer == null)
         {
-            Debug.LogError("Timer not found in the scene!");
+            //Debug.LogError("Timer not found in the scene!");
         }
         if (audioSource == null)
         {

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2669432048975060939}
   - component: {fileID: -816659442163277357}
   - component: {fileID: 4052174762634142302}
+  - component: {fileID: 5766013773404920265}
   m_Layer: 0
   m_Name: LeftShield2
   m_TagString: LeftTeam
@@ -56,7 +57,6 @@ MonoBehaviour:
   isPlaced: 0
   score: 0
   isBase: 0
-  MaxHp: 0
   Atk: 0
   bullet: {fileID: 7674632085815101502, guid: 5b325cb4ecae7dd449c3b2ad1846663f, type: 3}
   spawnRate: 0
@@ -65,8 +65,9 @@ MonoBehaviour:
   bulletSpawnSound: {fileID: 8300000, guid: af66162561d2eed40ad49268cab318bb, type: 3}
   audioSource: {fileID: 0}
   timer: {fileID: 0}
+  healthRT: {fileID: 0}
   healthBar: {fileID: 0}
-  HitCount: 0
+  healthText: {fileID: 0}
 --- !u!65 &2926058797531089412
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -273,6 +274,28 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     LocalScale: {x: 0, y: 0, z: 0}
+--- !u!114 &5766013773404920265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8004512513631891132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 4052174762634142302}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 310117374216017329}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1001 &369041961338359117
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -350,6 +373,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
+--- !u!95 &310117374216017329 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95380085654935804, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}
+  m_PrefabInstance: {fileID: 369041961338359117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &364986078970125179 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4408297863206454, guid: 6bbfea6690ef7724ba495c866081f855, type: 3}

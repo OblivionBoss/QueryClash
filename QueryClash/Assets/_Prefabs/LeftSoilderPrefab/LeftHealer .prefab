@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6908402498182417843}
   - component: {fileID: 272627431890222903}
   - component: {fileID: 1145101606347615135}
+  - component: {fileID: 7507924643919009366}
   m_Layer: 0
   m_Name: 'LeftHealer '
   m_TagString: LeftTeam
@@ -126,6 +127,28 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     LocalScale: {x: 0, y: 0, z: 0}
+--- !u!114 &7507924643919009366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822293651574785189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 1145101606347615135}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 1997786734450018417}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1001 &4822660768055684019
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -214,6 +237,11 @@ PrefabInstance:
       addedObject: {fileID: 4484833377723754536}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd08a534bbc69bc44bc146556a4382b4, type: 3}
+--- !u!95 &1997786734450018417 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6436796265283609538, guid: cd08a534bbc69bc44bc146556a4382b4, type: 3}
+  m_PrefabInstance: {fileID: 4822660768055684019}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5573693442625393163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1131587461562481080, guid: cd08a534bbc69bc44bc146556a4382b4, type: 3}

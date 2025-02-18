@@ -1,5 +1,6 @@
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,7 @@ public class Soldier : Unit
     public Grid grid;
 
     public AudioClip bulletSpawnSound; // Assign in the inspector
+    public AudioClip placedSound;
     public AudioSource audioSource;
 
     public Timer timer;
@@ -25,6 +27,8 @@ public class Soldier : Unit
     public RectTransform healthRT;
     public Image healthBar;
     public TextMeshProUGUI healthText;
+
+    protected Animator childAnimator;
 
     public new void Start()
     {
@@ -44,6 +48,13 @@ public class Soldier : Unit
         HealthBarSetup();
         CurrentHp.OnChange += HealthBarUpdate;
         MaxHp.OnChange += HealthBarUpdate; // For HealthText UI on begin client
+
+        if (isPlaced)
+        {
+            audioSource.PlayOneShot(placedSound);
+        }
+
+        SetAnimator();
     }
 
     [Server]
@@ -133,6 +144,65 @@ public class Soldier : Unit
         healthBar.fillAmount = CurrentHp.Value / MaxHp.Value;
         if (healthText != null)
             healthText.text = CurrentHp.Value.ToString("#0") + " / " + MaxHp.Value.ToString("#0");
+    }
+
+    public override void OnPlaced()
+    {
+        base.OnPlaced();
+        bulletTimer = 0f;
+
+        if (childAnimator == null) // Reassign if null
+        {
+            childAnimator = GetComponentInChildren<Animator>();
+        }
+        if (childAnimator != null)
+        {
+            childAnimator.SetBool("Shooting", true);
+        }
+        else
+        {
+            Debug.LogWarning("Animator reference is null in OnPlaced!");
+        }
+    }
+
+    public virtual void SetAnimator()
+    {
+        Debug.Log("Set animator run");
+        if (this.childAnimator == null) // Reassign if null
+        {
+            this.childAnimator = GetComponentInChildren<Animator>();
+        }
+
+        if (this.childAnimator != null && timer != null)
+        {
+            StartCoroutine(WaitForCountdownAndSetAnimator());
+        }
+        else
+        {
+            Debug.LogWarning("Animator reference is null in SetAnimator!");
+        }
+    }
+
+    //Coroutine to wait until countdown finishes before setting animator bool
+    private IEnumerator WaitForCountdownAndSetAnimator()
+    {
+        while (timer == null) // Wait until timer is assigned
+        {
+            Debug.LogWarning("Waiting for timer to be assigned...");
+            yield return null;
+        }
+
+        yield return new WaitUntil(() => !timer.isCountingDown.Value); // Wait until countdown ends
+
+        if (childAnimator != null)
+        {
+            childAnimator.SetBool("Shooting", true);
+            Debug.Log("Set shooting = true");
+        }
+        else
+        {
+            Debug.LogError("childAnimator is null before setting Shooting!");
+        }
     }
 
     public virtual void HealthBarSetup()

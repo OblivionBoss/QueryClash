@@ -11,7 +11,6 @@ public class Timer : NetworkBehaviour
     public readonly SyncVar<bool> isCountingDown = new SyncVar<bool>(true); // Determines whether the countdown is active
     public readonly SyncVar<bool> isGameStart = new SyncVar<bool>(true); // Determines whether the game is start
 
-    [Server]
     void Update()
     {
         if (!isGameStart.Value) return;

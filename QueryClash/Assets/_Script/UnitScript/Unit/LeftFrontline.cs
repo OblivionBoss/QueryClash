@@ -6,7 +6,9 @@ public class LeftFrontline : Soldier
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
+
+    public GameObject skillFX;
+    public AudioClip skillSound;
 
     public new void Start()
     {
@@ -26,27 +28,6 @@ public class LeftFrontline : Soldier
         ActivateSkill();
     }
 
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-
-        bulletTimer = 0f;
-
-        if (childAnimator == null) // Reassign if null
-        {
-            childAnimator = GetComponentInChildren<Animator>();
-        }
-        if (childAnimator != null)
-        {
-            childAnimator.SetBool("Shooting", true);
-            Debug.Log("Set shooting = true");
-        }
-        else
-        {
-            Debug.LogWarning("Animator reference is null in OnPlaced!");
-        }
-    }
-
     [Server]
     public void ActivateSkill()
     {
@@ -62,20 +43,29 @@ public class LeftFrontline : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            spawnRate = 0.5f;
+            spawnRate = 0.3f;
             skillDuration += Time.deltaTime; // Start counting skill duration
+
+            PlaySoundAndAnimationClient();
         }
         else if (skillDuration > 0) // Skill is active
         {
             skillDuration += Time.deltaTime;
 
             // Check if skill duration has ended
-            if (skillDuration >= 3f)
+            if (skillDuration >= 5f)
             {
                 ResetSkill();
                 Debug.Log("Skill ended");
             }
         }
+    }
+
+    [ObserversRpc]
+    public void PlaySoundAndAnimationClient()
+    {
+        skillFX.SetActive(true);
+        audioSource.PlayOneShot(skillSound);
     }
 
     [Server]
@@ -84,5 +74,12 @@ public class LeftFrontline : Soldier
         spawnRate = 1f;                 // Reset spawn rate to default
         skillCooldownRemaining = 0f;    // Reset cooldown timer
         skillDuration = 0f;             // Reset skill duration
+        StopAnimationClient();
+    }
+
+    [ObserversRpc]
+    public void StopAnimationClient()
+    {
+        skillFX.SetActive(false);
     }
 }

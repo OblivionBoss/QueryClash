@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1707308480420513214}
   - component: {fileID: 6778156688172201933}
   - component: {fileID: 2074883003754652058}
+  - component: {fileID: 3989051147589728261}
   m_Layer: 0
   m_Name: LeftShieldV1
   m_TagString: LeftTeam
@@ -56,7 +57,6 @@ MonoBehaviour:
   isPlaced: 0
   score: 0
   isBase: 0
-  MaxHp: 0
   Atk: 0
   bullet: {fileID: 0}
   spawnRate: 0
@@ -65,7 +65,9 @@ MonoBehaviour:
   bulletSpawnSound: {fileID: 0}
   audioSource: {fileID: 0}
   timer: {fileID: 0}
+  healthRT: {fileID: 0}
   healthBar: {fileID: 0}
+  healthText: {fileID: 0}
   skillCooldown: 10
   skillCooldownRemaining: 0
   skillDuration: 0
@@ -179,6 +181,28 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 0}
     LocalScale: {x: 0, y: 0, z: 0}
+--- !u!114 &3989051147589728261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 779309227765353985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 2074883003754652058}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 2898022796148904960}
+  _synchronizeWhenDisabled: 0
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &2348349675232062553
 GameObject:
   m_ObjectHideFlags: 0
@@ -15016,6 +15040,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6cfc32748fb5004aa11a1be074b5c58, type: 3}
+--- !u!95 &2898022796148904960 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1077356409, guid: c6cfc32748fb5004aa11a1be074b5c58, type: 3}
+  m_PrefabInstance: {fileID: 2898022795072484217}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2898022796148904963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1077356410, guid: c6cfc32748fb5004aa11a1be074b5c58, type: 3}
