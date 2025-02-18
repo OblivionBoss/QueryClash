@@ -11,14 +11,19 @@ public class SingleSniperDrill : SingleBullet
 
     protected override void HandleCollision(Collider collision)
     {
+        if (!collision.gameObject.CompareTag(enemyTag)) return;
+
         SingleSoldier soldier = collision.gameObject.GetComponent<SingleSoldier>();
-        if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == false)
+        if (soldier == null || !soldier.isPlaced) return;
+
+        if (soldier.isBase)
         {
-            soldier.ReduceHp(Atk / 3);
+            Destroy(gameObject); // Destroy bullet if it hits a base
         }
-        else if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == true)
+        else
         {
-            Destroy(gameObject);
+            soldier.ReduceHp(Atk / 3); // Deal damage to normal soldiers
         }
     }
+
 }

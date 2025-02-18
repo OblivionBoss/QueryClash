@@ -10,36 +10,69 @@ public class SingleHealer : SingleUnit
     public float healRange = 1.2f;      // Healing radius
 
     private bool isHealing = false;
-    //public Timer timer;
+   
+    public AudioClip HealingSound; // Assign in the inspector
+    public AudioSource healingAudioSource;
 
     public Grid grid;
     public SingleTimer timer;
+
+    public GameObject specialEffect;
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<SingleTimer>();
-        //if (audioSource == null)
-        //{
-        //    audioSource = GetComponent<AudioSource>();
-        //    if (audioSource == null)
-        //    {
-        //        audioSource = gameObject.AddComponent<AudioSource>();
-        //    }
-        //}
+
+        
+
+        if (HealingSound != null && isPlaced)
+        {
+            PlayHealingSound();
+        }
     }
 
+    public void Update()
+    {
+        if (isPlaced && !timer.isCountingDown)
+        {
+            StartCoroutine(HealOverTime());
+            if (specialEffect == null)
+            {
+                specialEffect = transform.Find("Healing FX")?.gameObject;
+            }
+            if (specialEffect != null)
+            {
+                specialEffect.SetActive(true); // Show the child object
+            }
+        }
+        
+    }
+    private void PlayHealingSound()
+    {
+        healingAudioSource.clip = HealingSound;
+        healingAudioSource.loop = true;
+        healingAudioSource.Play();
+    }
+
+    private void StopHealingSound()
+    {
+        if (healingAudioSource.isPlaying)
+        {
+            healingAudioSource.Stop();
+        }
+    }
     public override void OnPlaced()
     {
         base.OnPlaced();
         
-        StartCoroutine(HealOverTime()); 
-       
+
     }
 
     private IEnumerator HealOverTime()
     {
         isHealing = true;
+        
         float elapsedTime = 0f;
 
         while (elapsedTime < healDuration)
@@ -54,6 +87,7 @@ public class SingleHealer : SingleUnit
         Debug.Log($"{gameObject.name} finished healing and has been destroyed.");
         Vector3Int gridPosition = grid.WorldToCell(transform.position);
         RemoveUnit(gridPosition);
+        StopHealingSound();
 
     }
 

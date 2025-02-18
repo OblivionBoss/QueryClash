@@ -35,7 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1366964225049417525}
+  - {fileID: 93743415456148739}
   - {fileID: 2609057543345423013}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -246,7 +246,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7411914940324839725}
   _networkObjectCache: {fileID: 7411914940324839725}
   IgnoredParameters: []
-  _animator: {fileID: 1366964225039808663}
+  _animator: {fileID: 0}
   _synchronizeWhenDisabled: 0
   _smoothFloats: 1
   _interpolation: 2
@@ -403,7 +403,7 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3325589414082426172, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
   m_PrefabInstance: {fileID: 726172389779896217}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &8132991712726738631
+--- !u!1001 &7163913386343963889
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -414,27 +414,27 @@ PrefabInstance:
     - target: {fileID: 7072444061578043536, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300006, guid: 34d1b8e01a0412f449dcefc77b05e27b, type: 3}
+      objectReference: {fileID: 4300006, guid: 860793eb3324391468f1c120a75ec049, type: 3}
     - target: {fileID: 7072444061578043538, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300010, guid: 669b29b2139d8de4ca5447dd50e201af, type: 3}
+      objectReference: {fileID: 4300010, guid: 860793eb3324391468f1c120a75ec049, type: 3}
     - target: {fileID: 7072444061578043540, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300004, guid: d406f8f3cbe268f4e9d0234d45cca60c, type: 3}
+      objectReference: {fileID: 4300004, guid: 860793eb3324391468f1c120a75ec049, type: 3}
     - target: {fileID: 7072444061578043542, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300002, guid: 1d4365e1541bb6949a273318862b72d3, type: 3}
+      objectReference: {fileID: 4300002, guid: 860793eb3324391468f1c120a75ec049, type: 3}
     - target: {fileID: 7072444061578043544, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 3ad7c5979f6586d4a9532a55492a0ebe, type: 3}
+      objectReference: {fileID: 4300000, guid: 860793eb3324391468f1c120a75ec049, type: 3}
     - target: {fileID: 7072444061578043546, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300008, guid: d805ca1ced9a1054c9cb7e1dc431a6e3, type: 3}
+      objectReference: {fileID: 4300008, guid: 860793eb3324391468f1c120a75ec049, type: 3}
     - target: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Controller
       value: 
@@ -497,20 +497,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Name
-      value: PolyartCharacter
+      value: PolyartCharacter (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
---- !u!95 &1366964225039808663 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
-  m_PrefabInstance: {fileID: 8132991712726738631}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1366964225049417525 stripped
+--- !u!4 &93743415456148739 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
-  m_PrefabInstance: {fileID: 8132991712726738631}
+  m_PrefabInstance: {fileID: 7163913386343963889}
   m_PrefabAsset: {fileID: 0}

@@ -7,7 +7,9 @@ public class SingleBurst : SingleSoldier
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
+
+    public GameObject skillFX;
+    public AudioClip skillSound;
     void Start()
     {
         base.Start();
@@ -15,6 +17,7 @@ public class SingleBurst : SingleSoldier
         spawnRate = 1f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
+        
         Atk = 10 * (1 + score / 1000); 
 
     }
@@ -28,27 +31,7 @@ public class SingleBurst : SingleSoldier
 
     public override void OnPlaced()
     {
-
         base.OnPlaced();
-
-        
-
-        bulletTimer = 0f;
-
-        if (childAnimator == null) // Reassign if null
-        {
-            childAnimator = GetComponentInChildren<Animator>();
-        }
-        if (childAnimator != null)
-        {
-            childAnimator.SetBool("Shooting", true);
-            Debug.Log("Set shooting = true");
-        }
-        else
-        {
-            Debug.LogWarning("Animator reference is null in OnPlaced!");
-        }
-
     }
 
     public void ActivateSkill()
@@ -66,7 +49,9 @@ public class SingleBurst : SingleSoldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            spawnRate = 0.5f;
+            skillFX.SetActive(true);
+            audioSource.PlayOneShot(skillSound);
+            spawnRate = 0.3f;
             skillDuration += Time.deltaTime; // Start counting skill duration
         }
         else if (skillDuration > 0) // Skill is active
@@ -74,7 +59,7 @@ public class SingleBurst : SingleSoldier
             skillDuration += Time.deltaTime;
 
             // Check if skill duration has ended
-            if (skillDuration >= 3f)
+            if (skillDuration >= 5f)
             {
                 ResetSkill();
                 Debug.Log("Skill ended");
@@ -87,6 +72,8 @@ public class SingleBurst : SingleSoldier
         spawnRate = 1f; // Reset spawn rate to default
         skillCooldownRemaining = 0f; // Reset cooldown timer
         skillDuration = 0f; // Reset skill duration
+        skillFX.SetActive(false);
+
     }
 
 

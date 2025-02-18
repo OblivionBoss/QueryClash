@@ -7,7 +7,7 @@ public class SingleSniper1 : SingleSoldier
     public float skillCooldown = 15;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
+   
     private bool skillUsing;
     public GameObject specialBullet;
     void Start()
@@ -30,26 +30,8 @@ public class SingleSniper1 : SingleSoldier
 
     public override void OnPlaced()
     {
-
         base.OnPlaced();
         skillUsing = false;
-
-        bulletTimer = 0f;
-
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
     }
 
     public override void SpawnBullet()
@@ -82,7 +64,8 @@ public class SingleSniper1 : SingleSoldier
             {
                 Debug.LogWarning("Spawned object does not have a Bullet component!");
             }
-        }else if (bullet != null && isPlaced && skillUsing == true)
+        }
+        else if (bullet != null && isPlaced && skillUsing == true)
         {
             GameObject spawnedBullet = Instantiate(specialBullet, transform.position, transform.rotation);
 

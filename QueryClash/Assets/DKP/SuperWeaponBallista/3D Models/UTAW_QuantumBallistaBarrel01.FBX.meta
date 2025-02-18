@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: 9b4d0764de0e81244988c2ec2ef97f3d
+timeCreated: 1465128765
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ballista_Cradle
+    100002: Barrel
+    100004: bowArm_BL_Sect01
+    100006: bowArm_BL_Sect02
+    100008: bowArm_BL_Sect03
+    100010: bowArm_BR_Sect01
+    100012: bowArm_BR_Sect02
+    100014: bowArm_BR_Sect03
+    100016: bowArm_RotationSection_BL
+    100018: bowArm_RotationSection_BR
+    100020: bowArm_RotationSection_TL
+    100022: bowArm_RotationSection_TR
+    100024: bowArm_TL_Sect01
+    100026: bowArm_TL_Sect02
+    100028: bowArm_TL_Sect03
+    100030: bowArm_TR_Sect01
+    100032: bowArm_TR_Sect02
+    100034: bowArm_TR_Sect03
+    100036: FirePoint
+    100038: StringConnect_BL
+    100040: StringConnect_BR
+    100042: StringConnect_TL
+    100044: StringConnect_TR
+    100046: StringConnectPoint
+    100048: //RootNode
+    100050: StringConnectPoint_Bottom
+    100052: StringConnectPoint_Top
+    100054: BallistaBolt
+    100056: BoltLoadLocation
+    100058: boltPos_Forward01
+    100060: boltPos_Forward02
+    100062: boltPos_Rear01
+    100064: boltPos_Rear02
+    100066: boltSection_Forward01
+    100068: boltSection_Forward02
+    100070: boltSection_Rear01
+    100072: boltSection_Rear02
+    400000: ballista_Cradle
+    400002: Barrel
+    400004: bowArm_BL_Sect01
+    400006: bowArm_BL_Sect02
+    400008: bowArm_BL_Sect03
+    400010: bowArm_BR_Sect01
+    400012: bowArm_BR_Sect02
+    400014: bowArm_BR_Sect03
+    400016: bowArm_RotationSection_BL
+    400018: bowArm_RotationSection_BR
+    400020: bowArm_RotationSection_TL
+    400022: bowArm_RotationSection_TR
+    400024: bowArm_TL_Sect01
+    400026: bowArm_TL_Sect02
+    400028: bowArm_TL_Sect03
+    400030: bowArm_TR_Sect01
+    400032: bowArm_TR_Sect02
+    400034: bowArm_TR_Sect03
+    400036: FirePoint
+    400038: StringConnect_BL
+    400040: StringConnect_BR
+    400042: StringConnect_TL
+    400044: StringConnect_TR
+    400046: StringConnectPoint
+    400048: //RootNode
+    400050: StringConnectPoint_Bottom
+    400052: StringConnectPoint_Top
+    400054: BallistaBolt
+    400056: BoltLoadLocation
+    400058: boltPos_Forward01
+    400060: boltPos_Forward02
+    400062: boltPos_Rear01
+    400064: boltPos_Rear02
+    400066: boltSection_Forward01
+    400068: boltSection_Forward02
+    400070: boltSection_Rear01
+    400072: boltSection_Rear02
+    2300000: ballista_Cradle
+    2300002: Barrel
+    2300004: bowArm_BL_Sect01
+    2300006: bowArm_BL_Sect02
+    2300008: bowArm_BL_Sect03
+    2300010: bowArm_BR_Sect01
+    2300012: bowArm_BR_Sect02
+    2300014: bowArm_BR_Sect03
+    2300016: bowArm_RotationSection_BL
+    2300018: bowArm_RotationSection_BR
+    2300020: bowArm_RotationSection_TL
+    2300022: bowArm_RotationSection_TR
+    2300024: bowArm_TL_Sect01
+    2300026: bowArm_TL_Sect02
+    2300028: bowArm_TL_Sect03
+    2300030: bowArm_TR_Sect01
+    2300032: bowArm_TR_Sect02
+    2300034: bowArm_TR_Sect03
+    2300036: BallistaBolt
+    2300038: boltSection_Forward01
+    2300040: boltSection_Forward02
+    2300042: boltSection_Rear01
+    2300044: boltSection_Rear02
+    3300000: ballista_Cradle
+    3300002: Barrel
+    3300004: bowArm_BL_Sect01
+    3300006: bowArm_BL_Sect02
+    3300008: bowArm_BL_Sect03
+    3300010: bowArm_BR_Sect01
+    3300012: bowArm_BR_Sect02
+    3300014: bowArm_BR_Sect03
+    3300016: bowArm_RotationSection_BL
+    3300018: bowArm_RotationSection_BR
+    3300020: bowArm_RotationSection_TL
+    3300022: bowArm_RotationSection_TR
+    3300024: bowArm_TL_Sect01
+    3300026: bowArm_TL_Sect02
+    3300028: bowArm_TL_Sect03
+    3300030: bowArm_TR_Sect01
+    3300032: bowArm_TR_Sect02
+    3300034: bowArm_TR_Sect03
+    3300036: BallistaBolt
+    3300038: boltSection_Forward01
+    3300040: boltSection_Forward02
+    3300042: boltSection_Rear01
+    3300044: boltSection_Rear02
+    4300000: ballista_Cradle
+    4300002: Barrel
+    4300004: bowArm_RotationSection_TR
+    4300006: bowArm_TR_Sect01
+    4300008: bowArm_TR_Sect02
+    4300010: bowArm_TR_Sect03
+    4300012: bowArm_RotationSection_BR
+    4300014: bowArm_BR_Sect01
+    4300016: bowArm_BR_Sect02
+    4300018: bowArm_BR_Sect03
+    4300020: bowArm_RotationSection_BL
+    4300022: bowArm_BL_Sect01
+    4300024: bowArm_BL_Sect02
+    4300026: bowArm_BL_Sect03
+    4300028: bowArm_RotationSection_TL
+    4300030: bowArm_TL_Sect01
+    4300032: bowArm_TL_Sect02
+    4300034: bowArm_TL_Sect03
+    4300036: BallistaBolt
+    4300038: boltSection_Rear01
+    4300040: boltSection_Rear02
+    4300042: boltSection_Forward01
+    4300044: boltSection_Forward02
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
