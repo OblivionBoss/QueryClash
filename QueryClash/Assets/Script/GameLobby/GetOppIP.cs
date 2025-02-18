@@ -7,6 +7,7 @@ using FishNet.Transporting.Tugboat;
 using FishNet;
 using FishNet.Managing;
 using FishNet.Transporting;
+using FishNet.Managing.Client;
 
 public class GetOppIP : MonoBehaviour
 {
@@ -15,12 +16,15 @@ public class GetOppIP : MonoBehaviour
     public string Opp_IP;
 
     private NetworkManager _networkManager;
+    private ClientManager _clientManager;
 
     private void Awake() {
         if (getOppIP == null) 
         { 
             getOppIP = this;
-            InstanceFinder.ClientManager.OnClientConnectionState += OnClientConnectionStateChange;
+            _clientManager = InstanceFinder.ClientManager;
+            _clientManager.OnClientConnectionState += OnClientConnectionStateChange;
+            _clientManager.OnClientTimeOut += OnClientTimeOut;
             DontDestroyOnLoad(gameObject); 
         }
         else if (getOppIP != this)
@@ -89,13 +93,19 @@ public class GetOppIP : MonoBehaviour
     {
         if (args.ConnectionState == LocalConnectionState.Stopped)
         {
-            Debug.LogError("Connection failed. Check server IP and try again.");
+            Debug.LogError("Connection Stop.");
             SceneManager.LoadScene("MainMenuFNetwork");
         }
         else if (args.ConnectionState == LocalConnectionState.Started)
         {
             Debug.LogError("Connected!");
         }
+    }
+
+    private void OnClientTimeOut()
+    {
+        Debug.LogError("Connection Timeout. Check server IP and try again.");
+        SceneManager.LoadScene("MainMenuFNetwork");
     }
 }
 

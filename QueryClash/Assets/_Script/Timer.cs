@@ -9,7 +9,7 @@ public class Timer : NetworkBehaviour
     public readonly SyncVar<float> elapsedTime = new SyncVar<float>(0f); // Tracks the time after countdown ends
     public readonly SyncVar<float> countDown = new SyncVar<float>(15f); // Duration of the countdown in seconds
     public readonly SyncVar<bool> isCountingDown = new SyncVar<bool>(true); // Determines whether the countdown is active
-    public readonly SyncVar<bool> isGameStart = new SyncVar<bool>(false); // Determines whether the game is start
+    public readonly SyncVar<bool> isGameStart = new SyncVar<bool>(true); // Determines whether the game is start
 
     [Server]
     void Update()
