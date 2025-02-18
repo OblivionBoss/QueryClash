@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class SingleGridData
 {
-    Dictionary<Vector3Int, PlacementData> placedObjects = new();
+    Dictionary<Vector3Int, SinglePlacementData> placedObjects = new();
 
     public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placeObjectIndex)
     {
         List<Vector3Int> posistionToOccupy = CalculatePostions(gridPosition, objectSize);
-        PlacementData data = new PlacementData(posistionToOccupy, ID, placeObjectIndex);
+        SinglePlacementData data = new SinglePlacementData(posistionToOccupy, ID, placeObjectIndex);
         foreach (var pos in posistionToOccupy)
         {
             if (placedObjects.ContainsKey(pos))
@@ -18,10 +18,7 @@ public class SingleGridData
                 throw new Exception($"Dictionary already contains this cell position {pos}");
             }
             placedObjects[pos] = data;
-
         }
-
-
     }
 
     private List<Vector3Int> CalculatePostions(Vector3Int gridPosition, Vector2Int objectSize)
@@ -32,13 +29,10 @@ public class SingleGridData
             for (int y = 0; y < objectSize.y; y++)
             {
                 returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
-
             }
         }
         return returnVal;
-
     }
-
 
     public bool CanPlaceObjectAt(Vector3Int gridPosition, Vector2Int objectSize)
     {
@@ -50,10 +44,8 @@ public class SingleGridData
             {
                 return false;
             }
-
         }
         return true;
-
     }
 
     internal int GetRepresentationIndex(Vector3Int gridPosition)
@@ -64,7 +56,6 @@ public class SingleGridData
         }
 
         return placedObjects[gridPosition].PlaceObjectIndex;
-
     }
 
     internal void RemoveObjectAt(Vector3Int gridPosition)
@@ -88,6 +79,4 @@ public class SinglePlacementData
         ID = iD;
         PlaceObjectIndex = placeObjectIndex;
     }
-
-
 }

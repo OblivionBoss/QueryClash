@@ -1,63 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
 public class Shielder2 : Soldier
 {
-
     private Animator childAnimator;
-    public int HitCount = 0;
-
+    public readonly SyncVar<int> HitCount = new SyncVar<int>(0);
 
     // Start is called before the first frame update
-    void Start()
+    public new void Start()
     {
         base.Start();
-        MaxHp = 750f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
+        MaxHp.Value = 750f * (1 + score / 1000);  // Set specific MaxHp for LeftFrontline
+        spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
+        bulletTimer = 0f;                   // Initialize bullet timer
+        CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
         Atk = 20f * (1 + score / 1000);
     }
 
-    // Update is called once per frame
+    [Server]
     void Update()
     {
-        ActiveSkill();
+        if (ClientManager.Connection.IsHost)
+            ActiveSkill();
     }
 
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
-    }
-
+    [Server]
     public void ActiveSkill()
     {
-        if(this.HitCount >= 10)
+        if (HitCount.Value >= 10)
         {
             SpawnBullet();
-            HitCount = 0;
+            HitCount.Value = 0;
         }
     }
 
+    [Server]
     public override void ReduceHp(float damage)
     {
-        CurrentHp.Value -= damage;
-        HitCount++;
+        CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage);
+        HitCount.Value++;
         if (CurrentHp.Value <= 0)
         {
             Vector3Int gridPosition = grid.WorldToCell(transform.position);

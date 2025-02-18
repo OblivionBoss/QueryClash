@@ -1,40 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Healer : Unit
 {
-    public float healAmount = 10f;    // Amount healed per second
-    public float healDuration = 10f;  // Total healing duration
-    public float healInterval = 1f;   // Heal every second
+    public float healAmount = 10f;      // Amount healed per second
+    public float healDuration = 10f;    // Total healing duration
+    public float healInterval = 1f;     // Heal every second
     public float healRange = 1.2f;      // Healing radius
 
     private bool isHealing = false;
-    //public Timer timer;
 
     public Grid grid;
     public Timer timer;
-    public void Start()
+
+    public new void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<Timer>();
-        //if (audioSource == null)
-        //{
-        //    audioSource = GetComponent<AudioSource>();
-        //    if (audioSource == null)
-        //    {
-        //        audioSource = gameObject.AddComponent<AudioSource>();
-        //    }
-        //}
     }
 
     public override void OnPlaced()
     {
         base.OnPlaced();
-
         StartCoroutine(HealOverTime());
-
     }
 
     private IEnumerator HealOverTime()
@@ -68,7 +57,7 @@ public class Healer : Unit
         foreach (Collider collider in hitColliders)
         {
             Soldier soldier = collider.GetComponent<Soldier>();
-            if (soldier != null && soldier.CurrentHp.Value > 0 && soldier.CurrentHp.Value < soldier.MaxHp)
+            if (soldier != null && soldier.CurrentHp.Value > 0 && soldier.CurrentHp.Value < soldier.MaxHp.Value)
             {
                 Heal(soldier);
             }

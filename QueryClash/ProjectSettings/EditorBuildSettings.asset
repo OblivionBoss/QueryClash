@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 87b791da7c11966498486e3f3757f956
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenuFNetwork.unity
     guid: 47919476737cfac42a890d18ba8cf26b
   - enabled: 0
@@ -17,6 +17,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Game.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/BossScene/BossMainMenu.unity
+    guid: 5286456f8977c704fa327d786c8dcd46
+  - enabled: 1
+    path: Assets/Scenes/BossScene/BossGameLobby.unity
+    guid: f36dd39a5599e724ba77cbc14326a96c
+  - enabled: 1
+    path: Assets/Scenes/BossScene/BossMultiOptions.unity
+    guid: 6bc629c9b6e553d42a197381f3f1fa24
+  - enabled: 0
+    path: Assets/Scenes/BossScene/BossWaitingRoom.unity
+    guid: 96f3506e34d8be34c9bb0891cbd8064d
   - enabled: 1
     path: Assets/Scenes/GameFNetwork.unity
     guid: f4f5b7e0304306f4495bfdd42fb8f809

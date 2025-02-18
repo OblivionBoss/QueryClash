@@ -1,5 +1,6 @@
 ﻿using FishNet.Managing;
 using FishNet.Transporting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -201,7 +202,6 @@ namespace FishNet.Example
             UpdateColor(obj.ConnectionState, ref _serverIndicator);
         }
 
-
         public void OnClick_Server()
         {
             if (_networkManager == null)
@@ -215,7 +215,6 @@ namespace FishNet.Example
             DeselectButtons();
         }
 
-
         public void OnClick_Client()
         {
             if (_networkManager == null)
@@ -228,7 +227,6 @@ namespace FishNet.Example
 
             DeselectButtons();
         }
-
 
         private void SetEventSystem()
         {

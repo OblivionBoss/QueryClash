@@ -9,6 +9,7 @@ public class PlacementState : IBuildingState
     Grid grid;
     PreviewSystem previewSystem;
     ObjectsDatabaseSO database;
+    ObjectsDatabaseSO singleDatabase;
     GridData floorData;
     GridData unitData;
     ObjectPlacer objectPlacer;
@@ -19,6 +20,7 @@ public class PlacementState : IBuildingState
                           Grid grid,
                           PreviewSystem previewSystem,
                           ObjectsDatabaseSO database,
+                          ObjectsDatabaseSO singleDatabase,
                           GridData floorData,
                           GridData unitData,
                           ObjectPlacer objectPlacer,
@@ -30,6 +32,7 @@ public class PlacementState : IBuildingState
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.database = database;
+        this.singleDatabase = singleDatabase;
         this.floorData = floorData;
         this.unitData = unitData;
         this.objectPlacer = objectPlacer;
@@ -40,7 +43,7 @@ public class PlacementState : IBuildingState
         if (selectedObjectIndex > -1)
         {
             previewSystem.StartShowingPlacementPreview(
-                database.objectsData[selectedObjectIndex].Prefab,
+                singleDatabase.objectsData[selectedObjectIndex].Prefab,
                 database.objectsData[selectedObjectIndex].Size);
         }
         else

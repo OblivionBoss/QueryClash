@@ -22,6 +22,8 @@ public class CraftingManager : MonoBehaviour
 
     public bool isLeftTeam;
 
+    public Sprite slot;
+
     public void UpdateCrafting()
     {
         QueryMaterial[] pattern = new QueryMaterial[CraftingSlots.Length];
@@ -105,13 +107,15 @@ public class CraftingManager : MonoBehaviour
     private void AddUnitCraftingIcon(int unit_id)
     {
         resultSlot.color = GetQuality(score);
+        unitCraftingIcon.color = Color.white;
         unitCraftingIcon.enabled = true;
         unitCraftingIcon.sprite = UnitSpriteList[unit_id];
     }
 
     private void RemoveUnitCraftingIcon()
     {
-        resultSlot.color = Color.white;
+        resultSlot.color = new Color(0.5490196f, 0.5490196f, 0.5490196f);
+        unitCraftingIcon.color = new Color(0.5490196f, 0.5490196f, 0.5490196f);
         unitCraftingIcon.enabled = false;
         unitCraftingIcon.sprite = null;
         unitIndex = -1;
@@ -198,6 +202,8 @@ public class CraftingManager : MonoBehaviour
         unit.unitInventorySlot = slot.GetComponent<Image>();
         //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
         unit.unitInventorySlot.color = GetQuality(score);
+
+        slot.GetComponent<Image>().sprite = null;
     }
 
     private Color GetQuality(float score)

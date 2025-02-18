@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class SniperSP : Bullet
 {
@@ -9,13 +8,14 @@ public class SniperSP : Bullet
         transform.position += Direction * bulletspeed * Time.deltaTime;
     }
 
+    [Server]
     protected override void HandleCollision(Collider collision)
     {
         Base enemyBase = collision.gameObject.GetComponent<Base>();
         if (collision.gameObject.CompareTag(enemyTag) && enemyBase != null && enemyBase.isPlaced)
         {
-            enemyBase.ReduceHp(Atk);
-            Destroy(gameObject);
+            enemyBase.ReduceHp(Atk.Value);
+            ServerManager.Despawn(gameObject);
         }
     }
 }

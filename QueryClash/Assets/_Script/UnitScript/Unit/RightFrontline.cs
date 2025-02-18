@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class RightFrontline : Soldier
 {
@@ -8,20 +7,21 @@ public class RightFrontline : Soldier
     public float skillCooldownRemaining;
     public float skillDuration;
     private Animator childAnimator;
-    void Start()
+
+    public new void Start()
     {
         base.Start();
-        MaxHp = 150f * (1 + score/1000);         // Set specific MaxHp for LeftFrontline
-        spawnRate = 1.2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp.Value = MaxHp;    // Initialize CurrentHp to MaxHp   
+        MaxHp.Value = 150f * (1 + score/1000);    // Set specific MaxHp for LeftFrontline
+        spawnRate = 1.2f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
+        bulletTimer = 0f;                   // Initialize bullet timer
+        CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
         Atk = 10 * (1 + score / 1000);
-        
     }
 
+    [Server]
     void Update()
     {
-        //base.Update();
+        if (!ClientManager.Connection.IsHost) return;
         HandleBulletSpawning();
         ActivateSkill();
     }
@@ -29,8 +29,6 @@ public class RightFrontline : Soldier
     public override void OnPlaced()
     {
         base.OnPlaced();
-
-        
 
         bulletTimer = 0f;
 
@@ -47,16 +45,15 @@ public class RightFrontline : Soldier
         {
             Debug.LogWarning("Animator reference is null in OnPlaced!");
         }
-
     }
 
+    [Server]
     public void ActivateSkill()
     {
-        if (!isPlaced)
-            return; // Do nothing if the soldier is not placed
+        if (!isPlaced) return; // Do nothing if the soldier is not placed
 
         // Increment cooldown timer if skill is not active
-        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown)
+        if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown.Value)
         {
             skillCooldownRemaining += Time.deltaTime;
         }
@@ -65,29 +62,14 @@ public class RightFrontline : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            CurrentHp.Value += 50;
-            if (CurrentHp.Value > MaxHp)
-            {
-                CurrentHp.Value = MaxHp;
-            }
+            CurrentHp.Value = Mathf.Min(CurrentHp.Value + 50, MaxHp.Value);
 
             Debug.Log("Skill ended");
             ResetSkill();
-            //skillDuration += Time.deltaTime; // Start counting skill duration
         }
-        //else if (skillDuration > 0) // Skill is active
-        //{
-        //    skillDuration += Time.deltaTime;
-
-        //    // Check if skill duration has ended
-        //    if (skillDuration >= 3f)
-        //    {
-        //        ResetSkill();
-        //        Debug.Log("Skill ended");
-        //    }
-        //}
     }
 
+    [Server]
     public void ResetSkill()
     {
         spawnRate = 1.2f; // Reset spawn rate to default

@@ -3,7 +3,6 @@ using FishNet.Managing;
 using FishNet.Object;
 using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace FishNet.Component.Spawning
 {
@@ -29,6 +28,8 @@ namespace FishNet.Component.Spawning
         [Tooltip("Prefab to spawn for the player.")]
         [SerializeField]
         private NetworkObject _playerPrefab;
+        [SerializeField]
+        private NetworkObject _clientPrefab;
         /// <summary>
         /// True to add player to the active scene when no global scenes are specified through the SceneManager.
         /// </summary>
@@ -80,6 +81,12 @@ namespace FishNet.Component.Spawning
             }
 
             _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
+            //_networkManager.SceneManager.OnLoadStart += SceneManager_OnLoadStart;
+        }
+
+        private void SceneManager_OnLoadStart(Managing.Scened.SceneLoadStartEventArgs obj)
+        {
+
         }
 
         /// <summary>
@@ -100,10 +107,12 @@ namespace FishNet.Component.Spawning
             //SetSpawn(_playerPrefab.transform, out position, out rotation);
 
             //NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, position, rotation, true);
+            InstanceFinder.ServerManager.OnClientKick += ServerManager_OnClientKick;
 
             if (InstanceFinder.ServerManager.Clients.Count > 2)
             {
-                InstanceFinder.ClientManager.StopConnection();
+                //InstanceFinder.ClientManager.StopConnection();
+                InstanceFinder.ServerManager.Kick(conn, Managing.Server.KickReason.Unset);
                 return;
             }
 
@@ -120,6 +129,16 @@ namespace FishNet.Component.Spawning
                 _networkManager.SceneManager.AddOwnerToDefaultScene(nob);
 
             OnSpawned?.Invoke(nob);
+        }
+
+        public void SpawnPlayer()
+        {
+
+        }
+
+        private void ServerManager_OnClientKick(NetworkConnection arg1, int arg2, Managing.Server.KickReason arg3)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainMenuFNetwork");
         }
 
         /// <summary>

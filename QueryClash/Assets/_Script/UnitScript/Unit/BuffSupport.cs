@@ -1,41 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Object;
 
 public class BuffSupport : Soldier
 {
     public string unitTag;
 
-    public void Start()
+    public new void Start()
     {
         base.Start();
         unitTag = gameObject.tag;
-        MaxHp = 100f * (1 + score / 1000);
-        CurrentHp.Value = MaxHp;
+        MaxHp.Value = 100f * (1 + score / 1000);
+        CurrentHp.Value = MaxHp.Value;
         Atk = 5 * (1 + score / 1000);
     }
 
-
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-        
-    }
-
+    [Server]
     private void OnTriggerEnter(Collider other)
     {
-        HandleGateCollision(other);
+        if (ClientManager.Connection.IsHost)
+            HandleGateCollision(other);
     }
 
+    [Server]
     private void HandleGateCollision(Collider collision)
     {
         Bullet bullet = collision.GetComponent<Bullet>();
-        if (bullet != null && collision.gameObject.CompareTag(unitTag) && bullet.isBuff == false)
+        if (bullet != null && collision.gameObject.CompareTag(unitTag) && !bullet.isBuff.Value)
         {
-            bullet.Atk += this.Atk;
-            Debug.Log("Atk after buff = " + bullet.Atk);
-            bullet.isBuff = true;
+            bullet.Atk.Value += Atk;
+            Debug.Log("Atk after buff = " + bullet.Atk.Value);
+            bullet.isBuff.Value = true;
         }
     }
-
 }

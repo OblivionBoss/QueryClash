@@ -47,5 +47,3 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 0}
   _networkObjectCache: {fileID: 0}
-  placedGameObjects: []
-  objectPlacerNetwork: {fileID: 5911016309872635940, guid: 1a96ee2a133e7fa4388bbf27a34e6647, type: 3}
