@@ -18,17 +18,23 @@ public class SingleSoldier : SingleUnit
     public Grid grid;
 
     public AudioClip bulletSpawnSound; // Assign in the inspector
+    public AudioClip placedSound;
     public AudioSource audioSource;
 
     public SingleTimer timer;
 
     public Image healthBar;
 
+    protected Animator childAnimator;
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<SingleTimer>();
+        if (timer == null)
+        {
+            Debug.LogError("Timer not found in the scene!");
+        }
         if (audioSource == null)
         {
             audioSource = GetComponent<AudioSource>();
@@ -39,7 +45,13 @@ public class SingleSoldier : SingleUnit
         }
 
         FindHealthBar();
+        if (isPlaced)
+        {
+            audioSource.PlayOneShot(placedSound);
+        }
 
+        SetAnimator();
+       
     }
 
     public void Update()
@@ -99,6 +111,20 @@ public class SingleSoldier : SingleUnit
     public override void OnPlaced()
     {
         base.OnPlaced();
+        bulletTimer = 0f;
+        if (childAnimator == null) // Reassign if null
+        {
+            childAnimator = GetComponentInChildren<Animator>();
+        }
+        if (childAnimator != null)
+        {
+            childAnimator.SetBool("Onplace", true);
+            Debug.Log("Set Onplace = true");
+        }
+        else
+        {
+            Debug.LogWarning("Animator reference is null in OnPlaced!");
+        }
     }
 
 
@@ -148,6 +174,47 @@ public class SingleSoldier : SingleUnit
             }
         }
     }
+
+    public virtual void SetAnimator()
+    {
+        Debug.Log("Set animator run");
+        if (this.childAnimator == null) // Reassign if null
+        {
+            this.childAnimator = GetComponentInChildren<Animator>();
+        }
+
+        if (this.childAnimator != null && timer != null)
+        {
+            StartCoroutine(WaitForCountdownAndSetAnimator());
+        }
+        else
+        {
+            Debug.LogWarning("Animator reference is null in SetAnimator!");
+        }
+    }
+
+    //Coroutine to wait until countdown finishes before setting animator bool
+    private IEnumerator WaitForCountdownAndSetAnimator()
+    {
+        while (timer == null) // Wait until timer is assigned
+        {
+            Debug.LogWarning("Waiting for timer to be assigned...");
+            yield return null;
+        }
+
+        yield return new WaitUntil(() => !timer.isCountingDown); // Wait until countdown ends
+
+        if (childAnimator != null)
+        {
+            childAnimator.SetBool("Shooting", true);
+            Debug.Log("Set shooting = true");
+        }
+        else
+        {
+            Debug.LogError("childAnimator is null before setting Shooting!");
+        }
+    }
+
 
 
 

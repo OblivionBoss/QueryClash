@@ -7,9 +7,11 @@ public class SingleShielder1 : SingleSoldier
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
 
     private float Defence = 0f;
+
+    public GameObject skillFX;
+    public AudioClip skillSound;
 
     // Start is called before the first frame update
     void Start()
@@ -31,20 +33,6 @@ public class SingleShielder1 : SingleSoldier
     public override void OnPlaced()
     {
         base.OnPlaced();
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
     }
 
     public void ActivateSkill()
@@ -61,6 +49,8 @@ public class SingleShielder1 : SingleSoldier
         // Activate skill if cooldown has elapsed
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
+            audioSource.PlayOneShot(skillSound);
+            skillFX.SetActive(true);
             Debug.Log("Skill activated");
             Defence = 0.5f;
             skillDuration += Time.deltaTime; // Start counting skill duration
@@ -83,6 +73,8 @@ public class SingleShielder1 : SingleSoldier
         Defence = 0f; // Reset spawn rate to default
         skillCooldownRemaining = 0f; // Reset cooldown timer
         skillDuration = 0f; // Reset skill duration
+        skillFX.SetActive(false);
+
     }
 
     public override void ReduceHp(float damage)

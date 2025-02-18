@@ -12,14 +12,19 @@ public class SingleLaserBullet : SingleBullet
     protected override void HandleCollision(Collider collision)
     {
         SingleSoldier soldier = collision.gameObject.GetComponent<SingleSoldier>();
-        if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == false)
+
+        if (soldier != null && collision.gameObject.CompareTag(enemyTag) && soldier.isPlaced)
         {
-            soldier.ReduceHp(Atk);
-        }
-        else if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == true)
-        {
-            soldier.ReduceHp(Atk);
-            Destroy(gameObject);
+            soldier.ReduceHp(Atk); // Damage the soldier
+
+            if (soldier.isBase) // If it's a base, destroy the bullet
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                this.Atk *= 2f / 3f; // Reduce attack power for next hits
+            }
         }
     }
 }

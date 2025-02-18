@@ -22,6 +22,7 @@ public class SingleTimer : MonoBehaviour
             {
                 countDown = 0;
                 isCountingDown = false; // Switch to elapsed time mode
+                Debug.Log("Count down ended");
             }
 
             // Display the countdown timer

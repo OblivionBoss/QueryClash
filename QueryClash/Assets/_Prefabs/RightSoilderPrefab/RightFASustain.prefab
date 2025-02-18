@@ -35,7 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5306649166721313965}
+  - {fileID: 3205585280342744962}
   - {fileID: 5705785755250283918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -246,7 +246,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 5945685705787822196}
   _networkObjectCache: {fileID: 5945685705787822196}
   IgnoredParameters: []
-  _animator: {fileID: 5306649166730822415}
+  _animator: {fileID: 0}
   _synchronizeWhenDisabled: 0
   _smoothFloats: 1
   _interpolation: 2
@@ -301,7 +301,7 @@ MonoBehaviour:
     Position: {x: 0.5, y: 0, z: 0.5}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
---- !u!1001 &3135454400428039519
+--- !u!1001 &5646063346390527600
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -312,27 +312,27 @@ PrefabInstance:
     - target: {fileID: 7072444061578043536, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300006, guid: 860793eb3324391468f1c120a75ec049, type: 3}
+      objectReference: {fileID: 4300006, guid: 34d1b8e01a0412f449dcefc77b05e27b, type: 3}
     - target: {fileID: 7072444061578043538, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300010, guid: 860793eb3324391468f1c120a75ec049, type: 3}
+      objectReference: {fileID: 4300010, guid: 669b29b2139d8de4ca5447dd50e201af, type: 3}
     - target: {fileID: 7072444061578043540, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300004, guid: 860793eb3324391468f1c120a75ec049, type: 3}
+      objectReference: {fileID: 4300004, guid: d406f8f3cbe268f4e9d0234d45cca60c, type: 3}
     - target: {fileID: 7072444061578043542, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300002, guid: 860793eb3324391468f1c120a75ec049, type: 3}
+      objectReference: {fileID: 4300002, guid: 1d4365e1541bb6949a273318862b72d3, type: 3}
     - target: {fileID: 7072444061578043544, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300000, guid: 860793eb3324391468f1c120a75ec049, type: 3}
+      objectReference: {fileID: 4300000, guid: 3ad7c5979f6586d4a9532a55492a0ebe, type: 3}
     - target: {fileID: 7072444061578043546, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 4300008, guid: 860793eb3324391468f1c120a75ec049, type: 3}
+      objectReference: {fileID: 4300008, guid: d805ca1ced9a1054c9cb7e1dc431a6e3, type: 3}
     - target: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Controller
       value: 
@@ -395,22 +395,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7072444061591711186, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
       propertyPath: m_Name
-      value: PolyartCharacter
+      value: PolyartCharacter (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
---- !u!4 &5306649166721313965 stripped
+--- !u!4 &3205585280342744962 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7072444061591351794, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
-  m_PrefabInstance: {fileID: 3135454400428039519}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5306649166730822415 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7072444061582351952, guid: 910177ec26b76c14996c2d53627a6def, type: 3}
-  m_PrefabInstance: {fileID: 3135454400428039519}
+  m_PrefabInstance: {fileID: 5646063346390527600}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6992357503673819314
 PrefabInstance:

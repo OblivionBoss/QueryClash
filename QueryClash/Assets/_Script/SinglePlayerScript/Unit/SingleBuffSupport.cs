@@ -5,7 +5,7 @@ using UnityEngine;
 public class SingleBuffSupport : SingleSoldier
 {
     public string unitTag;
-
+    public GameObject specialEffect;
     public void Start()
     {
         base.Start();
@@ -20,6 +20,10 @@ public class SingleBuffSupport : SingleSoldier
     {
         base.OnPlaced();
         
+        if (specialEffect != null)
+        {
+            specialEffect.SetActive(true); // Show the child object
+        }
     }
 
     private void OnTriggerEnter(Collider other)

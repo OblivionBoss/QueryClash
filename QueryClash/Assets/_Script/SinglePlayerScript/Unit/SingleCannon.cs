@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class SingleCannon : SingleSoldier
 {
-
-    private Animator childAnimator;
-    
-
-
     void Start()
     {
         base.Start();
@@ -27,24 +22,6 @@ public class SingleCannon : SingleSoldier
 
     public override void OnPlaced()
     {
-
         base.OnPlaced();
-
-        bulletTimer = 0f;
-
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
     }
 }

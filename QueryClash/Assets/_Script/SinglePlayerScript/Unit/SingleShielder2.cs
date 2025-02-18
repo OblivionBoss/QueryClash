@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class SingleShielder2 : SingleSoldier
 {
 
-    private Animator childAnimator;
+    
     public int HitCount = 0;
 
 
@@ -29,34 +30,25 @@ public class SingleShielder2 : SingleSoldier
     public override void OnPlaced()
     {
         base.OnPlaced();
-        //if (childAnimator == null) // Reassign if null
-        //{
-        //    childAnimator = GetComponentInChildren<Animator>();
-        //}
-        //if (childAnimator != null)
-        //{
-        //    childAnimator.SetBool("Shooting", true);
-        //    Debug.Log("Set shooting = true");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Animator reference is null in OnPlaced!");
-        //}
-
     }
 
-    public void ActiveSkill()
+    public async void ActiveSkill()
     {
         if(this.HitCount >= 10)
         {
+            this.childAnimator = GetComponentInChildren<Animator>();
+            childAnimator.SetBool("Shooting", true);
             SpawnBullet();
             HitCount = 0;
+            await Task.Delay(500);
+            childAnimator.SetBool("Shooting", false);
         }
     }
 
     public override void ReduceHp(float damage)
     {
         CurrentHp -= damage;
+        healthBar.fillAmount = CurrentHp / MaxHp;
         HitCount++;
         if (CurrentHp <= 0)
         {
@@ -65,5 +57,10 @@ public class SingleShielder2 : SingleSoldier
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
+    }
+
+    public override void SetAnimator()
+    {
+        // Do not need to set Animator param in this unit 
     }
 }
