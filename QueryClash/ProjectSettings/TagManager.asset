@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - HealthText
+  - LeftTeam
+  - RightTeam
   layers:
   - Default
   - TransparentFX
@@ -12,12 +14,12 @@ TagManager:
   - Terrain
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - loading ui
+  - loading bg
+  - waiting room ui
+  - video bg
+  - game obj
+  - game UI
   - 
   - 
   - 
