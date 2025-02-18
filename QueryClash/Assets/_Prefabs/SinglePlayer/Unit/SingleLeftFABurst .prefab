@@ -24517,6 +24517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlaced: 0
   score: 0
+  grade: 0
   isBase: 0
   MaxHp: 0
   CurrentHp: 0
@@ -68250,7 +68251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1413472848202949583, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3045690411253227008, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
       propertyPath: m_Pivot.x
