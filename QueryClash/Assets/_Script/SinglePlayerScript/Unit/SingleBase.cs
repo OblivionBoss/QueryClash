@@ -37,4 +37,8 @@ public class SingleBase : SingleSoldier
         // Do nothing, since healthBar is manually assigned
     }
 
+    public override void SetHealthCanvas()
+    {
+        //Do not set Health canvas on Base object.
+    }
 }

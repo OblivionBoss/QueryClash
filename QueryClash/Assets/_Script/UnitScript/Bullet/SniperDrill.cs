@@ -11,14 +11,18 @@ public class SniperDrill : Bullet
     [Server]
     protected override void HandleCollision(Collider collision)
     {
+        if (!collision.gameObject.CompareTag(enemyTag)) return;
+
         Soldier soldier = collision.gameObject.GetComponent<Soldier>();
-        if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == false)
+        if (soldier == null || !soldier.isPlaced) return;
+
+        if (soldier.isBase)
         {
-            soldier.ReduceHp(Atk.Value / 3);
+            Destroy(gameObject); // Destroy bullet if it hits a base
         }
-        else if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == true)
+        else
         {
-            ServerManager.Despawn(gameObject);
+            soldier.ReduceHp(Atk.Value / 3); // Deal damage to normal soldiers
         }
     }
 }

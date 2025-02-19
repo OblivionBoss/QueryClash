@@ -1,10 +1,12 @@
 using UnityEngine;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using System.Threading.Tasks;
+using System.Collections;
 
 public class Shielder2 : Soldier
 {
-    private Animator childAnimator;
+    
     public readonly SyncVar<int> HitCount = new SyncVar<int>(0);
 
     // Start is called before the first frame update
@@ -28,11 +30,26 @@ public class Shielder2 : Soldier
     [Server]
     public void ActiveSkill()
     {
-        if (HitCount.Value >= 10)
+        if(HitCount.Value >= 10)
         {
             SpawnBullet();
             HitCount.Value = 0;
+            PlayAnimationClient();
         }
+    }
+
+    [ObserversRpc]
+    public void PlayAnimationClient()
+    {
+        childAnimator = GetComponentInChildren<Animator>();
+        childAnimator.SetBool("Shooting", true);
+        StartCoroutine(DelayStopAnimation(0.5f));
+    }
+
+    private IEnumerator DelayStopAnimation(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Waits for 3 seconds
+        childAnimator.SetBool("Shooting", false);
     }
 
     [Server]
@@ -47,5 +64,10 @@ public class Shielder2 : Soldier
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
+    }
+
+    public override void SetAnimator()
+    {
+        // do nothing
     }
 }

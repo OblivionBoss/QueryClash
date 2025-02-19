@@ -85,6 +85,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   timer: {fileID: 0}
   healthBar: {fileID: 0}
+  healthCanvas: {fileID: 4532612316628087083}
   skillCooldown: 15
   skillCooldownRemaining: 0
   skillDuration: 0
@@ -311,6 +312,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Healthbar Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1729101503847368947, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2956966739679339008, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -403,5 +408,10 @@ PrefabInstance:
 --- !u!224 &522082999348055268 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3325589414082426172, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
+  m_PrefabInstance: {fileID: 2961136868466883032}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4532612316628087083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1729101503847368947, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
   m_PrefabInstance: {fileID: 2961136868466883032}
   m_PrefabAsset: {fileID: 0}

@@ -191,6 +191,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   timer: {fileID: 0}
   healthBar: {fileID: 0}
+  healthCanvas: {fileID: 1454272351634683401}
 --- !u!1001 &554847577696146886
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -205,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1413472848202949583, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3045690411253227008, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
       propertyPath: m_Pivot.x
@@ -296,6 +297,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
+--- !u!1 &1454272351634683401 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1413472848202949583, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}
+  m_PrefabInstance: {fileID: 554847577696146886}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3312188225591659462 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3045690411253227008, guid: 3e9cf91f1a8ddcb499bda38a85c79dc0, type: 3}

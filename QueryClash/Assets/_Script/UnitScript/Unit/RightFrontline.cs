@@ -1,12 +1,15 @@
 using UnityEngine;
 using FishNet.Object;
+using System.Collections;
 
 public class RightFrontline : Soldier
 {
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
+
+    public GameObject skillFX;
+    public AudioClip skillSound;
 
     public new void Start()
     {
@@ -26,26 +29,6 @@ public class RightFrontline : Soldier
         ActivateSkill();
     }
 
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-
-        bulletTimer = 0f;
-
-        if (childAnimator == null) // Reassign if null
-        {
-            childAnimator = GetComponentInChildren<Animator>();
-        }
-        if (childAnimator != null)
-        {
-            childAnimator.SetBool("Shooting", true);
-            Debug.Log("Set shooting = true");
-        }
-        else
-        {
-            Debug.LogWarning("Animator reference is null in OnPlaced!");
-        }
-    }
 
     [Server]
     public void ActivateSkill()
@@ -56,17 +39,27 @@ public class RightFrontline : Soldier
         if (skillCooldownRemaining < skillCooldown && !timer.isCountingDown.Value)
         {
             skillCooldownRemaining += Time.deltaTime;
+
         }
 
         // Activate skill if cooldown has elapsed
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
+            PlaySoundAndAnimationClient();
+
             CurrentHp.Value = Mathf.Min(CurrentHp.Value + 50, MaxHp.Value);
 
             Debug.Log("Skill ended");
             ResetSkill();
         }
+    }
+
+    [ObserversRpc]
+    public void PlaySoundAndAnimationClient()
+    {
+        ShowFX();
+        audioSource.PlayOneShot(skillSound);
     }
 
     [Server]
@@ -75,5 +68,19 @@ public class RightFrontline : Soldier
         spawnRate = 1.2f; // Reset spawn rate to default
         skillCooldownRemaining = 0f; // Reset cooldown timer
         skillDuration = 0f; // Reset skill duration
+    }
+
+    public void ShowFX()
+    {
+        skillFX.SetActive(true);
+        StartCoroutine(HideFXAfterDelay(3f)); // This runs in the background
+        Debug.Log("This will run immediately after setting FX active");
+    }
+
+    private IEnumerator HideFXAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Waits for 3 seconds
+        skillFX.SetActive(false);
+        Debug.Log("FX is now hidden");
     }
 }

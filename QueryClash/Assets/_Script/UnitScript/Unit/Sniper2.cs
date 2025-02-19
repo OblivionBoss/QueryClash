@@ -6,7 +6,7 @@ public class Sniper2 : Soldier
     public float skillCooldown = 15;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
+    
     private bool skillUsing;
     public GameObject specialBullet;
 
@@ -32,7 +32,7 @@ public class Sniper2 : Soldier
     {
         base.OnPlaced();
         skillUsing = false;
-        bulletTimer = 0f;
+        
     }
 
     [Server]

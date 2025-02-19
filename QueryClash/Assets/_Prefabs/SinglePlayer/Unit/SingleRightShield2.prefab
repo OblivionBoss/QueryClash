@@ -85,6 +85,7 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   timer: {fileID: 0}
   healthBar: {fileID: 0}
+  healthCanvas: {fileID: 7881769295622444013}
   HitCount: 0
 --- !u!1 &8517934217194332249
 GameObject:
@@ -382,5 +383,10 @@ PrefabInstance:
 --- !u!224 &6104759251508145698 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3325589414082426172, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
+  m_PrefabInstance: {fileID: 8835688369435613982}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7881769295622444013 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1729101503847368947, guid: df13ee2f6e67f76449dd38c95b5d93e1, type: 3}
   m_PrefabInstance: {fileID: 8835688369435613982}
   m_PrefabAsset: {fileID: 0}
