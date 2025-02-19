@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
@@ -8,7 +7,6 @@ using FishNet;
 using FishNet.Managing;
 using FishNet.Transporting;
 using FishNet.Managing.Client;
-using System.Net.NetworkInformation;
 
 public class GetOppIP : MonoBehaviour
 {
@@ -18,6 +16,7 @@ public class GetOppIP : MonoBehaviour
 
     private NetworkManager _networkManager;
     private ClientManager _clientManager;
+    public Tugboat TB;
 
     private void Awake() {
         if (getOppIP == null) 
@@ -61,33 +60,34 @@ public class GetOppIP : MonoBehaviour
 
     public void GetIPv4() { 
         Opp_IP = inputField.text;
-
-        //Opp_IP = "localhost";
-        //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress(Opp_IP);
-        //InstanceFinder.NetworkManager.GetComponent<Tugboat>().SetClientAddress();
-        //SceneManager.LoadSceneAsync("GameFNetwork"); //SceneManager.LoadSceneAsync("Game");
-        //if (!OnStart_Client(Opp_IP))
-        //{
-        //    SceneManager.LoadSceneAsync("MainMenuFNetwork");
-        //}
-        //else SceneManager.LoadSceneAsync("GameFNetwork");
-        OnStart_Client(Opp_IP);
-        SceneManager.LoadScene("GameFNetwork");
+        if (Opp_IP.Equals(string.Empty))
+        {
+            Debug.LogError("ip must not empty");
+            return;
+        }
+        
+        OnStart_Client();
+        SceneManager.LoadSceneAsync("GameFNetwork");
     }
 
-    public void OnStart_Client(string address)
+    public void OnStart_Client()
     {
         if (_networkManager == null) return;
-      
+
+        if (TB == null) TB = _networkManager.GetComponent<Tugboat>();
+        TB.SetClientAddress(Opp_IP);
+        if (TB != null) Debug.LogError("TB != null");
+        Debug.LogError("ip = " + Opp_IP);
         StartCoroutine(ClientDelay());
-        //_networkManager.ClientManager.StartConnection();
     }
 
     private IEnumerator ClientDelay()
     {
         yield return new WaitForSeconds(0.5f);
 
-        _networkManager.ClientManager.StartConnection();
+        _networkManager.ClientManager.StartConnection(Opp_IP);
+        Debug.LogError("ip cdelay = " + Opp_IP);
+        Debug.LogError("After startconn" + TB.GetClientAddress());
     }
 
     private void OnClientConnectionStateChange(ClientConnectionStateArgs args)
@@ -95,8 +95,8 @@ public class GetOppIP : MonoBehaviour
         if (args.ConnectionState == LocalConnectionState.Stopped)
         {
             Debug.LogError("Connection Stop.");
-            //SceneManager.LoadScene("MainMenuFNetwork");
-            SceneManager.LoadScene("BossGameLobby");
+            SceneManager.LoadSceneAsync("MainMenuFNetwork");
+            //SceneManager.LoadScene("BossGameLobby");
         }
         else if (args.ConnectionState == LocalConnectionState.Started)
         {
@@ -108,7 +108,7 @@ public class GetOppIP : MonoBehaviour
     {
         Debug.LogError("Connection Timeout. Check server IP and try again.");
         //SceneManager.LoadScene("MainMenuFNetwork");
-        SceneManager.LoadScene("BossGameLobby");
+        SceneManager.LoadSceneAsync("BossGameLobby");
     }
 }
 

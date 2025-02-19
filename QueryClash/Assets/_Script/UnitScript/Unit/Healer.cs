@@ -1,3 +1,4 @@
+using FishNet.Object;
 using System.Collections;
 using UnityEngine;
 
@@ -13,17 +14,59 @@ public class Healer : Unit
     public Grid grid;
     public Timer timer;
 
+    public GameObject specialEffect;
+    public AudioClip healingSound;
+    public AudioSource healingAudioSource;
+
     public new void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<Timer>();
+
+        if (healingSound != null && isPlaced) PlayHealingSound();
+    }
+
+    [Server]
+    public void Update()
+    {
+        if (!ClientManager.Connection.IsHost) return;
+
+        if (isPlaced && !timer.isCountingDown.Value)
+        {
+            StartCoroutine(HealOverTime());
+            if (specialEffect == null)
+            {
+                specialEffect = transform.Find("Healing FX")?.gameObject;
+            }
+            if (specialEffect != null)
+            {
+                specialEffect.SetActive(true); // Show the child object
+            }
+        }
+    }
+
+    [ObserversRpc]
+    public void PlayHealingSound()
+    {
+        healingAudioSource.clip = healingSound;
+        healingAudioSource.loop = true;
+        healingAudioSource.Play();
+    }
+
+    [ObserversRpc]
+    private void StopHealingSound()
+    {
+        if (healingAudioSource.isPlaying)
+        {
+            healingAudioSource.Stop();
+        }
     }
 
     public override void OnPlaced()
     {
         base.OnPlaced();
-        StartCoroutine(HealOverTime());
+        //StartCoroutine(HealOverTime()); // Comment this line if there's a issue.
     }
 
     private IEnumerator HealOverTime()
@@ -43,6 +86,7 @@ public class Healer : Unit
         Debug.Log($"{gameObject.name} finished healing and has been destroyed.");
         Vector3Int gridPosition = grid.WorldToCell(transform.position);
         RemoveUnit(gridPosition);
+        StopHealingSound();
 
     }
 

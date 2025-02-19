@@ -4,7 +4,7 @@ using FishNet.Object;
 public class BuffSupport : Soldier
 {
     public string unitTag;
-
+    public GameObject specialEffect;
     public new void Start()
     {
         base.Start();
@@ -12,6 +12,15 @@ public class BuffSupport : Soldier
         MaxHp.Value = 100f * (1 + score / 1000);
         CurrentHp.Value = MaxHp.Value;
         Atk = 5 * (1 + score / 1000);
+    }
+
+    public override void OnPlaced()
+    {
+        base.OnPlaced();
+        if (specialEffect != null)
+        {
+            specialEffect.SetActive(true);
+        }
     }
 
     [Server]

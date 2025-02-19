@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 87b791da7c11966498486e3f3757f956
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenuFNetwork.unity
     guid: 47919476737cfac42a890d18ba8cf26b
   - enabled: 0
@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameFNetwork.unity
     guid: f4f5b7e0304306f4495bfdd42fb8f809
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/EndGame.unity
     guid: 0a45ba0a6d0fee743b6f6a3fac15797c
   m_configObjects: {}

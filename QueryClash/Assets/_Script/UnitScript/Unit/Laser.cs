@@ -3,7 +3,6 @@ using FishNet.Object;
 
 public class Laser : Soldier
 {
-    private Animator childAnimator;
 
     public new void Start()
     {
@@ -20,11 +19,5 @@ public class Laser : Soldier
     {
         if (ClientManager.Connection.IsHost)
             HandleBulletSpawning();
-    }
-
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-        bulletTimer = 0f;
     }
 }

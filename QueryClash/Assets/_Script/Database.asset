@@ -44,7 +44,7 @@ MonoBehaviour:
   - <Name>k__BackingField: LeftCounterAtk
     <ID>k__BackingField: 108
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 1061754738404325796, guid: ca5583badd3515046847a85ab7bc304c, type: 3}
+    <Prefab>k__BackingField: {fileID: 8004512513631891132, guid: 054ff1a91b7f2bb45b401787aa363f47, type: 3}
   - <Name>k__BackingField: LeftHealer
     <ID>k__BackingField: 109
     <Size>k__BackingField: {x: 1, y: 1}

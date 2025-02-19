@@ -24,6 +24,7 @@ public class SingleSoldier : SingleUnit
     public SingleTimer timer;
 
     public Image healthBar;
+    public GameObject healthCanvas;
 
     protected Animator childAnimator;
     public void Start()
@@ -49,7 +50,7 @@ public class SingleSoldier : SingleUnit
         {
             audioSource.PlayOneShot(placedSound);
         }
-
+        
         SetAnimator();
        
     }
@@ -112,6 +113,8 @@ public class SingleSoldier : SingleUnit
     {
         base.OnPlaced();
         bulletTimer = 0f;
+        SetHealthCanvas();
+        
         if (childAnimator == null) // Reassign if null
         {
             childAnimator = GetComponentInChildren<Animator>();
@@ -173,6 +176,11 @@ public class SingleSoldier : SingleUnit
                 Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
             }
         }
+    }
+
+    public virtual void SetHealthCanvas()
+    {
+        healthCanvas.SetActive(true);
     }
 
     public virtual void SetAnimator()

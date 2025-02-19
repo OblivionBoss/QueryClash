@@ -6,7 +6,10 @@ public class Shielder1 : Soldier
     public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
-    private Animator childAnimator;
+    
+
+    public GameObject skillFX;
+    public AudioClip skillSound;
 
     private float Defence = 0f;
 
@@ -42,6 +45,7 @@ public class Shielder1 : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
+            PlaySoundAndAnimationClient();
             Defence = 0.5f;
             skillDuration += Time.deltaTime; // Start counting skill duration
         }
@@ -59,14 +63,6 @@ public class Shielder1 : Soldier
     }
 
     [Server]
-    public void ResetSkill()
-    {
-        Defence = 0f;                   // Reset Defence to default
-        skillCooldownRemaining = 0f;    // Reset cooldown timer
-        skillDuration = 0f;             // Reset skill duration
-    }
-
-    [Server]
     public override void ReduceHp(float damage)
     {
         CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage * (1 - Mathf.Min(0.9f, Defence)));
@@ -78,5 +74,27 @@ public class Shielder1 : Soldier
             RemoveUnit(gridPosition);
         }
         //ClientHealthBarUpdate();
+    }
+
+    [Server]
+    public void ResetSkill()
+    {
+        Defence = 0f;                   // Reset Defence to default
+        skillCooldownRemaining = 0f;    // Reset cooldown timer
+        skillDuration = 0f;             // Reset skill duration
+        StopAnimationClient();
+    }
+    
+    [ObserversRpc]
+    public void PlaySoundAndAnimationClient()
+    {
+        skillFX.SetActive(true);
+        audioSource.PlayOneShot(skillSound);
+    }
+
+    [ObserversRpc]
+    public void StopAnimationClient()
+    {
+        skillFX.SetActive(false);
     }
 }

@@ -8,7 +8,7 @@ public class SingleUnit : MonoBehaviour
     private SinglePlacementSystem placementSystem;
     public bool isPlaced = false;
     public float score;
-    public float grade;
+    public int grade;
     public bool isBase=false;
     private Renderer showGradeRenderer;
     public event Action OnDeath;
@@ -60,11 +60,11 @@ public class SingleUnit : MonoBehaviour
 
     private void SetGrade()
     {
-        if (score > 1200f) grade = 5f;
-        else if (score > 800f) grade = 4f;
-        else if (score > 400f) grade = 3f;
-        else if (score > 0f) grade = 3f;
-        else grade = 1f;
+        if (score > 1200f) grade = 5;
+        else if (score > 800f) grade = 4;
+        else if (score > 400f) grade = 3;
+        else if (score > 0f) grade = 2;
+        else grade = 1;
     }
 
     private void UpdateGradeColor()
@@ -75,11 +75,11 @@ public class SingleUnit : MonoBehaviour
 
         switch (grade)
         {
-            case 5f: newColor = new Color(1f, 0.743384f, 0f); break;
-            case 4f: newColor = new Color(0.7693181f, 0f, 1f); break;
-            case 3f: newColor = new Color(0f, 0.5488603f, 1f); break;
-            case 2f: newColor = new Color(0f, 0.7987421f, 0.07062242f); break;
-            case 1f: newColor = new Color(0.6289307f, 0.6289307f, 0.6289307f); break;
+            case 5: newColor = new Color(1f, 0.743384f, 0f); break;
+            case 4: newColor = new Color(0.7693181f, 0f, 1f); break;
+            case 3: newColor = new Color(0f, 0.5488603f, 1f); break;
+            case 2: newColor = new Color(0f, 0.7987421f, 0.07062242f); break;
+            case 1: newColor = new Color(0.6289307f, 0.6289307f, 0.6289307f); break;
         }
 
         showGradeRenderer.material.color = newColor;

@@ -3,7 +3,7 @@ using FishNet.Object;
 
 public class Cannon : Soldier
 {
-    private Animator childAnimator;
+   
 
     public new void Start()
     {
@@ -23,9 +23,5 @@ public class Cannon : Soldier
             HandleBulletSpawning();
     }
 
-    public override void OnPlaced()
-    {
-        base.OnPlaced();
-        bulletTimer = 0f;
-    }
+    
 }

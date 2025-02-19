@@ -12,14 +12,19 @@ public class LaserBullet : Bullet
     protected override void HandleCollision(Collider collision)
     {
         Soldier soldier = collision.gameObject.GetComponent<Soldier>();
-        if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == false)
+
+        if (soldier != null && collision.gameObject.CompareTag(enemyTag) && soldier.isPlaced)
         {
-            soldier.ReduceHp(Atk.Value);
-        }
-        else if (collision.gameObject.CompareTag(enemyTag) && soldier != null && soldier.isPlaced && soldier.isBase == true)
-        {
-            soldier.ReduceHp(Atk.Value);
-            ServerManager.Despawn(gameObject);
+            soldier.ReduceHp(Atk.Value); // Damage the soldier
+
+            if (soldier.isBase) // If it's a base, destroy the bullet
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Atk.Value *= 2f / 3f; // Reduce attack power for next hits
+            }
         }
     }
 }

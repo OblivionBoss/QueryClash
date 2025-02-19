@@ -9,8 +9,14 @@ using FishNet;
 public class SetOppIP : MonoBehaviour
 {
     public Tugboat TB;
-    // Start is called before the first frame update
-    void Start()
-    { //TB.SetClientAddress(GetOppIP.getOppIP.Opp_IP); 
+
+    //void Start()
+    //{ 
+    //    TB.SetClientAddress(GetOppIP.getOppIP.Opp_IP);
+    //}
+
+    public void OnClientAddress()
+    {
+        TB.SetClientAddress(GetOppIP.getOppIP.Opp_IP);
     }
 }

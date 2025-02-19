@@ -27,6 +27,7 @@ public class Soldier : Unit
     public RectTransform healthRT;
     public Image healthBar;
     public TextMeshProUGUI healthText;
+    
 
     protected Animator childAnimator;
 
@@ -150,6 +151,7 @@ public class Soldier : Unit
     {
         base.OnPlaced();
         bulletTimer = 0f;
+        
 
         if (childAnimator == null) // Reassign if null
         {
@@ -157,7 +159,7 @@ public class Soldier : Unit
         }
         if (childAnimator != null)
         {
-            childAnimator.SetBool("Shooting", true);
+            childAnimator.SetBool("Onplace", true);
         }
         else
         {
