@@ -18,6 +18,8 @@ public class SingleHealer : SingleUnit
     public SingleTimer timer;
 
     public GameObject specialEffect;
+
+   
     public void Start()
     {
         base.Start();
@@ -111,10 +113,11 @@ public class SingleHealer : SingleUnit
         foreach (Collider collider in hitColliders)
         {
             SingleSoldier soldier = collider.GetComponent<SingleSoldier>();
-            if (soldier != null && soldier.CurrentHp > 0 && soldier.CurrentHp < soldier.MaxHp)
+            if (soldier != null && soldier.CurrentHp > 0 && soldier.CurrentHp < soldier.MaxHp && soldier.CompareTag(gameObject.tag))
             {
                 Heal(soldier);
             }
+
         }
     }
 
