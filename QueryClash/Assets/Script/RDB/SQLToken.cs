@@ -10,6 +10,7 @@ public class SQLToken : MonoBehaviour, IPointerClickHandler
     public TextMeshProUGUI tokenText;
     public RectTransform rectTransform;
     public int tokenIndex;
+    public bool isString;
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -22,16 +23,5 @@ public class SQLToken : MonoBehaviour, IPointerClickHandler
         {
             this.keyboardManager = keyboardManager;
         }  
-    }
-
-    void Awake()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

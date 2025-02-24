@@ -16,7 +16,7 @@ public class Shielder1 : Soldier
     public new void Start()
     {
         base.Start();
-        MaxHp.Value = 1000f * (1 + score / 1000); // Set specific MaxHp for LeftFrontline
+        MaxHp.Value = 1000f * (1 + score.Value / 1000); // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   

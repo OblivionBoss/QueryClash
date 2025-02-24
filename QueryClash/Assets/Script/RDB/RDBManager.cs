@@ -6,7 +6,8 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
-using GameKit.Dependencies.Utilities;
+using System.Text;
+using Unity.VisualScripting;
 
 public class RDBManager : MonoBehaviour
 {
@@ -14,11 +15,12 @@ public class RDBManager : MonoBehaviour
     public GameObject colPrefab;
     public GameObject tablePrefab;
     public Transform canvasParent;
+    public Transform queryErrorParent;
     public GameObject linePrefab;
     public Transform linePanel;
     public GameObject queryErrorBoxPrefab;
 
-    public string dbName;
+    private string dbName;
     public string tempDB;
     public InventoryManager inventoryManager;
     public TextMeshProUGUI output;
@@ -35,6 +37,8 @@ public class RDBManager : MonoBehaviour
     public SQLTokenKeyboardManager keyboardManager;
     public TextMeshProUGUI textForSize;
 
+    public Timer timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,13 +48,15 @@ public class RDBManager : MonoBehaviour
         //getDatabase(dbName, table_name, all_table_list);
         //GenerateAllTables(table_name, all_table_list);
 
-        dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
-        Vector2[] company = {new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f)};
-        Debug.Log(dbName);
+        //dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
+        //Vector2[] company = {new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f)};
+        //Debug.Log(dbName);
 
-        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
-        queryResult = null;
-        GetFocusMaterial();
+        //resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
+        //queryResult = null;
+        //GetFocusMaterial();
+        StartRDBNetwork(tempDB);
+
         //GameObject a = Instantiate(linePrefab, linePanel);
         //var b = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[0]).getTable();
         //var c = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[1]).getTable();
@@ -61,18 +67,21 @@ public class RDBManager : MonoBehaviour
         //debug_getResourceTable(resourceTable);
     }
 
+    public void StartRDBNetwork(string rdbName)
+    {
+        dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + rdbName;
+        Vector2[] company = { new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f) };
+        Debug.Log(dbName);
+
+        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
+        queryResult = null;
+        GetFocusMaterial();
+    }
+
     public void GetFocusMaterial()
     {
         focusMaterialType = (MaterialType) chooseMatDropdown.value;
         Debug.Log("focusMaterialType = " + focusMaterialType.ToString());
-    }
-
-    public void ExecuteForInputText()
-    {
-        try { Query(textInputField.text); }
-        catch { }
-        try { Query1(textInputField.text); }
-        catch { }
     }
 
     public void Query(string query_command)
@@ -94,7 +103,13 @@ public class RDBManager : MonoBehaviour
         List<List<GameObject>> query_cell_list = new List<List<GameObject>>(); // idx [i][0] to [i][k-1] is a query cell in table
         List<List<Sprite>> mat_sprites = new List<List<Sprite>>();
         List<ResourceData> queryData_list = new List<ResourceData>();
-        int NumDiffTableQueryFocus = 0, NumMatOtherQueryFocus = 0, QueryFocusCount = 0, QueryEmptyCount = 0;
+        int NumDiffTableQueryFocus = 0, NumMatOtherQueryFocus = 0, QueryFocusCount = 0, QueryNotFocusCount = 0, QueryEmptyCount = 0;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (timer.isCountingDown.Value) stringBuilder.Append("#P-");
+        else stringBuilder.Append("#B-");
+        stringBuilder.Append(timer.timerText.text);
+
         try
         {
             using (var connection = new SqliteConnection(dbName))
@@ -113,6 +128,14 @@ public class RDBManager : MonoBehaviour
                         temp = e.Message;
                         Debug.LogError(e);
                         queryErrorBox = GenerateQueryErrorBox(e.Message);
+                        connection.Close();
+
+                        // log E with query_command
+                        stringBuilder.Append("-E# {");
+                        stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
+                        stringBuilder.Append("}");
+                        Debug.LogError(stringBuilder.ToString());
+                        return;
                     }
 
                     // "Modify SQL Command" and "get column name list of first SELECT" for Material query
@@ -239,6 +262,10 @@ public class RDBManager : MonoBehaviour
                                                 isFound = true;
                                             }
                                         }
+                                        else
+                                        {
+                                            QueryNotFocusCount++;
+                                        }
                                     }
                                 }
                                 else
@@ -257,8 +284,15 @@ public class RDBManager : MonoBehaviour
                     catch (SqliteException e)
                     {
                         temp = e.Message;
+                        queryErrorBox = GenerateQueryErrorBox("SQL Syntax Error");
                         Debug.LogError("Modify SQL Command ERROR -> " + e.Message);
-                        throw e;
+                        connection.Close();
+                        // log G with query_command
+                        stringBuilder.Append("-G# {");
+                        stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
+                        stringBuilder.Append("}");
+                        Debug.LogError(stringBuilder.ToString());
+                        return;
                     }
                 }
                 connection.Close();
@@ -266,35 +300,78 @@ public class RDBManager : MonoBehaviour
         }
         catch (Exception e)
         {
+            temp = e.Message;
+            queryErrorBox = GenerateQueryErrorBox("SQL Syntax Error");
             Debug.LogError("SQLite Connection ERROR -> " + e.Message);
-            throw e;
+            // log G with query_command
+            stringBuilder.Append("-G# {");
+            stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
+            stringBuilder.Append("}");
+            Debug.LogError(stringBuilder.ToString());
+            return;
         }
-        CalculateQueryMatScore(queryData_list, NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryEmptyCount);
-        AddQueryToInventory();
+
+        var (log_fst_temp, logMatList) = CalculateQueryMatScore(queryData_list, NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryNotFocusCount, QueryEmptyCount);
+        var (totalScoreNotAdd, numAddMat) = AddQueryToInventory();
+        string log_fst = log_fst_temp + $",{totalScoreNotAdd.ToString("F2")},{numAddMat}| ";
+        // log S
+        stringBuilder.Append("-S# {");
+        stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
+        stringBuilder.Append("} ");
+        stringBuilder.Append(log_fst);
+        stringBuilder.Append(logMatList);
+        Debug.LogError(stringBuilder.ToString());
+
         queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
 
-    public void CalculateQueryMatScore(List<ResourceData> queryData_list, int NumDiffTableQueryFocus, int NumMatOtherQueryFocus, int QueryFocusCount, int QueryEmptyCount)
-    {
-        Debug.Log($"{NumDiffTableQueryFocus}, {NumMatOtherQueryFocus}, {QueryFocusCount}, {QueryEmptyCount}");
+    public (string, string) CalculateQueryMatScore(List<ResourceData> queryData_list, int NumDiffTableQueryFocus, int NumMatOtherQueryFocus, int QueryFocusCount, int QueryNotFocusCount, int QueryEmptyCount)
+    {   
+        Debug.Log($"{NumDiffTableQueryFocus}, {NumMatOtherQueryFocus}, {QueryFocusCount}, {QueryNotFocusCount}, {QueryEmptyCount}");
+        StringBuilder sbForMatList = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
+        int[] matTypeCount = new int[5];
+        float totalScore = 0f;
+
+        sbForMatList.Append("[");
         foreach (ResourceData queryCell in queryData_list)
         {
             int duplicateQueryCount = queryCell.GetAndResetDuplicateQueryCount() - 1;
             QueryMaterial material = queryCell.GetMaterial();
             if (material != null)
             {
-                material.score = ScoreFunction(NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryEmptyCount, duplicateQueryCount);
+                material.score = ScoreFunction(NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryNotFocusCount, QueryEmptyCount, duplicateQueryCount);
                 queryMaterialList.Add(material);
+
+                matTypeCount[(int) material.type]++;
+                totalScore += material.score;
             }
+
+            // [(<matType>,D,score),...]
+            sbForMatList.Append($"({(int) material.type},{duplicateQueryCount},{material.score.ToString("F2")}),");
         }
+        sbForMatList.Append("]");
+
+        // [<focus>,<fro>,<sni>,<shi>,<can>,<sup>]
+        sb.Append($"[{(int) focusMaterialType}");
+        foreach (int count in matTypeCount)
+        {
+            sb.Append($",{count}");
+        }
+        sb.Append("]");
+
+        // |T,O,F,N,E,<totalScore>,<totalScoreNotAdd>,<numAddMat>|
+        sb.Append($" |{NumDiffTableQueryFocus},{NumMatOtherQueryFocus},{QueryFocusCount},{QueryNotFocusCount},{QueryEmptyCount},{totalScore.ToString("F2")}");
+        return (sb.ToString(), sbForMatList.ToString());
     }
 
-    private float ScoreFunction(float NumDiffTableQueryFocus, float NumMatOtherQueryFocus, float QueryFocusCount, float QueryEmptyCount, float duplicateQueryCount)
+    private float ScoreFunction(float NumDiffTableQueryFocus, float NumMatOtherQueryFocus, float QueryFocusCount, float QueryNotFocusCount, float QueryEmptyCount, float duplicateQueryCount)
     {
-        float a = 0.5f, b = 50f, c = 0.2f, d = 100f, e = 100f;
+        float a = 0.5f, b = 50f, c = 0.2f, d = 100f, e = 100f, f = 50f;
         float T = NumDiffTableQueryFocus; // >= 0
         float O = NumMatOtherQueryFocus; // 0 <= O <= 4
         float F = QueryFocusCount; // >= 0
+        float N = QueryNotFocusCount; // >= 0
         float E = QueryEmptyCount; // >= 0
         float D = duplicateQueryCount; // >= 0
         Debug.Log("T = " + T + " F = " + F + " O = " + O + " D = " + D + " E = " + E);
@@ -303,61 +380,17 @@ public class RDBManager : MonoBehaviour
         return score;
     }
 
-    public void AddQueryToInventory()
+    public (float, int) AddQueryToInventory()
     {
+        int numAddMat = 0;
+        float totalScoreNotAdd = 0f;
         foreach (QueryMaterial queryItem in queryMaterialList)
         {
-            inventoryManager.AddItem(queryItem);
+            if (inventoryManager.AddItem(queryItem)) numAddMat++;
+            else totalScoreNotAdd += queryItem.score;
         }
         queryMaterialList.Clear();
-    }
-
-    public void Query1(string query_command)
-    {
-        string temp = "";
-
-        using (var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-            try
-            {
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = query_command;
-
-                    using (IDataReader reader = command.ExecuteReader())
-                    {
-                        DataTable schema = reader.GetSchemaTable();
-                        temp += "| ";
-                        foreach (DataRow col in schema.Rows)
-                        {
-                            temp += col.Field<string>("ColumnName") + " | ";
-                        }
-                        temp += "\n";
-
-                        while (reader.Read())
-                        {
-                            temp += "| ";
-                            for (int i = 0; i < reader.FieldCount; i++)
-                            {
-                                temp += reader[i] + " | ";
-                            }
-                            temp += "\n";
-                        }
-                        reader.Close();
-                    }
-                }
-            }
-            catch (SqliteException e)
-            {
-                temp = e.Message;
-                Debug.Log(e);
-                output.text = temp;
-                throw e;
-            }
-            connection.Close();
-        }
-        output.text = temp;
+        return (totalScoreNotAdd, numAddMat);
     }
 
     public static GameObject Instantiate(GameObject tablePrefab, GameObject canvasParent)
@@ -365,10 +398,10 @@ public class RDBManager : MonoBehaviour
         return Instantiate(tablePrefab, canvasParent);
     }
 
-    private GameObject GenerateQueryErrorBox(string errorMessage)
+    public GameObject GenerateQueryErrorBox(string errorMessage)
     {
-        GameObject queryErrorBox = Instantiate(queryErrorBoxPrefab, canvasParent);
-        queryErrorBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-280f, 500f);
+        GameObject queryErrorBox = Instantiate(queryErrorBoxPrefab, queryErrorParent);
+        //queryErrorBox.GetComponent<RectTransform>().anchoredPosition = new Vector2(-280f, 500f);
         queryErrorBox.transform.Find("ErrorTextBox").GetComponent<TextMeshProUGUI>().text = errorMessage;
         return queryErrorBox;
     }
@@ -498,6 +531,62 @@ public class RDBManager : MonoBehaviour
         return (textForSize.preferredWidth, textForSize.preferredHeight);
     }
 
+    //public void ExecuteForInputText()
+    //{
+    //    try { Query(textInputField.text); }
+    //    catch { }
+    //    try { Query1(textInputField.text); }
+    //    catch { }
+    //}
+
+    //public void Query1(string query_command)
+    //{
+    //    string temp = "";
+
+    //    using (var connection = new SqliteConnection(dbName))
+    //    {
+    //        connection.Open();
+    //        try
+    //        {
+    //            using (var command = connection.CreateCommand())
+    //            {
+    //                command.CommandText = query_command;
+
+    //                using (IDataReader reader = command.ExecuteReader())
+    //                {
+    //                    DataTable schema = reader.GetSchemaTable();
+    //                    temp += "| ";
+    //                    foreach (DataRow col in schema.Rows)
+    //                    {
+    //                        temp += col.Field<string>("ColumnName") + " | ";
+    //                    }
+    //                    temp += "\n";
+
+    //                    while (reader.Read())
+    //                    {
+    //                        temp += "| ";
+    //                        for (int i = 0; i < reader.FieldCount; i++)
+    //                        {
+    //                            temp += reader[i] + " | ";
+    //                        }
+    //                        temp += "\n";
+    //                    }
+    //                    reader.Close();
+    //                }
+    //            }
+    //        }
+    //        catch (SqliteException e)
+    //        {
+    //            temp = e.Message;
+    //            Debug.Log(e);
+    //            output.text = temp;
+    //            throw e;
+    //        }
+    //        connection.Close();
+    //    }
+    //    output.text = temp;
+    //}
+
     //private void debug_getResourceTable(Dictionary<string, List<Node>> resourceTable)
     //{
     //    foreach (var item in resourceTable)
@@ -518,81 +607,81 @@ public class RDBManager : MonoBehaviour
     //    }
     //}
 
-    private string debug_getDatabase(List<string> table_name, List<List<List<string>>> all_table_list)
-    {
-        string text = string.Empty;
-        for (int i = 0; i < all_table_list.Count; i++)
-        {
-            text += table_name[i] + "\n";
-            for (int j = 0; j < all_table_list[i][0].Count; j++) // loop each column in table[i]
-            {
-                for (int k = 0; k < all_table_list[i].Count; k++)
-                {
-                    text += all_table_list[i][k][j] + " | ";
-                }
-                text += "\n";
-            }
-            text += "\n\n";
-        }
-        return text;
-    }
+    //private string debug_getDatabase(List<string> table_name, List<List<List<string>>> all_table_list)
+    //{
+    //    string text = string.Empty;
+    //    for (int i = 0; i < all_table_list.Count; i++)
+    //    {
+    //        text += table_name[i] + "\n";
+    //        for (int j = 0; j < all_table_list[i][0].Count; j++) // loop each column in table[i]
+    //        {
+    //            for (int k = 0; k < all_table_list[i].Count; k++)
+    //            {
+    //                text += all_table_list[i][k][j] + " | ";
+    //            }
+    //            text += "\n";
+    //        }
+    //        text += "\n\n";
+    //    }
+    //    return text;
+    //}
 
-    public void getDatabase(string dbName, List<string> table_name, List<List<List<string>>> all_table_list)
-    {
-        using (var connection = new SqliteConnection(dbName))
-        {
-            connection.Open();
-            try
-            {
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence'";
+    //public void getDatabase(string dbName, List<string> table_name, List<List<List<string>>> all_table_list)
+    //{
+    //    using (var connection = new SqliteConnection(dbName))
+    //    {
+    //        connection.Open();
+    //        try
+    //        {
+    //            using (var command = connection.CreateCommand())
+    //            {
+    //                command.CommandText = "SELECT name FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence'";
 
-                    using (IDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            Debug.Log(reader[0].ToString());
-                            table_name.Add(reader[0].ToString());
-                        }
-                        reader.Close();
-                    }
+    //                using (IDataReader reader = command.ExecuteReader())
+    //                {
+    //                    while (reader.Read())
+    //                    {
+    //                        Debug.Log(reader[0].ToString());
+    //                        table_name.Add(reader[0].ToString());
+    //                    }
+    //                    reader.Close();
+    //                }
 
-                    foreach (var table in table_name)
-                    {
-                        var table_list = new List<List<string>>();
-                        command.CommandText = "SELECT * FROM " + table;
+    //                foreach (var table in table_name)
+    //                {
+    //                    var table_list = new List<List<string>>();
+    //                    command.CommandText = "SELECT * FROM " + table;
 
-                        using (IDataReader reader = command.ExecuteReader())
-                        {
-                            DataTable schema = reader.GetSchemaTable();
-                            foreach (DataRow col in schema.Rows)
-                            {
-                                var col_list = new List<string>();
-                                col_list.Add(col.Field<string>("ColumnName"));
-                                table_list.Add(col_list);
-                            }
+    //                    using (IDataReader reader = command.ExecuteReader())
+    //                    {
+    //                        DataTable schema = reader.GetSchemaTable();
+    //                        foreach (DataRow col in schema.Rows)
+    //                        {
+    //                            var col_list = new List<string>();
+    //                            col_list.Add(col.Field<string>("ColumnName"));
+    //                            table_list.Add(col_list);
+    //                        }
 
-                            while (reader.Read())
-                            {
-                                IDataRecord data = (IDataRecord)reader;
-                                for (int i = 0; i < data.FieldCount; i++)
-                                {
-                                    table_list[i].Add(reader[i].ToString());
-                                }
-                            }
-                            reader.Close();
-                        }
-                        all_table_list.Add(table_list);
-                    }
-                }
-            }
-            catch (SqliteException e)
-            {
-                Debug.Log(e);
-                throw(e);
-            }
-            connection.Close();
-        }
-    }
+    //                        while (reader.Read())
+    //                        {
+    //                            IDataRecord data = (IDataRecord)reader;
+    //                            for (int i = 0; i < data.FieldCount; i++)
+    //                            {
+    //                                table_list[i].Add(reader[i].ToString());
+    //                            }
+    //                        }
+    //                        reader.Close();
+    //                    }
+    //                    all_table_list.Add(table_list);
+    //                }
+    //            }
+    //        }
+    //        catch (SqliteException e)
+    //        {
+    //            Debug.Log(e);
+    //            throw(e);
+    //        }
+    //        connection.Close();
+    //    }
+    //}
 }

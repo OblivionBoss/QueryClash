@@ -5,6 +5,6 @@ public class GoMainMenu : MonoBehaviour
 {
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenuFNetwork");
+        SceneManager.LoadSceneAsync("BossMainMenu");
     }
 }

@@ -217,6 +217,8 @@ public class Soldier : Unit
         {
             Color blue = new Color(0f, 0.2874017f, 1f);
             Color red = new Color(1f, 0.03264745f, 0f);
+            Color cyan = new Color(0f, 1f, 1f);
+            Color orange = new Color(1f, 0.6658927f, 0f);
 
             if (healthRT != null) healthRT.eulerAngles = new Vector3(50f, 180f, 0f);
 
@@ -227,7 +229,7 @@ public class Soldier : Unit
                     healthBar.color = red;
                     healthBar.fillOrigin = 1;
                 }
-                if (healthText != null) healthText.color = red;
+                if (healthText != null) healthText.color = orange;
             }
             else
             {
@@ -236,7 +238,7 @@ public class Soldier : Unit
                     healthBar.color = blue;
                     healthBar.fillOrigin = 0;
                 }
-                if (healthText != null) healthText.color = blue;
+                if (healthText != null) healthText.color = cyan;
             }
         }
     }

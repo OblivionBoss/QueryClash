@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 
 public class Unit : NetworkBehaviour
 {
     private PlacementSystem placementSystem;
     public bool isPlaced = false;
-    public float score;
+    public readonly SyncVar<float> score = new SyncVar<float>();
     public int grade;
     public bool isBase = false;
 
@@ -54,15 +55,15 @@ public class Unit : NetworkBehaviour
 
     public void SetScore(float score)
     {
-        this.score = score;
+        this.score.Value = score;
     }
 
     private void SetGrade()
     {
-        if (score > 1200f) grade = 5;
-        else if (score > 800f) grade = 4;
-        else if (score > 400f) grade = 3;
-        else if (score > 0f) grade = 2;
+        if (score.Value > 1200f) grade = 5;
+        else if (score.Value > 800f) grade = 4;
+        else if (score.Value > 400f) grade = 3;
+        else if (score.Value > 0f) grade = 2;
         else grade = 1;
     }
 

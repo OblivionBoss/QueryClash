@@ -1,18 +1,17 @@
 using UnityEngine;
 using FishNet.Object;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Net;
 using System.Linq;
 using TMPro;
 using FishNet.Object.Synchronizing;
-using System;
-using FishNet.Managing;
 using System.Collections;
+using System.Diagnostics;
 
 public class WaitingRoomManager : NetworkBehaviour
 {
     [SerializeField] private Canvas waitingRoom;
+    [SerializeField] private Canvas gameUI;
     [SerializeField] private Button startGameHost;
     [SerializeField] private Button readyClient;
     [SerializeField] private Image loadingScene;
@@ -21,10 +20,17 @@ public class WaitingRoomManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI readyText;
     public readonly SyncVar<bool> isReady = new SyncVar<bool>(false);
     public readonly SyncVar<int> connNumber = new SyncVar<int>(0);
+    public readonly SyncVar<int> seed = new SyncVar<int>(42);
+    public readonly SyncVar<int> rdb = new SyncVar<int>(0);
+
+    [SerializeField] private QueryMaterialManager queryMaterialManager;
+    [SerializeField] private RDBManager rdbManager;
+    [SerializeField] private string[] rdbList;
 
     public override void OnStartClient()
     {
         base.OnStartClient();
+        gameUI.enabled = false;
         if (!ClientManager.Connection.IsHost)
         {
             startGameHost.gameObject.SetActive(false);
@@ -40,6 +46,8 @@ public class WaitingRoomManager : NetworkBehaviour
             hostIPText.text = "Host IP : " + GetLocalIPv4();
             startGameHost.interactable = false;
             connNumber.OnChange += ConnNumber_OnChange;
+
+            seed.Value = (int)(Stopwatch.GetTimestamp() % int.MaxValue);
         }
 
         isReady.OnChange += OnReady;
@@ -92,7 +100,6 @@ public class WaitingRoomManager : NetworkBehaviour
         if (!ClientManager.Connection.IsHost) return;
         if (!isReady.Value) return;
 
-        waitingRoom.gameObject.SetActive(false);
         StartGameClient();
     }
 
@@ -100,6 +107,11 @@ public class WaitingRoomManager : NetworkBehaviour
     public void StartGameClient()
     {
         waitingRoom.gameObject.SetActive(false);
+        gameUI.enabled = true;
+        queryMaterialManager.SetRandomInitStateNetwork(seed.Value);
+        rdbManager.StartRDBNetwork(rdbList[rdb.Value]);
+
+        UnityEngine.Debug.LogError($"seed = {seed.Value} , RDB = {rdbList[rdb.Value]}");
     }
 
     public void OnClickReady()
@@ -133,7 +145,7 @@ public class WaitingRoomManager : NetworkBehaviour
         {   
             ClientManager.StopConnection();
         }
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuFNetwork");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("BossMultiOptions");
     }
 
     //private IEnumerator StopConnClientDelay()
