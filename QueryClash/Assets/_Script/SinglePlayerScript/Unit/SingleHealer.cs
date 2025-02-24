@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SingleHealer : SingleUnit
 {
-    public float healAmount = 10f;    // Amount healed per second
+    public float healAmount = 20f;    // Amount healed per second
     public float healDuration = 10f;  // Total healing duration
-    public float healInterval = 1f;   // Heal every second
+    public float healInterval = 2f;   // Heal every second
     public float healRange = 1.2f;      // Healing radius
 
     private bool isHealing = false;
@@ -36,7 +36,7 @@ public class SingleHealer : SingleUnit
     {
         if (isPlaced && !timer.isCountingDown)
         {
-            StartCoroutine(HealOverTime());
+            //StartCoroutine(HealOverTime());
             if (specialEffect == null)
             {
                 specialEffect = transform.Find("Healing FX")?.gameObject;
@@ -65,9 +65,18 @@ public class SingleHealer : SingleUnit
     public override void OnPlaced()
     {
         base.OnPlaced();
-        
 
+        if (!isHealing) 
+        {
+            StartCoroutine(HealOverTime());
+        }
+
+        if (HealingSound != null)
+        {
+            PlayHealingSound();
+        }
     }
+
 
     private IEnumerator HealOverTime()
     {
@@ -112,6 +121,7 @@ public class SingleHealer : SingleUnit
     private void Heal(SingleSoldier soldier)
     {
         soldier.HealingHp(healAmount);
+        
         Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
     }
 

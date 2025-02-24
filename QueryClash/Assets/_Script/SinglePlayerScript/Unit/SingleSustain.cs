@@ -58,19 +58,9 @@ public class SingleSustain : SingleSoldier
 
             Debug.Log("Skill ended");
             ResetSkill();
-            //skillDuration += Time.deltaTime; // Start counting skill duration
+            
         }
-        //else if (skillDuration > 0) // Skill is active
-        //{
-        //    skillDuration += Time.deltaTime;
-
-        //    // Check if skill duration has ended
-        //    if (skillDuration >= 3f)
-        //    {
-        //        ResetSkill();
-        //        Debug.Log("Skill ended");
-        //    }
-        //}
+     
     }
 
     public void ShowFX()
