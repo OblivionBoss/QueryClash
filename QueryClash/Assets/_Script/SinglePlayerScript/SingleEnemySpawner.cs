@@ -44,6 +44,17 @@ public class SingleEnemySpawner : MonoBehaviour
         }
     }
 
+    private int GetRandomEnemyScore()
+    {
+        int roll = UnityEngine.Random.Range(0, 100); // Random number from 0 to 99
+
+        if (roll < 50) return 0;       // 50% chance
+        if (roll < 80) return 100;     // 30% chance
+        if (roll < 90) return 500;     // 10% chance
+        if (roll < 97) return 900;     // 9% chance
+        return 1250;                   // 1% chance
+    }
+
     private void SpawnEnemy()
     {
         if (availablePositions.Count == 0)
@@ -58,7 +69,7 @@ public class SingleEnemySpawner : MonoBehaviour
         // Randomly select an enemy ID
         //int randomEnemyIndex = Random.Range(0, enemyIds.Count);
         int enemyId = enemyIds[Random.Range(0, enemyIds.Count)];
-
+        int enemyScore = GetRandomEnemyScore();//Random from score = 0 for 40%, score = 100 for 40%, score = 500 for 10 %, score = 900 for 7%, score = 1250 for 3%
         Debug.Log($"Spawned enemy ID: {enemyId} at position: {spawnPosition}");
 
         // Get the enemy prefab from the database
@@ -70,7 +81,7 @@ public class SingleEnemySpawner : MonoBehaviour
         }
 
         // Place the enemy at the selected position
-        int placedIndex = objectPlacer.PlaceObject(enemyData.Prefab, spawnPosition, 0f);
+        int placedIndex = objectPlacer.PlaceObject(enemyData.Prefab, spawnPosition, enemyScore);
 
         // Remove the position from the available list
         availablePositions.Remove(spawnPosition);
