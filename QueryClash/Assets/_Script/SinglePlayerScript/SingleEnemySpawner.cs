@@ -15,7 +15,9 @@ public class SingleEnemySpawner : MonoBehaviour
     private ObjectsDatabaseSO database; // Reference to the object database
     [SerializeField]
     private float spawnInterval = 10f; // Time between spawns
-    
+
+    private string level;
+     
     private void Start()
     {
         Random.InitState(System.DateTime.Now.Millisecond);
@@ -110,5 +112,10 @@ public class SingleEnemySpawner : MonoBehaviour
         {
             availablePositions.Add(worldPosition);
         }
+    }
+
+    public void SetLevel(string level)
+    {
+        this.level = level;
     }
 }
