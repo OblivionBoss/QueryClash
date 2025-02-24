@@ -322,7 +322,7 @@ public class RDBManager : MonoBehaviour
         stringBuilder.Append(logMatList);
         Debug.LogError(stringBuilder.ToString());
 
-        queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
+        //queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
 
     public (string, string) CalculateQueryMatScore(List<ResourceData> queryData_list, int NumDiffTableQueryFocus, int NumMatOtherQueryFocus, int QueryFocusCount, int QueryNotFocusCount, int QueryEmptyCount)
@@ -367,7 +367,7 @@ public class RDBManager : MonoBehaviour
 
     private float ScoreFunction(float NumDiffTableQueryFocus, float NumMatOtherQueryFocus, float QueryFocusCount, float QueryNotFocusCount, float QueryEmptyCount, float duplicateQueryCount)
     {
-        float a = 0.5f, b = 50f, c = 0.2f, d = 100f, e = 100f, f = 50f;
+        float a = 0.5f, b = 20f, c = 0.1f, d = 100f, e = 100f, f = 50f, g = 50f;
         float T = NumDiffTableQueryFocus; // >= 0
         float O = NumMatOtherQueryFocus; // 0 <= O <= 4
         float F = QueryFocusCount; // >= 0
@@ -375,7 +375,7 @@ public class RDBManager : MonoBehaviour
         float E = QueryEmptyCount; // >= 0
         float D = duplicateQueryCount; // >= 0
         Debug.Log("T = " + T + " F = " + F + " O = " + O + " D = " + D + " E = " + E);
-        float score = (a * T) * (b * F * F) / (c * O + 1) - (d * D) - (e * E);
+        float score = Mathf.Pow(T, 1.2f) * (b/c) * Mathf.Pow(F, 1.5f) / (F + N + E) - (d * D) - (e * E) - (g * N);
         Debug.Log(score);
         return score;
     }
