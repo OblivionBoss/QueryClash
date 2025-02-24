@@ -27,6 +27,7 @@ public class SQLTokenKeyboardManager : MonoBehaviour
     private int TokenPadding;
 
     public RDBManager RDBManager;
+    private GameObject queryErrorBox;
     public TextMeshProUGUI SQLtext;
 
     public Color keywordColor;
@@ -185,7 +186,10 @@ public class SQLTokenKeyboardManager : MonoBehaviour
 
     public void Execute()
     {
+        if (queryErrorBox != null) Destroy(queryErrorBox);
         StringBuilder stringBuilder = new StringBuilder();
+        bool isFound = false, isAliasingError = false;
+        string prevStringToken = "", currStringToken = "";
         foreach (var token in tokenList)
         {
             if (token.newline)
@@ -194,17 +198,44 @@ public class SQLTokenKeyboardManager : MonoBehaviour
             }
             else
             {
+                if (!isAliasingError && token.sqltoken.isString)
+                {
+                    if (isFound)
+                    {
+                        currStringToken = token.sqltoken.tokenText.text;
+                        isAliasingError = true;
+                    }
+                    else
+                    {
+                        isFound = true;
+                        prevStringToken = token.sqltoken.tokenText.text;
+                    }
+                } 
+                else if (!isAliasingError) isFound = false;
+
                 stringBuilder.Append(' ');
                 stringBuilder.Append(token.sqltoken.tokenText.text);
                 stringBuilder.Append(' ');
             }
         }
         string query_command = stringBuilder.ToString();
-        SQLtext.text = query_command;
-        try { RDBManager.Query(query_command); }
-        catch { }
-        try { RDBManager.Query1(query_command); }
-        catch { }
+        //SQLtext.text = query_command;
+
+        if (isAliasingError) AliasingError(prevStringToken, currStringToken, query_command);
+        else RDBManager.Query(query_command);
+    }
+
+    private void AliasingError(string prevString, string currString, string query_command)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        queryErrorBox = RDBManager.GenerateQueryErrorBox($"SQL syntax error\naliasing not allow\nat \" {prevString} {currString} \"");
+        stringBuilder.Clear();
+        Debug.LogError("SQLite Parser ERROR");
+        // log G with query_command
+        stringBuilder.Append("-G# {");
+        stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
+        stringBuilder.Append("}");
+        Debug.LogError(stringBuilder.ToString());
     }
 
     private void insertToken(Token t)
@@ -224,40 +255,41 @@ public class SQLTokenKeyboardManager : MonoBehaviour
 
     public void AddKeywordToken(string str)
     {
-        AddToken(str, keywordColor);
+        AddToken(str, keywordColor, false);
     }
 
     public void AddOperatorToken(string str)
     {
-        AddToken(str, operatorColor);
+        AddToken(str, operatorColor, false);
     }
 
     public void AddTableNameToken(string str)
     {
-        AddToken(str, tablenameColor);
+        AddToken(str, tablenameColor, true);
     }
 
     public void AddColumnNameToken(string str)
     {
-        AddToken(str, identifierColor);
+        AddToken(str, identifierColor, true);
     }
 
     public void AddStringToken(string str)
     {
-        AddToken("\'" + str + "\'", stringColor);
+        AddToken("\'" + str + "\'", stringColor, true);
     }
 
     public void AddNumberToken(string str)
     {
-        AddToken(str, numberColor);
+        AddToken(str, numberColor, false);
     }
 
-    public void AddToken(string str, Color color)
+    public void AddToken(string str, Color color, bool isString)
     {
         SQLToken SQLtoken = Instantiate<SQLToken>(TokenPrefab, TokenScreen);
         SQLtoken.AddKeyboardManager(this);
         SQLtoken.tokenText.text = str;
         SQLtoken.tokenText.color = color;
+        SQLtoken.isString = isString;
 
         Token token = new Token();
         token.newline = false;

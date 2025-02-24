@@ -5,7 +5,8 @@ using FishNet.Object.Synchronizing;
 
 public class Timer : NetworkBehaviour
 {
-    [SerializeField] TextMeshProUGUI timerText; // Reference to the UI Text component
+    [SerializeField] 
+    public TextMeshProUGUI timerText; // Reference to the UI Text component
     public readonly SyncVar<float> elapsedTime = new SyncVar<float>(0f); // Tracks the time after countdown ends
     public readonly SyncVar<float> countDown = new SyncVar<float>(15f); // Duration of the countdown in seconds
     public readonly SyncVar<bool> isCountingDown = new SyncVar<bool>(true); // Determines whether the countdown is active

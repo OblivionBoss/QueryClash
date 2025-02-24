@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cannon
   m_EditorClassIdentifier: 
   name: Cannon
-  icon: {fileID: 21300000, guid: f622061a00ef3d943ae22a3ad1366271, type: 3}
+  icon: {fileID: 21300000, guid: 732a4b7794690fa488367594941fe26f, type: 3}
   score: 0
   type: 3
+  quality: 5

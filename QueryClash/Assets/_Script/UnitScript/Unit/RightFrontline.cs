@@ -14,11 +14,11 @@ public class RightFrontline : Soldier
     public new void Start()
     {
         base.Start();
-        MaxHp.Value = 150f * (1 + score/1000);    // Set specific MaxHp for LeftFrontline
+        MaxHp.Value = 150f * (1 + score.Value / 1000);    // Set specific MaxHp for LeftFrontline
         spawnRate = 1.2f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (1 + score / 1000);
+        Atk = 10 * (1 + score.Value / 1000);
     }
 
     [Server]

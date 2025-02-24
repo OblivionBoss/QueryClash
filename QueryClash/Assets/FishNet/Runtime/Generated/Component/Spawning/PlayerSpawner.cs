@@ -81,12 +81,6 @@ namespace FishNet.Component.Spawning
             }
 
             _networkManager.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes;
-            //_networkManager.SceneManager.OnLoadStart += SceneManager_OnLoadStart;
-        }
-
-        private void SceneManager_OnLoadStart(Managing.Scened.SceneLoadStartEventArgs obj)
-        {
-
         }
 
         /// <summary>
@@ -109,12 +103,12 @@ namespace FishNet.Component.Spawning
             //NetworkObject nob = _networkManager.GetPooledInstantiated(_playerPrefab, position, rotation, true);
             InstanceFinder.ServerManager.OnClientKick += ServerManager_OnClientKick;
 
-            if (InstanceFinder.ServerManager.Clients.Count > 2)
-            {
-                //InstanceFinder.ClientManager.StopConnection();
-                InstanceFinder.ServerManager.Kick(conn, Managing.Server.KickReason.Unset);
-                return;
-            }
+            //if (InstanceFinder.ServerManager.Clients.Count > 2)
+            //{
+            //    //InstanceFinder.ClientManager.StopConnection();
+            //    InstanceFinder.ServerManager.Kick(conn, Managing.Server.KickReason.Unset);
+            //    return;
+            //}
 
             if (!conn.IsHost) {
                 playerPosition.z = 23.7f;
@@ -131,14 +125,9 @@ namespace FishNet.Component.Spawning
             OnSpawned?.Invoke(nob);
         }
 
-        public void SpawnPlayer()
-        {
-
-        }
-
         private void ServerManager_OnClientKick(NetworkConnection arg1, int arg2, Managing.Server.KickReason arg3)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainMenuFNetwork");
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("BossGameLobby");
         }
 
         /// <summary>

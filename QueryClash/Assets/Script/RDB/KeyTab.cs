@@ -19,7 +19,7 @@ public class KeyTab : MonoBehaviour
         }
     }
 
-    void MoveObject()
+    public void MoveObject()
     {
         if (!isOpen)
         {
