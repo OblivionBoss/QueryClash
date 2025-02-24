@@ -93,3 +93,7 @@ MonoBehaviour:
     <ID>k__BackingField: 210
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 6437428359607094924, guid: 2d04210c162cf4e43ae6a83703ed4675, type: 3}
+  - <Name>k__BackingField: TestHealer
+    <ID>k__BackingField: 1
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 418039146114299213, guid: 19439032082703a47986611d79b4c52f, type: 3}

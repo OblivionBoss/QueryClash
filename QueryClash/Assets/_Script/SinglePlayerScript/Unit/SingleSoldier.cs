@@ -173,7 +173,7 @@ public class SingleSoldier : SingleUnit
 
             if (healthBar == null)
             {
-                Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
+                //Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
             }
         }
     }
