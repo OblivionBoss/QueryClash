@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 026c9a1f583556445b1e710e72109e5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 92c7e0e07289b9346bf805eff0e2c2d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -92,6 +92,7 @@ MonoBehaviour:
   button: {fileID: 5071351441713189198}
   prefabIndex: 104
   score: 0
+  unitInventorySlot: {fileID: 0}
 --- !u!114 &5071351441713189198
 MonoBehaviour:
   m_ObjectHideFlags: 0
