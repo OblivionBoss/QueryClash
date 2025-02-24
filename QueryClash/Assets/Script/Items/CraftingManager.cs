@@ -22,7 +22,7 @@ public class CraftingManager : MonoBehaviour
 
     public bool isLeftTeam;
 
-    public Sprite slot;
+    public Sprite slotSprite;
 
     public void UpdateCrafting()
     {
@@ -198,11 +198,13 @@ public class CraftingManager : MonoBehaviour
 
         ButtonSetup unit = newUnitIcon.GetComponent<ButtonSetup>();
         //unit.prefabIndex = unitIndex;
+        //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
+
         unit.score = score;
         unit.unitInventorySlot = slot.GetComponent<Image>();
-        //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
-        unit.unitInventorySlot.color = GetQuality(score);
+        unit.slotSprite = slotSprite;
 
+        unit.unitInventorySlot.color = GetQuality(score);
         slot.GetComponent<Image>().sprite = null;
     }
 

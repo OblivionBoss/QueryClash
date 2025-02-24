@@ -29,10 +29,4 @@ public class SQLTabButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHa
         background = GetComponent<Image>();
         tabGroup.Subscribe(this);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

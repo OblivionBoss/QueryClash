@@ -1,17 +1,11 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI; // Use TMPro if you're using TextMeshPro
+using UnityEngine.UI;
 
 public class HpDisplay : MonoBehaviour
 {
-    public TMP_Text leftHpText; // Use TMP_Text for TextMeshPro
-    public TMP_Text rightHpText;
-
-    public GameObject leftBase; // Reference to the left Base object
-    public GameObject rightBase; // Reference to the right Base object
-
-    private Base leftBaseScript;
-    private Base rightBaseScript;
+    public TextMeshProUGUI leftHpText;
+    public TextMeshProUGUI rightHpText;
 
     public RectTransform leftHpRT;
     public RectTransform rightHpRT;
@@ -19,12 +13,13 @@ public class HpDisplay : MonoBehaviour
     public Image leftHpBar;
     public Image rightHpBar;
 
-    void Start()
-    {
-        // Get the Base script from the game objects
-        leftBaseScript = leftBase.GetComponent<Base>();
-        rightBaseScript = rightBase.GetComponent<Base>();
-    }
+    public GameObject LeftBluebase;
+    public GameObject LeftRedbase;
+
+    public GameObject RightRedbase;
+    public GameObject RightBluebase;
+
+    public GameObject Wall;
 
     public void swapHpUi()
     {
@@ -39,15 +34,17 @@ public class HpDisplay : MonoBehaviour
         leftHpBar.fillOrigin = 1;
         rightHpBar.fillOrigin = 0;
         
-        //Vector3 leftHpPos = leftHpText.transform.localPosition;
-        //leftHpText.transform.localPosition = rightHpText.transform.localPosition;
-        //rightHpText.transform.localPosition = leftHpPos;
-    }
+        Color leftHpColor = leftHpText.color;
+        leftHpText.color = rightHpText.color;
+        rightHpText.color = leftHpColor;
 
-    //void Update()
-    //{
-    //    // Update the text with the current HP values
-    //    leftHpText.text = leftBaseScript.CurrentHp.Value.ToString("#0");
-    //    rightHpText.text = rightBaseScript.CurrentHp.Value.ToString("#0");
-    //}
+        LeftBluebase.SetActive(false);
+        LeftRedbase.SetActive(true);
+
+        RightRedbase.SetActive(false);
+        RightBluebase.SetActive(true);
+
+        Wall.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        Wall.transform.position = new Vector3(0f, 0f, 0.8f);
+    }
 }

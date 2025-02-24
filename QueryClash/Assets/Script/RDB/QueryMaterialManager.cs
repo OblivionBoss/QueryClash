@@ -23,9 +23,8 @@ public class QueryMaterialManager : MonoBehaviour
         UnityEngine.Random.InitState(randomSeed);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetRandomInitStateNetwork(int seed)
     {
-
+        UnityEngine.Random.InitState(seed);
     }
 }

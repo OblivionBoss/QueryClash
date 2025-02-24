@@ -5,7 +5,7 @@ public class QueryMaterial : Item
 {
     public float score = 0;
     public MaterialType type;
-    private Quality quality = Quality.None;
+    public Quality quality = Quality.None;
 
     public override void Use()
     {
@@ -36,7 +36,7 @@ public class QueryMaterial : Item
             case Quality.Common:
                 return new Color(0f, 0.7987421f, 0.07062242f);
             case Quality.Gabbage:
-                return new Color(0.6289307f, 0.6289307f, 0.6289307f);
+                return new Color(0.349f, 0.349f, 0.349f);
             default:
                 return new Color(1f, 1f, 1f);
         }
