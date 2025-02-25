@@ -45,6 +45,6 @@ public class HpDisplay : MonoBehaviour
         RightBluebase.SetActive(true);
 
         Wall.transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        Wall.transform.position = new Vector3(0f, 0f, 0.8f);
+        Wall.transform.position = new Vector3(0f, 0f, 1f);
     }
 }

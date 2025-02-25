@@ -5,7 +5,7 @@ using TMPro;
 
 public class SingleTimer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI timerText; // Reference to the UI Text component
+    public TextMeshProUGUI timerText; // Reference to the UI Text component
     public float elapsedTime = 0f; // Tracks the time after countdown ends
     public float countDown; // Duration of the countdown in seconds
     public bool isCountingDown = true; // Determines whether the countdown is active

@@ -8,8 +8,12 @@ public class BuffSupport : Soldier
     public new void Start()
     {
         base.Start();
+
+        float maxhp = 100f * (1 + score.Value / 1000);
+        UpdateSpawnHP(maxhp);
+
         unitTag = gameObject.tag;
-        MaxHp.Value = 100f * (1 + score.Value / 1000);
+        MaxHp.Value = maxhp;
         CurrentHp.Value = MaxHp.Value;
         Atk = 5 * (1 + score.Value / 1000);
     }
@@ -26,7 +30,7 @@ public class BuffSupport : Soldier
     [Server]
     private void OnTriggerEnter(Collider other)
     {
-        if (ClientManager.Connection.IsHost)
+        if (ClientManager.Connection.IsHost && timer.isGameStart.Value)
             HandleGateCollision(other);
     }
 

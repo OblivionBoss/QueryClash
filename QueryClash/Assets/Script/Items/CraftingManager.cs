@@ -20,7 +20,8 @@ public class CraftingManager : MonoBehaviour
     private float score;
     private List<InventoryItem> craftingMaterials;
 
-    public bool isLeftTeam;
+    public bool isLeftTeam = true;
+    public RDBManager RDBManager;
 
     public Sprite slotSprite;
 
@@ -196,16 +197,33 @@ public class CraftingManager : MonoBehaviour
         if (isLeftTeam) newUnitIcon = Instantiate(LeftUnitIconPrefabList[unitIndex], slot);
         else newUnitIcon = Instantiate(RightUnitIconPrefabList[unitIndex], slot);
 
-        ButtonSetup unit = newUnitIcon.GetComponent<ButtonSetup>();
-        //unit.prefabIndex = unitIndex;
-        //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
+        if (RDBManager.isNetwork)
+        {
+            ButtonSetup unit = newUnitIcon.GetComponent<ButtonSetup>();
+            //unit.prefabIndex = unitIndex;
+            //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
 
-        unit.score = score;
-        unit.unitInventorySlot = slot.GetComponent<Image>();
-        unit.slotSprite = slotSprite;
+            unit.score = score;
+            unit.unitInventorySlot = slot.GetComponent<Image>();
+            unit.slotSprite = slotSprite;
 
-        unit.unitInventorySlot.color = GetQuality(score);
-        slot.GetComponent<Image>().sprite = null;
+            unit.unitInventorySlot.color = GetQuality(score);
+            slot.GetComponent<Image>().sprite = null;
+        }
+        else
+        {
+            SingleButtonSetup unit = newUnitIcon.GetComponent<SingleButtonSetup>();
+            //unit.prefabIndex = unitIndex;
+            //newUnitIcon.GetComponent<Image>().sprite = UnitSpriteList[unitIndex];
+
+            unit.score = score;
+            unit.unitInventorySlot = slot.GetComponent<Image>();
+            unit.slotSprite = slotSprite;
+
+            unit.unitInventorySlot.color = GetQuality(score);
+            slot.GetComponent<Image>().sprite = null;
+        }
+        
     }
 
     private Color GetQuality(float score)
