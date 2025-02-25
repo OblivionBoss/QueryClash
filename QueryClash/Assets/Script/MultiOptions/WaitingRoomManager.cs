@@ -18,6 +18,7 @@ public class WaitingRoomManager : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI hostIPText;
     [SerializeField] private TextMeshProUGUI numberOfPlayerText;
     [SerializeField] private TextMeshProUGUI readyText;
+    [SerializeField] private TMP_Dropdown rdbDropdown;
     public readonly SyncVar<bool> isReady = new SyncVar<bool>(false);
     public readonly SyncVar<int> connNumber = new SyncVar<int>(0);
     public readonly SyncVar<int> seed = new SyncVar<int>(42);
@@ -25,6 +26,7 @@ public class WaitingRoomManager : NetworkBehaviour
 
     [SerializeField] private QueryMaterialManager queryMaterialManager;
     [SerializeField] private RDBManager rdbManager;
+    [SerializeField] private Timer timer;
     [SerializeField] private string[] rdbList;
 
     public override void OnStartClient()
@@ -36,12 +38,14 @@ public class WaitingRoomManager : NetworkBehaviour
             startGameHost.gameObject.SetActive(false);
             readyClient.gameObject.SetActive(true);
             hostIPText.gameObject.SetActive(false);
+            rdbDropdown.gameObject.SetActive(false);
         }
         else
         {
             startGameHost.gameObject.SetActive(true);
             readyClient.gameObject.SetActive(false);
             hostIPText.gameObject.SetActive(true);
+            rdbDropdown.gameObject.SetActive(true);
 
             hostIPText.text = "Host IP : " + GetLocalIPv4();
             startGameHost.interactable = false;
@@ -100,6 +104,7 @@ public class WaitingRoomManager : NetworkBehaviour
         if (!ClientManager.Connection.IsHost) return;
         if (!isReady.Value) return;
 
+        timer.isGameStart.Value = true;
         StartGameClient();
     }
 
@@ -109,9 +114,11 @@ public class WaitingRoomManager : NetworkBehaviour
         waitingRoom.gameObject.SetActive(false);
         gameUI.enabled = true;
         queryMaterialManager.SetRandomInitStateNetwork(seed.Value);
-        rdbManager.StartRDBNetwork(rdbList[rdb.Value]);
 
-        UnityEngine.Debug.LogError($"seed = {seed.Value} , RDB = {rdbList[rdb.Value]}");
+        if (rdb.Value < rdbList.Length)
+            rdbManager.StartRDB(rdbList[rdb.Value]);
+        else
+            rdbManager.StartRDB(rdbList[0]);
     }
 
     public void OnClickReady()
@@ -128,11 +135,13 @@ public class WaitingRoomManager : NetworkBehaviour
         if (!isReady.Value) isReady.Value = true;
     }
 
-    //[ServerRpc(RequireOwnership = false)]
-    //public void OnNotReadyServer()
-    //{
-    //    if (isReady.Value) isReady.Value = false;
-    //}
+    [Server]
+    public void OnChooseRDB()
+    {
+        if (!ClientManager.Connection.IsHost) return;
+
+        rdb.Value = rdbDropdown.value;
+    }
 
     public void GoBack()
     {

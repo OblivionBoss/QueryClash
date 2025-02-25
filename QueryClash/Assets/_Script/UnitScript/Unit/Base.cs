@@ -27,6 +27,7 @@ public class Base : Soldier
     public override void OnStartClient()
     {
         base.OnStartClient();
+        timer = GameObject.FindObjectOfType<Timer>();
         OnPlaced();
         CurrentHp.Value = baseHP;
         MaxHp.Value = baseHP;
@@ -36,12 +37,13 @@ public class Base : Soldier
     [Server]
     public override void ReduceHp(float damage)
     {
+        if (!ClientManager.Connection.IsHost || !timer.isGameStart.Value) return;
+
         CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage);
         if (CurrentHp.Value <= 0)
         {
             ServerManager.Despawn(gameObject);
         }
-        healthBar.fillAmount = CurrentHp.Value / MaxHp.Value;
     }
 
     public override void HealingHp(float heal)

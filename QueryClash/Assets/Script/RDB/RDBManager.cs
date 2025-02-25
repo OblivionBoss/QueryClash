@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
 using System.Text;
-using Unity.VisualScripting;
 
 public class RDBManager : MonoBehaviour
 {
@@ -20,8 +19,8 @@ public class RDBManager : MonoBehaviour
     public Transform linePanel;
     public GameObject queryErrorBoxPrefab;
 
+    [SerializeField] public string[] rdbName;
     private string dbName;
-    public string tempDB;
     public InventoryManager inventoryManager;
     public TextMeshProUGUI output;
     public TMP_InputField textInputField;
@@ -38,6 +37,10 @@ public class RDBManager : MonoBehaviour
     public TextMeshProUGUI textForSize;
 
     public Timer timer;
+    public SingleTimer singleTimer;
+    public WaitingRoomManager roomManager;
+
+    public bool isNetwork = false;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +58,14 @@ public class RDBManager : MonoBehaviour
         //resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
         //queryResult = null;
         //GetFocusMaterial();
-        StartRDBNetwork(tempDB);
+
+        //if (!isNetwork)
+        //{
+        //    if (SingleSceneManager.singleSceneManager.rdb < rdbName.Length)
+        //        StartRDB(rdbName[SingleSceneManager.singleSceneManager.rdb]);
+        //    else
+        //        StartRDB(rdbName[0]);
+        //}
 
         //GameObject a = Instantiate(linePrefab, linePanel);
         //var b = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[0]).getTable();
@@ -67,7 +77,7 @@ public class RDBManager : MonoBehaviour
         //debug_getResourceTable(resourceTable);
     }
 
-    public void StartRDBNetwork(string rdbName)
+    public void StartRDB(string rdbName)
     {
         dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + rdbName;
         Vector2[] company = { new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f) };
@@ -106,9 +116,18 @@ public class RDBManager : MonoBehaviour
         int NumDiffTableQueryFocus = 0, NumMatOtherQueryFocus = 0, QueryFocusCount = 0, QueryNotFocusCount = 0, QueryEmptyCount = 0;
 
         StringBuilder stringBuilder = new StringBuilder();
-        if (timer.isCountingDown.Value) stringBuilder.Append("#P-");
-        else stringBuilder.Append("#B-");
-        stringBuilder.Append(timer.timerText.text);
+        if (isNetwork)
+        {
+            if (timer.isCountingDown.Value) stringBuilder.Append("#P-");
+            else stringBuilder.Append("#B-");
+            stringBuilder.Append(timer.timerText.text);
+        }
+        else
+        {
+            if (singleTimer.isCountingDown) stringBuilder.Append("#P-");
+            else stringBuilder.Append("#B-");
+            stringBuilder.Append(singleTimer.timerText.text);
+        }
 
         try
         {

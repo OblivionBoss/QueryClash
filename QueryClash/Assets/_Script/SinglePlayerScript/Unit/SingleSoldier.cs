@@ -1,12 +1,13 @@
+using FishNet.Managing.Client;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class SingleSoldier : SingleUnit
 {
-
     public float MaxHp;
     public float CurrentHp;
     public float Atk;
@@ -23,8 +24,10 @@ public class SingleSoldier : SingleUnit
 
     public SingleTimer timer;
 
-    public Image healthBar;
     public GameObject healthCanvas;
+    public RectTransform healthRT;
+    public Image healthBar;
+    public TextMeshProUGUI healthText;
 
     protected Animator childAnimator;
     public void Start()
@@ -46,18 +49,13 @@ public class SingleSoldier : SingleUnit
         }
 
         FindHealthBar();
+        HealthBarSetup();
         if (isPlaced)
         {
             audioSource.PlayOneShot(placedSound);
         }
         
         SetAnimator();
-       
-    }
-
-    public void Update()
-    {
-        //HandleBulletSpawning();
     }
 
     public void HandleBulletSpawning()
@@ -108,7 +106,6 @@ public class SingleSoldier : SingleUnit
         }
     }
 
-
     public override void OnPlaced()
     {
         base.OnPlaced();
@@ -130,12 +127,10 @@ public class SingleSoldier : SingleUnit
         }
     }
 
-
-
     public virtual void ReduceHp(float damage)
     {
-        CurrentHp -= damage;
-        healthBar.fillAmount = CurrentHp / MaxHp;
+        CurrentHp = Mathf.Max(0, CurrentHp - damage);
+        HealthBarUpdate();
         if (CurrentHp <= 0)
         {
             //if (grid == null)
@@ -153,16 +148,43 @@ public class SingleSoldier : SingleUnit
 
     public virtual void HealingHp(float heal)
     {
-        this.CurrentHp += heal;
-        if(CurrentHp >= MaxHp)
-        {
-            CurrentHp = MaxHp;
-        }
+        CurrentHp = Mathf.Min(MaxHp, CurrentHp + heal);
+        HealthBarUpdate();
+    }
+
+    public void HealthBarUpdate()
+    {
         healthBar.fillAmount = CurrentHp / MaxHp;
+        if (healthText != null)
+            healthText.text = CurrentHp.ToString("#0") + " / " + MaxHp.ToString("#0");
+    }
+
+    public void UpdateSpawnHP(float MaxHp)
+    {
+        healthBar.fillAmount = 1f;
+        if (healthText != null)
+            healthText.text = MaxHp.ToString("#0") + " / " + MaxHp.ToString("#0");
+    }
+
+    public virtual void HealthBarSetup()
+    {
+        if (healthRT != null) healthRT.eulerAngles = new Vector3(50f, 0f, 0f);
     }
 
     public virtual void FindHealthBar()
     {
+        if (healthBar == null)
+        {
+            string healthRTPath = gameObject.CompareTag("LeftTeam") ?
+                "Left Healthbar Canvas" :
+                "Right Healthbar Canvas";
+
+            healthRT = transform.Find(healthRTPath)?.GetComponent<RectTransform>();
+
+            if (healthRT == null)
+                Debug.LogError($"HealthRT UI not found for {gameObject.name} (Tag: {gameObject.tag})");
+
+        }
         if (healthBar == null)
         {
             string healthBarPath = gameObject.CompareTag("LeftTeam") ?
@@ -172,9 +194,19 @@ public class SingleSoldier : SingleUnit
             healthBar = transform.Find(healthBarPath)?.GetComponent<Image>();
 
             if (healthBar == null)
-            {
-                //Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
-            }
+                Debug.LogError($"HealthBar UI not found for {gameObject.name} (Tag: {gameObject.tag})");
+
+        }
+        if (healthText == null)
+        {
+            string healthTextPath = gameObject.CompareTag("LeftTeam") ?
+                "Left Healthbar Canvas/HealthText" :
+                "Right Healthbar Canvas/HealthText";
+
+            healthText = transform.Find(healthTextPath)?.GetComponent<TextMeshProUGUI>();
+
+            if (healthText == null)
+                Debug.LogError($"HealthText UI not found for {gameObject.name} (Tag: {gameObject.tag})");
         }
     }
 
@@ -222,9 +254,4 @@ public class SingleSoldier : SingleUnit
             Debug.LogError("childAnimator is null before setting Shooting!");
         }
     }
-
-
-
-
-
 }

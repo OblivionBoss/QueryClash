@@ -92,8 +92,8 @@ public class GetOppIP : MonoBehaviour
         if (args.ConnectionState == LocalConnectionState.Stopped)
         {
             Debug.LogError("Connection Stop.");
-            //SceneManager.LoadSceneAsync("MainMenuFNetwork");
-            SceneManager.LoadSceneAsync("BossMultiOptions");
+            Destroy(GameObject.Find("NetworkManager"));
+            SceneManager.LoadSceneAsync("BossGameLobby");
         }
         else if (args.ConnectionState == LocalConnectionState.Started)
         {
@@ -105,6 +105,7 @@ public class GetOppIP : MonoBehaviour
     {
         Debug.LogError("Connection Timeout.");
         //SceneManager.LoadScene("MainMenuFNetwork");
+        Destroy(GameObject.Find("NetworkManager"));
         SceneManager.LoadSceneAsync("BossGameLobby");
     }
 

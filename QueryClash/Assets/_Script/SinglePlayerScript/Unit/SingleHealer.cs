@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SingleHealer : SingleUnit
 {
-    public float healAmount = 20f;    // Amount healed per second
+    private float healAmount = 10f;    // Amount healed per second
     public float healDuration = 10f;  // Total healing duration
-    public float healInterval = 2f;   // Heal every second
+    public float healInterval = 1f;   // Heal every second
     public float healRange = 1.2f;      // Healing radius
 
     private bool isHealing = false;
-   
+
     public AudioClip HealingSound; // Assign in the inspector
     public AudioSource healingAudioSource;
 
@@ -19,15 +19,19 @@ public class SingleHealer : SingleUnit
 
     public GameObject specialEffect;
 
-   
+    public float elapsedTime = 0f;
+
     public void Start()
     {
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<SingleTimer>();
+        healAmount *= 1 + (score / 1000);
 
-        
-
+        if (specialEffect == null)
+        {
+            specialEffect = transform.Find("Healing FX")?.gameObject;
+        }
         if (HealingSound != null && isPlaced)
         {
             PlayHealingSound();
@@ -36,19 +40,11 @@ public class SingleHealer : SingleUnit
 
     public void Update()
     {
-        if (isPlaced && !timer.isCountingDown)
+        if (isPlaced && !timer.isCountingDown && !isHealing)
         {
-            //StartCoroutine(HealOverTime());
-            if (specialEffect == null)
-            {
-                specialEffect = transform.Find("Healing FX")?.gameObject;
-            }
-            if (specialEffect != null)
-            {
-                specialEffect.SetActive(true); // Show the child object
-            }
+            StartCoroutine(HealOverTime());
         }
-        
+
     }
     private void PlayHealingSound()
     {
@@ -68,29 +64,25 @@ public class SingleHealer : SingleUnit
     {
         base.OnPlaced();
 
-        if (!isHealing) 
-        {
-            StartCoroutine(HealOverTime());
-        }
-
-        if (HealingSound != null)
-        {
-            PlayHealingSound();
-        }
+        Debug.Log($"this unit {healAmount}");
+        //if (!isHealing) 
+        //{
+        //    StartCoroutine(HealOverTime());
+        //
     }
 
 
     private IEnumerator HealOverTime()
     {
         isHealing = true;
-        
-        float elapsedTime = 0f;
+        specialEffect.SetActive(true);
+        elapsedTime = 0f; // Reset elapsed time when healing starts
 
-        while (elapsedTime < healDuration)
+        while (elapsedTime < healDuration) // Loop while heal duration is not reached
         {
             HealNearbyUnits();
-            elapsedTime += healInterval;
-            yield return new WaitForSeconds(healInterval);
+            elapsedTime += healInterval; // Increase time only if healing happens
+            yield return new WaitForSeconds(healInterval); // Wait for the next heal tick
         }
 
         isHealing = false;
@@ -99,8 +91,9 @@ public class SingleHealer : SingleUnit
         Vector3Int gridPosition = grid.WorldToCell(transform.position);
         RemoveUnit(gridPosition);
         StopHealingSound();
-
+        //Destroy(gameObject); // Destroy the healer after healing duration ends
     }
+
 
     private void HealNearbyUnits()
     {
@@ -123,15 +116,15 @@ public class SingleHealer : SingleUnit
 
     private void Heal(SingleSoldier soldier)
     {
+        //Debug.Log($"Healing {soldier.gameObject.name} for {healAmount} HP (Expected: 20)");
         soldier.HealingHp(healAmount);
-        
-        Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
+        //Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green; // Set color to green for the healing range
         //Vector3 offset = new Vector3(0.5f, 0.5f, 0.5f); // Define the offset
-        Gizmos.DrawWireSphere(transform.position , healRange); // Draw healing range sphere with offset
+        Gizmos.DrawWireSphere(transform.position, healRange); // Draw healing range sphere with offset
     }
 }

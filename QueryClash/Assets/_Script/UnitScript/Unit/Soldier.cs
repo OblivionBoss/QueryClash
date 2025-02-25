@@ -122,22 +122,12 @@ public class Soldier : Unit
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
         }
-        //ClientHealthBarUpdate();
-        //healthBar.fillAmount = CurrentHp.Value / MaxHp;
     }
-
-    //[ObserversRpc]
-    //public void ClientHealthBarUpdate()
-    //{
-    //    healthBar.fillAmount = CurrentHp.Value / MaxHp;
-    //}
 
     [Server]
     public virtual void HealingHp(float heal)
     {
         CurrentHp.Value = Mathf.Min(MaxHp.Value, CurrentHp.Value + heal);
-        //ClientHealthBarUpdate();
-        //healthBar.fillAmount = CurrentHp.Value / MaxHp;
     }
 
     public void HealthBarUpdate(float prev, float next, bool asServer)
@@ -145,6 +135,13 @@ public class Soldier : Unit
         healthBar.fillAmount = CurrentHp.Value / MaxHp.Value;
         if (healthText != null)
             healthText.text = CurrentHp.Value.ToString("#0") + " / " + MaxHp.Value.ToString("#0");
+    }
+
+    public void UpdateSpawnHP(float MaxHp)
+    {
+        healthBar.fillAmount = 1f;
+        if (healthText != null)
+            healthText.text = MaxHp.ToString("#0") + " / " + MaxHp.ToString("#0");
     }
 
     public override void OnPlaced()

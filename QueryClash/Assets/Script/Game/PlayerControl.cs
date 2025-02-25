@@ -44,6 +44,9 @@ public class PlayerControl : NetworkBehaviour
 
             HpDisplay hpd = GameObject.Find("HP UI Manager").GetComponent<HpDisplay>();
             if (!ClientManager.Connection.IsHost) hpd.swapHpUi();
+
+            RDBManager rdbm = GameObject.Find("RDBManager").GetComponent<RDBManager>();
+            rdbm.isNetwork = true;
         }
         else { gameObject.GetComponent<PlayerControl>().enabled = false; }
     }

@@ -13,7 +13,11 @@ public class LeftFrontline : Soldier
     public new void Start()
     {
         base.Start();
-        MaxHp.Value = 100f * (1 + score.Value / 1000);  // Set specific MaxHp for LeftFrontline
+
+        float maxhp = 100f * (1 + score.Value / 1000);
+        UpdateSpawnHP(maxhp);
+
+        MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
         spawnRate = 1f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
@@ -23,7 +27,7 @@ public class LeftFrontline : Soldier
     [Server]
     public void Update()
     {
-        if (!ClientManager.Connection.IsHost) return;
+        if (!ClientManager.Connection.IsHost || !timer.isGameStart.Value) return;
         HandleBulletSpawning();
         ActivateSkill();
     }

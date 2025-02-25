@@ -6,21 +6,21 @@ using UnityEngine.UI;
 
 public class SingleBase : SingleSoldier
 {
-    //public Image healthBar;
+    public float baseHP;
 
-    
-    // Start is called before the first frame update
     void Start()
     {
         OnPlaced();
-        CurrentHp = MaxHp;
+        MaxHp = baseHP;
+        CurrentHp = baseHP;
         isBase = true;
+        UpdateSpawnHP(MaxHp);
     }
 
     public override void ReduceHp(float damage)
     {
-        CurrentHp -= damage;
-        healthBar.fillAmount = CurrentHp/MaxHp;
+        CurrentHp = Mathf.Max(0, CurrentHp - damage);
+        HealthBarUpdate();
         if (CurrentHp <= 0)
         {
             Destroy(gameObject);
@@ -30,6 +30,11 @@ public class SingleBase : SingleSoldier
     public override void HealingHp(float heal)
     {
         
+    }
+
+    public override void HealthBarSetup()
+    {
+        // Do nothing
     }
 
     public override void FindHealthBar()

@@ -16,7 +16,11 @@ public class Shielder1 : Soldier
     public new void Start()
     {
         base.Start();
-        MaxHp.Value = 1000f * (1 + score.Value / 1000); // Set specific MaxHp for LeftFrontline
+
+        float maxhp = 1000f * (1 + score.Value / 1000);
+        UpdateSpawnHP(maxhp);
+
+        MaxHp.Value = maxhp; // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
@@ -26,7 +30,7 @@ public class Shielder1 : Soldier
     [Server]
     void Update()
     {
-        if (ClientManager.Connection.IsHost)
+        if (ClientManager.Connection.IsHost && timer.isGameStart.Value)
             ActivateSkill();
     }
 

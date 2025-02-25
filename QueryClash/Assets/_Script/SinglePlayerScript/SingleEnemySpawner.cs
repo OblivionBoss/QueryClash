@@ -13,16 +13,50 @@ public class SingleEnemySpawner : MonoBehaviour
 
     [SerializeField]
     private ObjectsDatabaseSO database; // Reference to the object database
-    [SerializeField]
-    private float spawnInterval = 10f; // Time between spawns
+    private float spawnInterval; // Time between spawns
 
     private string level;
+    public SingleTimer timer;
      
     private void Start()
     {
+        spawnInterval = 120f;
         Random.InitState(System.DateTime.Now.Millisecond);
         InitializeAvailablePositions();
         StartCoroutine(SpawnEnemies());
+    }
+
+    private void Update()
+    {
+        if (timer.elapsedTime >= 300f)
+        {
+            SetSpawnlTime(100);
+        }
+
+        if (timer.elapsedTime >= 600f)
+        {
+            SetSpawnlTime(90);
+        }
+
+        if (timer.elapsedTime >= 900f)
+        {
+            SetSpawnlTime(75);
+        }
+
+        if (timer.elapsedTime >= 1200f)
+        {
+            SetSpawnlTime(60);
+        }
+
+        if (timer.elapsedTime >= 1500f)
+        {
+            SetSpawnlTime(45);
+        }
+    }
+
+    private void SetSpawnlTime(float time)
+    {
+        spawnInterval = time;
     }
 
     private void InitializeAvailablePositions()

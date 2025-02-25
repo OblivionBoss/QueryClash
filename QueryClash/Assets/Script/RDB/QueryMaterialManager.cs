@@ -1,5 +1,5 @@
 using System;
-using Unity.VisualScripting;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +20,7 @@ public class QueryMaterialManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        randomSeed = (int)(Stopwatch.GetTimestamp() % int.MaxValue);
         UnityEngine.Random.InitState(randomSeed);
     }
 

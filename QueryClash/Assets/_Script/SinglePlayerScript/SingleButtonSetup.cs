@@ -1,19 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
-public class SingleButtonSetup : MonoBehaviour//, IPointerClickHandler
+public class SingleButtonSetup : MonoBehaviour
 {
     public Button button;
     public int prefabIndex;
     public float score;
 
     public Image unitInventorySlot;
-
-    //public void OnPointerClick(PointerEventData eventData)
-    //{
-    //    throw new System.NotImplementedException();
-    //}
+    public Sprite slotSprite;
 
     void Start()
     {
@@ -37,6 +32,10 @@ public class SingleButtonSetup : MonoBehaviour//, IPointerClickHandler
     void OnDestroy()
     {
         Debug.Log("unit button " + prefabIndex + " has been destroy");
-        if (unitInventorySlot != null) unitInventorySlot.color = Color.white;
+        if (unitInventorySlot != null)
+        {
+            unitInventorySlot.color = Color.white;
+            unitInventorySlot.sprite = slotSprite;
+        }
     }
 }
