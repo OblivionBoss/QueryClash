@@ -8,6 +8,14 @@ using System;
 using System.Text.RegularExpressions;
 using System.Text;
 
+public class QueryStat
+{
+    public int querySuccess = 0;
+    public int queryError = 0;
+    public float totalScore = 0f;
+    public int[] numOfGetMaterial = new int[6]; // front, sni, shield, cannon, supp, garbage;
+}
+
 public class RDBManager : MonoBehaviour
 {
     public GameObject cellPrefab;
@@ -38,7 +46,7 @@ public class RDBManager : MonoBehaviour
 
     public Timer timer;
     public SingleTimer singleTimer;
-    public WaitingRoomManager roomManager;
+    public QueryStat queryStat = new();
 
     public bool isNetwork = false;
 
@@ -147,6 +155,7 @@ public class RDBManager : MonoBehaviour
                         temp = e.Message;
                         Debug.LogError(e);
                         queryErrorBox = GenerateQueryErrorBox(e.Message);
+                        queryStat.queryError++;
                         connection.Close();
 
                         // log E with query_command
@@ -304,6 +313,8 @@ public class RDBManager : MonoBehaviour
                     {
                         temp = e.Message;
                         queryErrorBox = GenerateQueryErrorBox("SQL Syntax Error");
+                        queryStat.queryError++;
+
                         Debug.LogError("Modify SQL Command ERROR -> " + e.Message);
                         connection.Close();
                         // log G with query_command
@@ -321,6 +332,8 @@ public class RDBManager : MonoBehaviour
         {
             temp = e.Message;
             queryErrorBox = GenerateQueryErrorBox("SQL Syntax Error");
+            queryStat.queryError++;
+
             Debug.LogError("SQLite Connection ERROR -> " + e.Message);
             // log G with query_command
             stringBuilder.Append("-G# {");
@@ -331,7 +344,10 @@ public class RDBManager : MonoBehaviour
         }
 
         var (log_fst_temp, logMatList) = CalculateQueryMatScore(queryData_list, NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryNotFocusCount, QueryEmptyCount);
-        var (totalScoreNotAdd, numAddMat) = AddQueryToInventory();
+        var (totalScoreAdd, totalScoreNotAdd, numAddMat, numGarbageNotAdd) = AddQueryToInventory();
+        if (queryData_list.Count == 0) queryErrorBox = GenerateQueryErrorBox("Empty query result");
+        queryStat.querySuccess++;
+
         string log_fst = log_fst_temp + $",{totalScoreNotAdd.ToString("F2")},{numAddMat}| ";
         // log S
         stringBuilder.Append("-S# {");
@@ -340,6 +356,8 @@ public class RDBManager : MonoBehaviour
         stringBuilder.Append(log_fst);
         stringBuilder.Append(logMatList);
         Debug.LogError(stringBuilder.ToString());
+
+        //numGarbageNotAdd decrease base hp
 
         //queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
@@ -350,6 +368,7 @@ public class RDBManager : MonoBehaviour
         StringBuilder sbForMatList = new StringBuilder();
         StringBuilder sb = new StringBuilder();
         int[] matTypeCount = new int[5];
+        int[] matTypeCountAndGarbage = new int[6];
         float totalScore = 0f;
 
         sbForMatList.Append("[");
@@ -364,12 +383,20 @@ public class RDBManager : MonoBehaviour
 
                 matTypeCount[(int) material.type]++;
                 totalScore += material.score;
+
+                matTypeCountAndGarbage[material.score > 0 ? (int) material.type : 5]++;
             }
 
             // [(<matType>,D,score),...]
             sbForMatList.Append($"({(int) material.type},{duplicateQueryCount},{material.score.ToString("F2")}),");
         }
         sbForMatList.Append("]");
+
+        queryStat.totalScore += totalScore;
+        for (int i = 0; i < queryStat.numOfGetMaterial.Length; i++)
+        {
+            queryStat.numOfGetMaterial[i] += matTypeCountAndGarbage[i];
+        }
 
         // [<focus>,<fro>,<sni>,<shi>,<can>,<sup>]
         sb.Append($"[{(int) focusMaterialType}");
@@ -399,17 +426,25 @@ public class RDBManager : MonoBehaviour
         return score;
     }
 
-    public (float, int) AddQueryToInventory()
+    public (float, float, int, int) AddQueryToInventory()
     {
-        int numAddMat = 0;
-        float totalScoreNotAdd = 0f;
+        int numAddMat = 0, numGarbageNotAdd = 0;
+        float totalScoreNotAdd = 0f, totalScoreAdd = 0f; ;
         foreach (QueryMaterial queryItem in queryMaterialList)
         {
-            if (inventoryManager.AddItem(queryItem)) numAddMat++;
-            else totalScoreNotAdd += queryItem.score;
+            if (inventoryManager.AddItem(queryItem))
+            {
+                totalScoreAdd += queryItem.score;
+                numAddMat++;
+            }
+            else
+            {
+                totalScoreNotAdd += queryItem.score;
+                if (queryItem.score <= 0) numGarbageNotAdd++;
+            }
         }
         queryMaterialList.Clear();
-        return (totalScoreNotAdd, numAddMat);
+        return (totalScoreAdd, totalScoreNotAdd, numAddMat, numGarbageNotAdd);
     }
 
     public static GameObject Instantiate(GameObject tablePrefab, GameObject canvasParent)

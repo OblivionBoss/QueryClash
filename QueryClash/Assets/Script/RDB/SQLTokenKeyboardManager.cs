@@ -227,7 +227,8 @@ public class SQLTokenKeyboardManager : MonoBehaviour
     {
         StringBuilder stringBuilder = new StringBuilder();
         queryErrorBox = RDBManager.GenerateQueryErrorBox($"SQL syntax error\naliasing not allow\nat \" {prevString} {currString} \"");
-        stringBuilder.Clear();
+        RDBManager.queryStat.queryError++;
+
         Debug.LogError("SQLite Parser ERROR");
         // log G with query_command
         stringBuilder.Append("-G# {");

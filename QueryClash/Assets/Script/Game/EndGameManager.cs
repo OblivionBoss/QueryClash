@@ -8,6 +8,7 @@ public class EndGameManager : NetworkBehaviour
     public Base leftBunker; // Assign the left bunker in the Inspector
     public Base rightBunker; // Assign the right bunker in the Inspector
     public Timer timer;
+    public RDBManager rdbManager;
 
     private bool leftBunkerDestroyed = false;
     private bool rightBunkerDestroyed = false;
@@ -15,6 +16,9 @@ public class EndGameManager : NetworkBehaviour
 
     [SerializeField] private Canvas endGameMenu;
     [SerializeField] private TextMeshProUGUI winLoseDrawText;
+    [SerializeField] private TextMeshProUGUI totalScoreText;
+    [SerializeField] private TextMeshProUGUI querySuccessText;
+    [SerializeField] private TextMeshProUGUI queryErrorText;
 
     [Server]
     public void Update()
@@ -78,6 +82,11 @@ public class EndGameManager : NetworkBehaviour
             winLoseDrawText.text = "defeated";
             winLoseDrawText.color = Color.red;
         }
+
+        // show stat from rdbmanager
+        totalScoreText.text = rdbManager.queryStat.totalScore.ToString("#0");
+        querySuccessText.text = rdbManager.queryStat.querySuccess.ToString();
+        queryErrorText.text = rdbManager.queryStat.queryError.ToString();
     }
 
     public void GoToLobby()
