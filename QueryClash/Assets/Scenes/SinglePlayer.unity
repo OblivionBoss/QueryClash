@@ -24428,7 +24428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerText: {fileID: 1809471785}
   elapsedTime: 0
-  countDown: 5
+  countDown: 120
   isCountingDown: 1
   baseManager: {fileID: 0}
 --- !u!1 &1911644996
