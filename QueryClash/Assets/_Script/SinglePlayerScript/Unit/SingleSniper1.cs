@@ -13,11 +13,11 @@ public class SingleSniper1 : SingleSoldier
     void Start()
     {
         base.Start();
-        MaxHp = 80f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
+        MaxHp = 100f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
         spawnRate = 2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 15 * (1 + score / 1000);
+        Atk = 20 * (1 + score / 1000);
 
     }
 

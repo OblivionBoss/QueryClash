@@ -18,7 +18,7 @@ public class SingleShielder2 : SingleSoldier
         spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 20f * (1 + score / 1000);
+        Atk = 30f * (1 + score / 1000);
     }
 
     // Update is called once per frame

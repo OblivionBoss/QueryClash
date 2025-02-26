@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SingleHealer : SingleUnit
 {
-    private float healAmount = 10f;    // Amount healed per second
+    private float healAmount;    // Amount healed per second
     public float healDuration = 10f;  // Total healing duration
     public float healInterval = 1f;   // Heal every second
     public float healRange = 1.2f;      // Healing radius
@@ -26,7 +26,7 @@ public class SingleHealer : SingleUnit
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<SingleTimer>();
-        healAmount *= 1 + (score / 1000);
+        healAmount *= 10 + (score / 1000);
 
         if (specialEffect == null)
         {

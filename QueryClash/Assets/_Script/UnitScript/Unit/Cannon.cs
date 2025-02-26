@@ -7,7 +7,7 @@ public class Cannon : Soldier
     {
         base.Start();
 
-        float maxhp = 200f * (1 + score.Value / 1000);
+        float maxhp = 300f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
