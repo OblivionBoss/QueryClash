@@ -31,6 +31,8 @@ public class Soldier : Unit
 
     protected Animator childAnimator;
 
+    
+
     public new void Start()
     {
         base.Start();

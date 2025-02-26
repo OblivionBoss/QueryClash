@@ -3,9 +3,22 @@ using UnityEngine;
 public class SingleBase : SingleSoldier
 {
     public float baseHP;
+    [SerializeField]
+    private GameObject explodeFX;
+    [SerializeField]
+    private AudioClip explodeSound;
+    
 
     void Start()
     {
+        //if (audioSource == null)
+        //{
+        //    audioSource = GetComponent<AudioSource>();
+        //    if (audioSource == null)
+        //    {
+        //        audioSource = gameObject.AddComponent<AudioSource>();
+        //    }
+        //}
         OnPlaced();
         MaxHp = baseHP;
         CurrentHp = baseHP;
@@ -13,14 +26,23 @@ public class SingleBase : SingleSoldier
         HealthBarUpdate();
     }
 
+    public  void Update()
+    {
+        
+    }
     public override void ReduceHp(float damage)
     {
+        if (baseManager.gameEnd) return;
         CurrentHp = Mathf.Max(0, CurrentHp - damage);
         HealthBarUpdate();
         if (CurrentHp <= 0)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            explodeFX.SetActive(true);
+            audioSource.PlayOneShot(explodeSound);
+            if (baseManager.gameEnd) return;
         }
+        
     }
 
     public override void HealingHp(float heal)
@@ -41,5 +63,10 @@ public class SingleBase : SingleSoldier
     public override void SetHealthCanvas()
     {
         //Do not set Health canvas on Base object.
+    }
+
+    public override void SetAnimator()
+    {
+        
     }
 }

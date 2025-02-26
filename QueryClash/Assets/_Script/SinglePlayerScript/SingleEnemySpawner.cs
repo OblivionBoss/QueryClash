@@ -14,50 +14,61 @@ public class SingleEnemySpawner : MonoBehaviour
     [SerializeField]
     private ObjectsDatabaseSO database; // Reference to the object database
     private float spawnInterval; // Time between spawns
+    private float[] newSpawnTime;
+    [SerializeField]
+    private int level;
 
-    private string level;
     public SingleTimer timer;
-     
+
+    public BaseManager baseManager;
+
+    private int[] rollChance;
+    
+    
     private void Start()
     {
-        spawnInterval = 120f;
+        SetLevelRollChanceAndSpawntime(SingleSceneManager.singleSceneManager.difficulty); 
+        baseManager = GameObject.FindObjectOfType<BaseManager>();
+        SetLevelRollChanceAndSpawntime(level);
         Random.InitState(System.DateTime.Now.Millisecond);
         InitializeAvailablePositions();
         StartCoroutine(SpawnEnemies());
+        StartCoroutine(CheckSpawnTime());   
     }
 
-    private void Update()
-    {
-        if (timer.elapsedTime >= 300f)
-        {
-            SetSpawnlTime(100);
-        }
-
-        if (timer.elapsedTime >= 600f)
-        {
-            SetSpawnlTime(90);
-        }
-
-        if (timer.elapsedTime >= 900f)
-        {
-            SetSpawnlTime(75);
-        }
-
-        if (timer.elapsedTime >= 1200f)
-        {
-            SetSpawnlTime(60);
-        }
-
-        if (timer.elapsedTime >= 1500f)
-        {
-            SetSpawnlTime(45);
-        }
-    }
+    
 
     private void SetSpawnlTime(float time)
     {
         spawnInterval = time;
+        Debug.Log($"New spawntime = {spawnInterval}");
     }
+    private IEnumerator CheckSpawnTime()
+    {
+        float[] thresholds = { 300f, 600f, 900f, 1200f };
+        int lastAppliedIndex = -1; // Track last applied spawn time
+
+        while (true)
+        {
+            float elapsed = timer.elapsedTime;
+
+            for (int i = thresholds.Length - 1; i >= 0; i--) // Check from highest to lowest threshold
+            {
+                if (elapsed >= thresholds[i] && lastAppliedIndex < i)
+                {
+                    Debug.Log($"Applying spawn time change at {elapsed}s for threshold {thresholds[i]}");
+                    SetSpawnlTime(newSpawnTime[i]);
+                    lastAppliedIndex = i; // Update last applied
+                    break; // Apply only the most recent threshold
+                }
+            }
+
+            if (elapsed >= 1200f) yield break; // Stop checking after last threshold
+
+            yield return new WaitForSeconds(1f); // Check every second
+        }
+    }
+
 
     private void InitializeAvailablePositions()
     {
@@ -72,9 +83,8 @@ public class SingleEnemySpawner : MonoBehaviour
     }
     private IEnumerator SpawnEnemies()
     {
-        while (true)
+        while (baseManager.gameEnd == false)
         {
-            
             yield return new WaitForSeconds(spawnInterval); // Wait for the next spawn
             SpawnEnemy(); // Spawn one enemy
         }
@@ -84,15 +94,16 @@ public class SingleEnemySpawner : MonoBehaviour
     {
         int roll = UnityEngine.Random.Range(0, 100); // Random number from 0 to 99
 
-        if (roll < 50) return 0;       // 50% chance
-        if (roll < 80) return 100;     // 30% chance
-        if (roll < 90) return 500;     // 10% chance
-        if (roll < 97) return 900;     // 9% chance
-        return 1250;                   // 1% chance
+        if (roll < rollChance[0]) return 0;       // 50% chance
+        else if (roll < rollChance[1]) return 100;     // 30% chance
+        else if (roll < rollChance[2]) return 500;     // 10% chance
+        else if (roll < rollChance[3]) return 900;     // 9% chance
+        else return 1250;                   // 1% chance
     }
 
     private void SpawnEnemy()
     {
+        
         if (availablePositions.Count == 0)
         {
             Debug.LogWarning("No available positions to spawn an enemy.");
@@ -117,6 +128,7 @@ public class SingleEnemySpawner : MonoBehaviour
         }
 
         // Place the enemy at the selected position
+
         int placedIndex = objectPlacer.PlaceObject(enemyData.Prefab, spawnPosition, enemyScore);
 
         // Remove the position from the available list
@@ -135,6 +147,8 @@ public class SingleEnemySpawner : MonoBehaviour
                 unit.OnDeath += () => OnUnitDeath(gridPosition);
             }
         }
+        
+        
     }
 
     private void OnUnitDeath(Vector3Int gridPosition)
@@ -148,8 +162,31 @@ public class SingleEnemySpawner : MonoBehaviour
         }
     }
 
-    public void SetLevel(string level)
+    //public void SetLevel(int level)
+    //{
+    //    this.level = level;
+    //}
+
+    public void SetLevelRollChanceAndSpawntime(int level)
     {
         this.level = level;
+        if (level == 0)
+        {
+            rollChance = new int[] { 50, 80, 90, 97 };
+            spawnInterval = 120f;
+            
+        }
+        else if (level == 1)
+        {
+            rollChance = new int[] { 40, 80, 90, 97 };
+            spawnInterval = 100f;
+        }
+        else if (level == 2)
+        {
+            rollChance = new int[] { 10, 50, 80, 95 };
+            spawnInterval = 80f;
+        }
+        newSpawnTime = new float[] {spawnInterval * 0.9f, spawnInterval * 0.8f, spawnInterval * 0.75f, spawnInterval * 0.6f, spawnInterval * 0.5f};
+        Debug.Log($"Enemy level is {level}, spawnInterval is {spawnInterval}");
     }
 }

@@ -13,10 +13,13 @@ public class Unit : NetworkBehaviour
 
     public event Action OnDeath;
     private Renderer showGradeRenderer;
+    public BaseManager baseManager;
 
     public void Start()
     {
         placementSystem = GameObject.FindObjectOfType<PlacementSystem>();
+        baseManager = GameObject.FindObjectOfType<BaseManager>();
+
         // Find the child object named "ShowGrade" and get its Renderer
         Transform showGradeTransform = transform.Find("ShowGrade");
         if (showGradeTransform != null)
@@ -27,6 +30,7 @@ public class Unit : NetworkBehaviour
         SetGrade();
         UpdateGradeColor();
     }
+    
 
     [Server]
     public void RemoveUnit(Vector3Int gridPosition)

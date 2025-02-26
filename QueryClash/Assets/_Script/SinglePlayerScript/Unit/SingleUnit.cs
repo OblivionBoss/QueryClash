@@ -12,9 +12,11 @@ public class SingleUnit : MonoBehaviour
     public bool isBase=false;
     private Renderer showGradeRenderer;
     public event Action OnDeath;
+    public BaseManager baseManager;
     public void Start()
     {
         placementSystem = GameObject.FindObjectOfType<SinglePlacementSystem>();
+        baseManager = GameObject.FindObjectOfType<BaseManager>();
 
         // Find the child object named "ShowGrade" and get its Renderer
         Transform showGradeTransform = transform.Find("ShowGrade");
@@ -28,10 +30,6 @@ public class SingleUnit : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
-    {
-
-    }
 
 
     public void RemoveUnit(Vector3Int gridPosition)
