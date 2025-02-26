@@ -74,6 +74,11 @@ public class ResourceData
         return cell.GetComponent<CellBehaviour>().IsCooldown();
     }
 
+    public void ResetCooldown()
+    {
+        cell.GetComponent<CellBehaviour>().ResetCooldown();
+    }
+
     public bool Query(out Sprite icon)
     {
         bool isFisrtQuery = duplicateQueryCount == 0;

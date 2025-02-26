@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 47
+  controlID: 48
   draggingID: 0
 --- !u!114 &2
 MonoBehaviour:
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 48
+  controlID: 49
   draggingID: 0
 --- !u!114 &4
 MonoBehaviour:
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 49
+  controlID: 50
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -197,8 +197,8 @@ MonoBehaviour:
     y: 0
     width: 338
     height: 527.3333
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -243,7 +243,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: ac43fefff643feffec56fefffa56feffa664feffd264feffdc64fefff464feffc0aefeff0eaffeff04c2feff12c2feffbecffeffeacffefff4cffeff0cd0feff0027ffff6842ffffb642ffffb855ffffcc55ffffa263ffffd263ffffe063fffffc63ffffec7effff3a7fffff3c92ffff5092fffffc9fffff2ca0ffff3aa0ffff58a0ffff2afbffff30fbfffff4ffffff567b0000727e0000a8b70100ac0902003c850200dca902004cb002002cb20200
+      m_ExpandedIDs: c0c6feffb6d8feffecdafeffb0dbfeff96eafeff46edfeff86eefeffa2eefeffaaeefefffaeefeff26effeff48effeff5aeffeff7af0feffda94ffffbe95ffff6697ffff7697ffff32b1ffff40b1ffff74faffff78faffff7efafffff4ffffff262d0100464b0100d26b01005e9401009acf0100
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -639,9 +639,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 967.05615, y: 500.36533, z: -5.7118235}
+    m_Target: {x: 957.9474, y: 523.0631, z: -5.1740127}
     speed: 2
-    m_Value: {x: 967.05615, y: 500.36533, z: -5.7118235}
+    m_Value: {x: 957.9474, y: 523.0631, z: -5.1740127}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -691,9 +691,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 773.14185
+    m_Target: 719.35803
     speed: 2
-    m_Value: 773.14185
+    m_Value: 719.35803
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1150,7 +1150,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Script/Game
+    - Assets
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -1158,16 +1158,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Script/Game
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\UnityProject\QueryClash\QueryClash
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 367}
-    m_SelectedIDs: 68c80000
-    m_LastClickedID: 51304
-    m_ExpandedIDs: 00000000bcc7000024c8000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 79}
+    m_SelectedIDs: 30170100
+    m_LastClickedID: 71472
+    m_ExpandedIDs: 00000000301701006617010092170100981701002acf01002ccf010000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1195,7 +1195,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000bcc70000
+    m_ExpandedIDs: 0000000030170100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: ea850000e480000010810000d6500100127e0000168300001a760000c476000044fa000032c000000cd100004a9a00002ee2000098c000000000000052470100b481000092c900007e470100423a0100d8350100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1339,8 +1339,8 @@ MonoBehaviour:
     y: 0
     width: 452.66663
     height: 819.3333
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}

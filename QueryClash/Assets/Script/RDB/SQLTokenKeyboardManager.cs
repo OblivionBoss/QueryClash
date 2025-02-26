@@ -61,6 +61,16 @@ public class SQLTokenKeyboardManager : MonoBehaviour
         cursor.rectTransform.anchoredPosition = new Vector2(LineHeadWidth, -(0 * TokenHeight));
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Comma)) AddOperatorToken(",");
+        if (Input.GetKeyDown(KeyCode.Return)) Execute();
+        if (Input.GetKeyDown(KeyCode.Space)) AddNewLine();
+        if (Input.GetKeyDown(KeyCode.Backspace)) DeleteToken();
+        if (Input.GetKeyDown(KeyCode.Backslash)) DeleteAllToken();
+        if (Input.GetKeyDown(KeyCode.Delete)) DeleteAllToken();
+    }
+
     private void Setup()
     {
         // setup token

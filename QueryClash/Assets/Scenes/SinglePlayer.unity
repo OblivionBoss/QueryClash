@@ -719,7 +719,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1693921725}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -31572,7 +31572,7 @@ PrefabInstance:
       objectReference: {fileID: 1902367467}
     - target: {fileID: 3924605546169159549, guid: 335cd8b9fe0dfc74598fac2f811d35c2, type: 3}
       propertyPath: baseHP
-      value: 500
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 3924605546169159549, guid: 335cd8b9fe0dfc74598fac2f811d35c2, type: 3}
       propertyPath: healthBar
