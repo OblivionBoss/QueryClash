@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-
 
 public class SingleBase : SingleSoldier
 {
@@ -14,7 +10,7 @@ public class SingleBase : SingleSoldier
         MaxHp = baseHP;
         CurrentHp = baseHP;
         isBase = true;
-        UpdateSpawnHP(MaxHp);
+        HealthBarUpdate();
     }
 
     public override void ReduceHp(float damage)

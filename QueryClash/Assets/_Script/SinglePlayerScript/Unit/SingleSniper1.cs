@@ -18,7 +18,7 @@ public class SingleSniper1 : SingleSoldier
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 20 * (1 + score / 1000);
-
+        HealthBarUpdate();
     }
 
     void Update()

@@ -13,6 +13,7 @@ public class SingleBuffSupport : SingleSoldier
         MaxHp = 300f * (1 + score / 1000);
         CurrentHp = MaxHp;
         Atk = 5 * (1 + score / 1000);
+        HealthBarUpdate();
     }
 
 

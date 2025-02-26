@@ -102,7 +102,7 @@ public class EndGameManager : NetworkBehaviour
             ClientManager.StopConnection();
         }
         Destroy(GameObject.Find("NetworkManager"));
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("BossGameLobby");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("GameLobby");
     }
 
     [ObserversRpc]
@@ -112,6 +112,6 @@ public class EndGameManager : NetworkBehaviour
 
         ClientManager.StopConnection();
         Destroy(GameObject.Find("NetworkManager"));
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("BossGameLobby");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("GameLobby");
     }
 }

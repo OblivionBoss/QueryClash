@@ -159,13 +159,6 @@ public class SingleSoldier : SingleUnit
             healthText.text = CurrentHp.ToString("#0") + " / " + MaxHp.ToString("#0");
     }
 
-    public void UpdateSpawnHP(float MaxHp)
-    {
-        healthBar.fillAmount = 1f;
-        if (healthText != null)
-            healthText.text = MaxHp.ToString("#0") + " / " + MaxHp.ToString("#0");
-    }
-
     public virtual void HealthBarSetup()
     {
         if (healthRT != null) healthRT.eulerAngles = new Vector3(50f, 0f, 0f);

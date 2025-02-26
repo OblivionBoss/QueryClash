@@ -7,6 +7,7 @@ public class BaseManager : MonoBehaviour
     public SingleBase leftBunker; // Assign the left bunker in the Inspector
     public SingleBase rightBunker; // Assign the right bunker in the Inspector
     public SingleTimer timer;
+    public RDBManager rdbManager;
 
     private bool leftBunkerDestroyed = false;
     private bool rightBunkerDestroyed = false;
@@ -14,6 +15,9 @@ public class BaseManager : MonoBehaviour
 
     [SerializeField] private Canvas endGameMenu;
     [SerializeField] private TextMeshProUGUI winLoseDrawText;
+    [SerializeField] private TextMeshProUGUI totalScoreText;
+    [SerializeField] private TextMeshProUGUI querySuccessText;
+    [SerializeField] private TextMeshProUGUI queryErrorText;
 
     void Update()
     {
@@ -56,10 +60,16 @@ public class BaseManager : MonoBehaviour
             winLoseDrawText.text = "draw";
             winLoseDrawText.color = new Color(1f, 0.5f, 0f);
         }
+
+        // show stat from rdbmanager
+        totalScoreText.text = rdbManager.queryStat.totalScore.ToString("#0");
+        querySuccessText.text = rdbManager.queryStat.querySuccess.ToString();
+        queryErrorText.text = rdbManager.queryStat.queryError.ToString();
     }
 
     public void GoToLobby()
     {
-        SceneManager.LoadSceneAsync("BossGameLobby");
+        Destroy(GameObject.Find("SingleSceneManager"));
+        SceneManager.LoadSceneAsync("GameLobby");
     }
 }

@@ -17,8 +17,9 @@ public class Hosting : MonoBehaviour
     public void StartHosting()
     {
         OnClick_Host();
-        SceneManager.LoadSceneAsync("GameFNetwork");
+        SceneManager.LoadSceneAsync("Multiplayer");
     }
+
     public void OnClick_Host()
     {
         if (_networkManager == null) return;

@@ -10,16 +10,20 @@ public class PathManager : MonoBehaviour
     {
         GameObject nm = GameObject.Find("NetworkManager");
         if (nm != null) Destroy(nm);
-        SceneManager.LoadSceneAsync("BossGameLobby");
+
+        GameObject ssm = GameObject.Find("SingleSceneManager");
+        if (ssm != null) Destroy(ssm);
+
+        SceneManager.LoadSceneAsync("GameLobby");
     }
 
-    public void Home() { SceneManager.LoadSceneAsync("BossMainMenu"); } // Go to MainMenu SceneManager.LoadSceneAsync("MainMenuFNetwork");
+    public void Home() { SceneManager.LoadSceneAsync("MainMenu"); } // Go to MainMenu SceneManager.LoadSceneAsync("MainMenuFNetwork");
 
-    public void Tutorial() { SceneManager.LoadSceneAsync("BossGameLobby"); } // Go to Turorial
+    public void Tutorial() { SceneManager.LoadSceneAsync("GameLobby"); } // Go to Turorial
 
     public void Singleplayer() { SceneManager.LoadSceneAsync("SingleLobby"); } // Go to Singleplayer
 
-    public void Multiplayer() { SceneManager.LoadSceneAsync("BossMultiOptions"); } // Go to MultiOptions
+    public void Multiplayer() { SceneManager.LoadSceneAsync("MultiOption"); } // Go to MultiOptions
 
     public void Quit() { Application.Quit(); } // Terminated application
 }

@@ -127,7 +127,7 @@ namespace FishNet.Component.Spawning
 
         private void ServerManager_OnClientKick(NetworkConnection arg1, int arg2, Managing.Server.KickReason arg3)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("BossGameLobby");
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("GameLobby");
         }
 
         /// <summary>
