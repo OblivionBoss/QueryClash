@@ -10,7 +10,7 @@ public class SingleBuffSupport : SingleSoldier
     {
         base.Start();
         unitTag = gameObject.tag;
-        MaxHp = 100f * (1 + score / 1000);
+        MaxHp = 300f * (1 + score / 1000);
         CurrentHp = MaxHp;
         Atk = 5 * (1 + score / 1000);
     }

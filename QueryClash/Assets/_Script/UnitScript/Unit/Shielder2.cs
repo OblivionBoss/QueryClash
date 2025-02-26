@@ -21,7 +21,7 @@ public class Shielder2 : Soldier
         spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 20f * (1 + score.Value / 1000);
+        Atk = 30f * (1 + score.Value / 1000);
     }
 
     [Server]
