@@ -10,6 +10,7 @@ public abstract class SingleBullet : MonoBehaviour
     public string thisTag { get; set; }
 
     public bool isBuff = false;
+   
     public virtual void Initialize(float atk, float deadZone, Vector3 direction, string enemyTag, string thisTag)
     {
         Atk = atk;
@@ -28,6 +29,7 @@ public abstract class SingleBullet : MonoBehaviour
 
     private void Update()
     {
+        
         Move();
         CheckDeadZone();
     }

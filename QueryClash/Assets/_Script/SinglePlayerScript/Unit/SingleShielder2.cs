@@ -25,6 +25,7 @@ public class SingleShielder2 : SingleSoldier
     // Update is called once per frame
     void Update()
     {
+        if (baseManager.gameEnd) return;
         ActiveSkill();
     }
 

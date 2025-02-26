@@ -9,9 +9,16 @@ public class SingleTimer : MonoBehaviour
     public float elapsedTime = 0f; // Tracks the time after countdown ends
     public float countDown; // Duration of the countdown in seconds
     public bool isCountingDown = true; // Determines whether the countdown is active
+    public BaseManager baseManager;
 
+
+    public void Start()
+    {
+        baseManager = GameObject.FindObjectOfType<BaseManager>();
+    }
     void Update()
     {
+        if (baseManager.gameEnd) return;
         if (isCountingDown)
         {
             // Decrease the countdown timer

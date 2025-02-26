@@ -24,6 +24,7 @@ public class SingleSniper2 : SingleSoldier
     void Update()
     {
         //base.Update();
+        if (baseManager.gameEnd) return;
         HandleBulletSpawning();
         ActivateSkill();
     }

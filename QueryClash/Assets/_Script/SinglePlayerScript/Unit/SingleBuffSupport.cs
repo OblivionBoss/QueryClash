@@ -16,7 +16,10 @@ public class SingleBuffSupport : SingleSoldier
         HealthBarUpdate();
     }
 
-
+    private void Update()
+    {
+        if (baseManager.gameEnd) return;
+    }
     public override void OnPlaced()
     {
         base.OnPlaced();

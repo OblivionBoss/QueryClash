@@ -17,6 +17,7 @@ public class SingleLaser : SingleSoldier
     void Update()
     {
         //base.Update();
+        if (baseManager.gameEnd) return;
         HandleBulletSpawning();
     }
 
