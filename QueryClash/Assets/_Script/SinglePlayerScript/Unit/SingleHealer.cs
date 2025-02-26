@@ -40,6 +40,7 @@ public class SingleHealer : SingleUnit
 
     public void Update()
     {
+        if (baseManager.gameEnd) return;
         if (isPlaced && !timer.isCountingDown && !isHealing)
         {
             StartCoroutine(HealOverTime());

@@ -13,6 +13,8 @@ public class BaseManager : MonoBehaviour
     private bool rightBunkerDestroyed = false;
     private bool sentData = false; // To ensure the transition happens only once
 
+    public bool gameEnd = false;
+
     [SerializeField] private Canvas endGameMenu;
     [SerializeField] private TextMeshProUGUI winLoseDrawText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
@@ -39,12 +41,15 @@ public class BaseManager : MonoBehaviour
             sentData = true; // Prevent multiple triggers
             //timer.isGameStart = false;
             HandleEndGame();
+            gameEnd = true;
+            Debug.Log("Game End");
         }
     }
 
     public void HandleEndGame()
     {
         endGameMenu.gameObject.SetActive(true);
+        
         if (!leftBunkerDestroyed && rightBunkerDestroyed)   // left win (player)
         {
             winLoseDrawText.text = "victory";

@@ -32,6 +32,7 @@ public class SingleSoldier : SingleUnit
     protected Animator childAnimator;
     public void Start()
     {
+        
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<SingleTimer>();
@@ -58,6 +59,7 @@ public class SingleSoldier : SingleUnit
         SetAnimator();
     }
 
+    
     public void HandleBulletSpawning()
     {
         if (isPlaced && !timer.isCountingDown)
@@ -129,6 +131,7 @@ public class SingleSoldier : SingleUnit
 
     public virtual void ReduceHp(float damage)
     {
+        if (baseManager.gameEnd) return;
         CurrentHp = Mathf.Max(0, CurrentHp - damage);
         HealthBarUpdate();
         if (CurrentHp <= 0)
@@ -143,6 +146,7 @@ public class SingleSoldier : SingleUnit
 
             // Remove the unit from the PlacementSystem
             RemoveUnit(gridPosition);
+            
         }
     }
 

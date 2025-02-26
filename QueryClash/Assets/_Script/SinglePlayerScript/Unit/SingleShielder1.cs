@@ -29,6 +29,7 @@ public class SingleShielder1 : SingleSoldier
     void Update()
     {
         //base.Update();
+        if (baseManager.gameEnd) return;
         ActivateSkill();
     }
     public override void OnPlaced()
@@ -80,6 +81,7 @@ public class SingleShielder1 : SingleSoldier
 
     public override void ReduceHp(float damage)
     {
+        if (baseManager.gameEnd) return;
         CurrentHp -= damage * (1-Defence);
         healthBar.fillAmount = CurrentHp / MaxHp;
         if (CurrentHp <= 0)

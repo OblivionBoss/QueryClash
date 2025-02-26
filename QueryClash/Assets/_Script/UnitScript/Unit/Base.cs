@@ -23,6 +23,10 @@ public class Base : Soldier
     //    isBase = true;
     //}
     public float baseHP;
+    [SerializeField]
+    private GameObject explodeFX;
+    [SerializeField]
+    private AudioClip explodeSound;
 
     public override void OnStartClient()
     {
@@ -42,9 +46,17 @@ public class Base : Soldier
         CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage);
         if (CurrentHp.Value <= 0)
         {
-            ServerManager.Despawn(gameObject);
+            ShowExpldeFXClient();
         }
     }
+
+    [ObserversRpc]
+    public void ShowExpldeFXClient()
+    {
+        explodeFX.SetActive(true);
+        audioSource.PlayOneShot(explodeSound);  
+    }
+
 
     [ServerRpc(RequireOwnership = false)]
     public void ReduceHpFromClient(float damage)

@@ -14,9 +14,9 @@ public class SingleCannon : SingleSoldier
         Atk = 30 * (1 + score / 1000);
         HealthBarUpdate();
     }
-    void Update()
+    public void Update()
     {
-        //base.Update();
+        if (baseManager.gameEnd) return;
         HandleBulletSpawning();
     }
 

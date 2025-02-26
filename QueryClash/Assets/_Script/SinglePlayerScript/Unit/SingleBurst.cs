@@ -23,7 +23,8 @@ public class SingleBurst : SingleSoldier
 
     void Update()
     {
-        //base.Update();
+        if (baseManager.gameEnd) return;
+        
         HandleBulletSpawning();
         ActivateSkill();
     }
