@@ -53,36 +53,14 @@ public class RDBManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Random.InitState(randomSeed);
-        //var table_name = new List<string>();
-        //var all_table_list = new List<List<List<string>>>();
-        //getDatabase(dbName, table_name, all_table_list);
-        //GenerateAllTables(table_name, all_table_list);
-
-        //dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + tempDB;
-        //Vector2[] company = {new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f)};
-        //Debug.Log(dbName);
-
-        //resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
-        //queryResult = null;
-        //GetFocusMaterial();
-
-        //if (!isNetwork)
-        //{
-        //    if (SingleSceneManager.singleSceneManager.rdb < rdbName.Length)
-        //        StartRDB(rdbName[SingleSceneManager.singleSceneManager.rdb]);
-        //    else
-        //        StartRDB(rdbName[0]);
-        //}
-
-        //GameObject a = Instantiate(linePrefab, linePanel);
-        //var b = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[0]).getTable();
-        //var c = resourceDatabase.GetTable(resourceDatabase.GetTableNames()[1]).getTable();
-        //a.transform.GetComponent<LineRendererUi>().CreateLine(b, c, Color.green);
-        //GenerateQueryMaterialForAllTableResourceData();
-
-        //database.text = debug_getDatabase(table_name, all_table_list);
-        //debug_getResourceTable(resourceTable);
+        GameObject ssm = GameObject.Find("SingleSceneManager");
+        if (ssm != null)
+        {
+            if (SingleSceneManager.singleSceneManager.rdb < rdbName.Length)
+                StartRDB(rdbName[SingleSceneManager.singleSceneManager.rdb]);
+            else
+                StartRDB(rdbName[0]);
+        }
     }
 
     public void StartRDB(string rdbName)
@@ -299,6 +277,7 @@ public class RDBManager : MonoBehaviour
                                 else
                                 {
                                     QueryEmptyCount++;
+                                    queryMaterialCell.ResetCooldown();
                                 }
                                 sprite_list.Add(gotMatIcon);
                             }
@@ -345,6 +324,7 @@ public class RDBManager : MonoBehaviour
 
         var (log_fst_temp, logMatList) = CalculateQueryMatScore(queryData_list, NumDiffTableQueryFocus, NumMatOtherQueryFocus, QueryFocusCount, QueryNotFocusCount, QueryEmptyCount);
         var (totalScoreAdd, totalScoreNotAdd, numAddMat, numGarbageNotAdd) = AddQueryToInventory();
+        ReduceBaseHpWhenDeleteGarbage(numGarbageNotAdd);
         if (queryData_list.Count == 0) queryErrorBox = GenerateQueryErrorBox("Empty query result");
         queryStat.querySuccess++;
 
@@ -356,8 +336,6 @@ public class RDBManager : MonoBehaviour
         stringBuilder.Append(log_fst);
         stringBuilder.Append(logMatList);
         Debug.LogError(stringBuilder.ToString());
-
-        //numGarbageNotAdd decrease base hp
 
         //queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
@@ -429,7 +407,7 @@ public class RDBManager : MonoBehaviour
     public (float, float, int, int) AddQueryToInventory()
     {
         int numAddMat = 0, numGarbageNotAdd = 0;
-        float totalScoreNotAdd = 0f, totalScoreAdd = 0f; ;
+        float totalScoreNotAdd = 0f, totalScoreAdd = 0f;
         foreach (QueryMaterial queryItem in queryMaterialList)
         {
             if (inventoryManager.AddItem(queryItem))
@@ -445,6 +423,29 @@ public class RDBManager : MonoBehaviour
         }
         queryMaterialList.Clear();
         return (totalScoreAdd, totalScoreNotAdd, numAddMat, numGarbageNotAdd);
+    }
+
+    public void ReduceBaseHpWhenDeleteGarbage(int numOfGarbage)
+    {
+        bool isLeft = GameObject.Find("CraftingManager").GetComponent<CraftingManager>().isLeftTeam;
+        if (isNetwork)
+        {
+            if (isLeft)
+            {
+                Base hostBase = GameObject.Find("LeftTeamBase").GetComponent<Base>();
+                hostBase.ReduceHp(0.01f * hostBase.MaxHp.Value * numOfGarbage);
+            }
+            else
+            {
+                Base clientBase = GameObject.Find("RightTeamBase").GetComponent<Base>();
+                clientBase.ReduceHpFromClient(0.01f * clientBase.MaxHp.Value * numOfGarbage);
+            }
+        }
+        else
+        {
+            SingleBase playerBase = GameObject.Find("SingleLeftTeamBase").GetComponent<SingleBase>();
+            playerBase.ReduceHp(0.01f * playerBase.MaxHp * numOfGarbage);
+        }
     }
 
     public static GameObject Instantiate(GameObject tablePrefab, GameObject canvasParent)

@@ -31,18 +31,18 @@ public class SingleSceneManager : MonoBehaviour
         rdb = rdbDropdown.value;
         difficulty = difficultyDropdown.value;
 
-        SceneManager.LoadScene("SinglePlayerScene");
-        StartCoroutine(DelayStartRDB());
+        SceneManager.LoadSceneAsync("SinglePlayer");
+        //StartCoroutine(DelayStartRDB());
     }
 
-    private IEnumerator DelayStartRDB()
-    {
-        yield return new WaitForSeconds(1f);
+    //private IEnumerator DelayStartRDB()
+    //{
+    //    yield return new WaitForSeconds(1f);
 
-        RDBManager rdbm = GameObject.Find("RDBManager").GetComponent<RDBManager>();
-        if (rdb < rdbm.rdbName.Length)
-            rdbm.StartRDB(rdbm.rdbName[rdb]);
-        else
-            rdbm.StartRDB(rdbm.rdbName[0]);
-    }
+    //    RDBManager rdbm = GameObject.Find("RDBManager").GetComponent<RDBManager>();
+    //    if (rdb < rdbm.rdbName.Length)
+    //        rdbm.StartRDB(rdbm.rdbName[rdb]);
+    //    else
+    //        rdbm.StartRDB(rdbm.rdbName[0]);
+    //}
 }

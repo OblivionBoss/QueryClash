@@ -46,6 +46,17 @@ public class Base : Soldier
         }
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void ReduceHpFromClient(float damage)
+    {
+        ReduceHp(damage);
+        //CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage);
+        //if (CurrentHp.Value <= 0)
+        //{
+        //    ServerManager.Despawn(gameObject);
+        //}
+    }
+
     public override void HealingHp(float heal)
     {
         // Do nothing

@@ -53,6 +53,11 @@ public class CellBehaviour : MonoBehaviour//, IPointerClickHandler
         return false;
     }
 
+    public void ResetCooldown()
+    {
+        if (isCooldown) timeLeft = 30f;
+    }
+
     private void NotCooldown()
     {
         cellCooldownText.SetActive(false);

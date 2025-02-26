@@ -42,6 +42,18 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             CraftingSlot.craftingManager.UpdateCrafting();
         }
-        if (isDestroy) Destroy(gameObject);
+        if (isDestroy)
+        {
+            if (item is QueryMaterial)
+            {
+                var material = (QueryMaterial) item;
+                if (material.score <= 0)
+                {
+                    RDBManager rdbm = GameObject.Find("RDBManager").GetComponent<RDBManager>();
+                    if (rdbm != null) rdbm.ReduceBaseHpWhenDeleteGarbage(1);
+                }
+            }
+            Destroy(gameObject);
+        }
     }
 }
