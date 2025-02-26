@@ -51,7 +51,7 @@ public class GetOppIP : MonoBehaviour
 
     private IEnumerator HostingDelay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         _networkManager.ServerManager.StartConnection();
 
@@ -82,7 +82,7 @@ public class GetOppIP : MonoBehaviour
 
     private IEnumerator ClientDelay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
 
         _networkManager.ClientManager.StartConnection(Opp_IP);
     }
