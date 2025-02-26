@@ -7,14 +7,14 @@ public class Laser : Soldier
     {
         base.Start();
 
-        float maxhp = 200f * (1 + score.Value / 1000);
+        float maxhp = 300f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
         spawnRate = 2.5f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 15 * (1 + score.Value / 1000);
+        Atk = 30 * (1 + score.Value / 1000);
     }
 
     [Server]

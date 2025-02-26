@@ -9,7 +9,7 @@ public class BuffSupport : Soldier
     {
         base.Start();
 
-        float maxhp = 100f * (1 + score.Value / 1000);
+        float maxhp = 300f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         unitTag = gameObject.tag;
