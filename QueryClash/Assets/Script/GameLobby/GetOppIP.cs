@@ -41,7 +41,7 @@ public class GetOppIP : MonoBehaviour
     public void StartHosting()
     {
         OnClick_Host();
-        SceneManager.LoadSceneAsync("GameFNetwork");
+        SceneManager.LoadSceneAsync("Multiplayer");
     }
     public void OnClick_Host()
     {
@@ -67,7 +67,7 @@ public class GetOppIP : MonoBehaviour
         }
         
         OnStart_Client();
-        SceneManager.LoadSceneAsync("GameFNetwork");
+        SceneManager.LoadSceneAsync("Multiplayer");
     }
 
     public void OnStart_Client()
@@ -93,7 +93,7 @@ public class GetOppIP : MonoBehaviour
         {
             Debug.LogError("Connection Stop.");
             Destroy(GameObject.Find("NetworkManager"));
-            SceneManager.LoadSceneAsync("BossGameLobby");
+            SceneManager.LoadSceneAsync("GameLobby");
         }
         else if (args.ConnectionState == LocalConnectionState.Started)
         {
@@ -106,12 +106,12 @@ public class GetOppIP : MonoBehaviour
         Debug.LogError("Connection Timeout.");
         //SceneManager.LoadScene("MainMenuFNetwork");
         Destroy(GameObject.Find("NetworkManager"));
-        SceneManager.LoadSceneAsync("BossGameLobby");
+        SceneManager.LoadSceneAsync("GameLobby");
     }
 
     public void GoToGameLobby()
     {
-        SceneManager.LoadSceneAsync("BossGameLobby");
+        SceneManager.LoadSceneAsync("GameLobby");
     }
 }
 

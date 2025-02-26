@@ -22,6 +22,7 @@ public class SingleShielder1 : SingleSoldier
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 0f;
+        HealthBarUpdate();
     }
 
     // Update is called once per frame

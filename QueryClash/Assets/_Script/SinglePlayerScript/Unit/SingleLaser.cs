@@ -12,7 +12,7 @@ public class SingleLaser : SingleSoldier
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
         Atk = 30 * (1 + score / 1000);
-
+        HealthBarUpdate();
     }
     void Update()
     {

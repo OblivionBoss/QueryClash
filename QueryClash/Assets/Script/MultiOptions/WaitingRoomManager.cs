@@ -7,6 +7,7 @@ using TMPro;
 using FishNet.Object.Synchronizing;
 using System.Collections;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 
 public class WaitingRoomManager : NetworkBehaviour
 {
@@ -154,7 +155,7 @@ public class WaitingRoomManager : NetworkBehaviour
         {   
             ClientManager.StopConnection();
         }
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("BossMultiOptions");
+        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MultiOption");
     }
 
     //private IEnumerator StopConnClientDelay()
@@ -162,11 +163,37 @@ public class WaitingRoomManager : NetworkBehaviour
     //    yield return new WaitForSeconds(0.5f);
 
     //    ClientManager.StopConnection();
-    //    UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuFNetwork");
+    //    UnityEngine.SceneManagement.SceneManager.LoadScene("Multiplayer");
     //}
 
     private string GetLocalIPv4()
     {
         return Dns.GetHostEntry(Dns.GetHostName()).AddressList.First(f => f.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork).ToString();
+    }
+
+    private string GetLocalyIPv4()
+    {
+        foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
+        {
+            // Ignore virtual adapters (like ZeroTier)
+            if (ni.Description.ToLower().Contains("zerotier") || ni.Name.ToLower().Contains("zerotier"))
+                continue;
+
+            if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 ||
+                ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+            {
+                if (ni.OperationalStatus == OperationalStatus.Up)
+                {
+                    foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            return ip.Address.ToString();
+                        }
+                    }
+                }
+            }
+        }
+        return "127.0.0.1"; // Default to localhost if no valid IP found
     }
 }

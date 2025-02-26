@@ -31,7 +31,7 @@ public class SingleSceneManager : MonoBehaviour
         rdb = rdbDropdown.value;
         difficulty = difficultyDropdown.value;
 
-        SceneManager.LoadSceneAsync("SinglePlayerScene");
+        SceneManager.LoadScene("SinglePlayerScene");
         StartCoroutine(DelayStartRDB());
     }
 
