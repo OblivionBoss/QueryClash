@@ -2592,7 +2592,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Company
       m_Image: {fileID: 0}
-    - m_Text: Shop
+    - m_Text: University
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

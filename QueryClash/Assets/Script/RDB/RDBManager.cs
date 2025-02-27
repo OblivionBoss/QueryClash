@@ -29,6 +29,7 @@ public class RDBManager : MonoBehaviour
 
     [SerializeField] public string[] rdbName;
     private string dbName;
+    public string RDBName;
     public InventoryManager inventoryManager;
     public TextMeshProUGUI output;
     public TMP_InputField textInputField;
@@ -47,6 +48,7 @@ public class RDBManager : MonoBehaviour
     public Timer timer;
     public SingleTimer singleTimer;
     public QueryStat queryStat = new();
+    public QueryLogger queryLogger;
 
     public bool isNetwork = false;
 
@@ -67,9 +69,12 @@ public class RDBManager : MonoBehaviour
     {
         dbName = "URI=file:" + Application.streamingAssetsPath + "/RDBs/" + rdbName;
         Vector2[] company = { new Vector2(380f, 735.88f), new Vector2(-245f, 678f), new Vector2(417.39f, 302f), new Vector2(-430f, 215f), new Vector2(-8f, 99f) };
+        Vector2[] university = { new Vector2(364f, 762f), new Vector2(-450f, 330f), new Vector2(-243f, 730f), new Vector2(410f, 416f), new Vector2(-44f, 322f), new Vector2(395f, 82f) };
         Debug.Log(dbName);
+        RDBName = rdbName;
 
-        resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
+        if (rdbName == "company.db") resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, company);
+        else if (rdbName == "university.db") resourceDatabase = new ResourceDatabase(dbName, canvasParent, tablePrefab, colPrefab, cellPrefab, keyboardManager, textForSize, university);
         queryResult = null;
         GetFocusMaterial();
     }
@@ -140,7 +145,7 @@ public class RDBManager : MonoBehaviour
                         stringBuilder.Append("-E# {");
                         stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
                         stringBuilder.Append("}");
-                        Debug.LogError(stringBuilder.ToString());
+                        if (queryLogger != null) queryLogger.LogQuery(stringBuilder.ToString());
                         return;
                     }
 
@@ -300,7 +305,7 @@ public class RDBManager : MonoBehaviour
                         stringBuilder.Append("-G# {");
                         stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
                         stringBuilder.Append("}");
-                        Debug.LogError(stringBuilder.ToString());
+                        if (queryLogger != null) queryLogger.LogQuery(stringBuilder.ToString());
                         return;
                     }
                 }
@@ -318,7 +323,7 @@ public class RDBManager : MonoBehaviour
             stringBuilder.Append("-G# {");
             stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
             stringBuilder.Append("}");
-            Debug.LogError(stringBuilder.ToString());
+            if (queryLogger != null) queryLogger.LogQuery(stringBuilder.ToString());
             return;
         }
 
@@ -335,7 +340,7 @@ public class RDBManager : MonoBehaviour
         stringBuilder.Append("} ");
         stringBuilder.Append(log_fst);
         stringBuilder.Append(logMatList);
-        Debug.LogError(stringBuilder.ToString());
+        if (queryLogger != null) queryLogger.LogQuery(stringBuilder.ToString());
 
         //queryResult = GenerateQueryResultTable(query_list, query_cell_list, mat_sprites);
     }
@@ -368,6 +373,7 @@ public class RDBManager : MonoBehaviour
             // [(<matType>,D,score),...]
             sbForMatList.Append($"({(int) material.type},{duplicateQueryCount},{material.score.ToString("F2")}),");
         }
+        if (queryData_list.Count != 0) sbForMatList.Remove(sbForMatList.Length - 1, 1);
         sbForMatList.Append("]");
 
         queryStat.totalScore += totalScore;
@@ -376,13 +382,13 @@ public class RDBManager : MonoBehaviour
             queryStat.numOfGetMaterial[i] += matTypeCountAndGarbage[i];
         }
 
-        // [<focus>,<fro>,<sni>,<shi>,<can>,<sup>]
-        sb.Append($"[{(int) focusMaterialType}");
+        // @<focus>,<fro>,<sni>,<shi>,<can>,<sup@
+        sb.Append($"@{(int) focusMaterialType}");
         foreach (int count in matTypeCount)
         {
             sb.Append($",{count}");
         }
-        sb.Append("]");
+        sb.Append("@");
 
         // |T,O,F,N,E,<totalScore>,<totalScoreNotAdd>,<numAddMat>|
         sb.Append($" |{NumDiffTableQueryFocus},{NumMatOtherQueryFocus},{QueryFocusCount},{QueryNotFocusCount},{QueryEmptyCount},{totalScore.ToString("F2")}");
