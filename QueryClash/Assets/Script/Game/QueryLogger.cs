@@ -4,20 +4,38 @@ using UnityEngine;
 
 public class QueryLogger : MonoBehaviour
 {
-    private string logFilePath;
+    private string timestamp;
+    public RDBManager RDBManager;
+    public SingleEnemySpawner Spawner;
 
-    private void Start()
+    void Start()
     {
-        logFilePath = Path.Combine(Application.persistentDataPath, "query_log.txt");
-        Debug.LogError(logFilePath);
+        DateTime utcNow = DateTime.UtcNow;
+        TimeZoneInfo thailandTimeZone = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+        DateTime thailandTime = TimeZoneInfo.ConvertTimeFromUtc(utcNow, thailandTimeZone);
+        timestamp = thailandTime.ToString("dd-MM-yyyy_HH-mm-ss-fff");
     }
 
-    public void LogQuery(string query)
+    public void LogQuery(string queryLog)
     {
-        string timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss");
-        string logEntry = $"{timestamp} - {query}";
-
-        File.AppendAllText(logFilePath, logEntry + Environment.NewLine);
-        Debug.Log($"Logged: {logEntry}");
+        if (RDBManager.isNetwork)
+        {
+            string multiFilePath = Application.streamingAssetsPath + "/QueryLogs/Multiplayer/" + "multi_" + timestamp + ".txt";
+            if (!File.Exists(multiFilePath))
+            {
+                File.WriteAllText(multiFilePath, $"multiplayer {timestamp} {RDBManager.RDBName}\n");
+            }
+            File.AppendAllText(multiFilePath, queryLog + "\n");
+        }
+        else
+        {
+            string singleFilePath = Application.streamingAssetsPath + "/QueryLogs/Singleplayer/" + "single_" + timestamp + ".txt";
+            if (!File.Exists(singleFilePath))
+            {
+                File.WriteAllText(singleFilePath, $"singleplayer {timestamp} {RDBManager.RDBName} {Spawner.difficulty}\n");
+            }
+            File.AppendAllText(singleFilePath, queryLog + "\n");
+        }
+        Debug.LogError($"Logged: {queryLog}");
     }
 }

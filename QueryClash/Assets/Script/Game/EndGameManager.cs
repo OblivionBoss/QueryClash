@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using FishNet.Object;
 using TMPro;
+using System.Text;
 
 public class EndGameManager : NetworkBehaviour
 {
@@ -9,16 +10,19 @@ public class EndGameManager : NetworkBehaviour
     public Base rightBunker; // Assign the right bunker in the Inspector
     public Timer timer;
     public RDBManager rdbManager;
+    public QueryLogger queryLogger;
 
     private bool leftBunkerDestroyed = false;
     private bool rightBunkerDestroyed = false;
     private bool sentData = false; // To ensure the transition happens only once
+    private string winOrLose;
 
     [SerializeField] private Canvas endGameMenu;
     [SerializeField] private TextMeshProUGUI winLoseDrawText;
     [SerializeField] private TextMeshProUGUI totalScoreText;
     [SerializeField] private TextMeshProUGUI querySuccessText;
     [SerializeField] private TextMeshProUGUI queryErrorText;
+    [SerializeField] private TextMeshProUGUI avgScoreText;
 
     [Server]
     public void Update()
@@ -71,22 +75,34 @@ public class EndGameManager : NetworkBehaviour
         {
             winLoseDrawText.text = "draw";
             winLoseDrawText.color = new Color(1f, 0.5f, 0f);
+            winOrLose = "draw";
         }
         else if (hostWin && isHost || !hostWin && !isHost)
         {
             winLoseDrawText.text = "victory";
             winLoseDrawText.color = Color.green;
+            winOrLose = "victory";
         }
         else if (!hostWin && isHost || hostWin && !isHost)
         {
             winLoseDrawText.text = "defeated";
             winLoseDrawText.color = Color.red;
+            winOrLose = "defeated";
         }
 
         // show stat from rdbmanager
         totalScoreText.text = rdbManager.queryStat.totalScore.ToString("#0");
         querySuccessText.text = rdbManager.queryStat.querySuccess.ToString();
         queryErrorText.text = rdbManager.queryStat.queryError.ToString();
+        avgScoreText.text = (rdbManager.queryStat.totalScore / rdbManager.queryStat.querySuccess).ToString("F2");
+
+        string finalLog = 
+            "TotalScore = " + totalScoreText.text + 
+            " QuerySuccess = " + querySuccessText.text + 
+            " QueryError = " + queryErrorText.text +
+            " AvgScorePerQuery = " + avgScoreText.text +
+            " Player = " + winOrLose;
+        if (queryLogger != null) queryLogger.LogQuery(finalLog);
     }
 
     public void GoToLobby()

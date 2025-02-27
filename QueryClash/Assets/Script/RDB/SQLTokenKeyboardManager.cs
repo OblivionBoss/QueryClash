@@ -27,6 +27,9 @@ public class SQLTokenKeyboardManager : MonoBehaviour
     public RDBManager RDBManager;
     private GameObject queryErrorBox;
     public TextMeshProUGUI SQLtext;
+    public QueryLogger queryLogger;
+    public Timer timer;
+    public SingleTimer singleTimer;
 
     public Color keywordColor;
     public Color functionColor;
@@ -239,12 +242,24 @@ public class SQLTokenKeyboardManager : MonoBehaviour
         queryErrorBox = RDBManager.GenerateQueryErrorBox($"SQL syntax error\naliasing not allow\nat \" {prevString} {currString} \"");
         RDBManager.queryStat.queryError++;
 
-        Debug.LogError("SQLite Parser ERROR");
+
+        if (RDBManager.isNetwork)
+        {
+            if (timer.isCountingDown.Value) stringBuilder.Append("#P-");
+            else stringBuilder.Append("#B-");
+            stringBuilder.Append(timer.timerText.text);
+        }
+        else
+        {
+            if (singleTimer.isCountingDown) stringBuilder.Append("#P-");
+            else stringBuilder.Append("#B-");
+            stringBuilder.Append(singleTimer.timerText.text);
+        }
         // log G with query_command
         stringBuilder.Append("-G# {");
         stringBuilder.Append(query_command.Replace("\n", " ").Replace("\r", " "));
         stringBuilder.Append("}");
-        Debug.LogError(stringBuilder.ToString());
+        if (queryLogger != null) queryLogger.LogQuery(stringBuilder.ToString());
     }
 
     private void insertToken(Token t)

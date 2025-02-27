@@ -17,6 +17,7 @@ public class SingleEnemySpawner : MonoBehaviour
     private float[] newSpawnTime;
     [SerializeField]
     private int level;
+    public string difficulty;
 
     public SingleTimer timer;
 
@@ -174,17 +175,19 @@ public class SingleEnemySpawner : MonoBehaviour
         {
             rollChance = new int[] { 50, 80, 90, 97 };
             spawnInterval = 120f;
-            
+            difficulty = "Easy";
         }
         else if (level == 1)
         {
             rollChance = new int[] { 40, 80, 90, 97 };
             spawnInterval = 100f;
+            difficulty = "Medium";
         }
         else if (level == 2)
         {
             rollChance = new int[] { 10, 50, 80, 95 };
             spawnInterval = 80f;
+            difficulty = "Hard";
         }
         newSpawnTime = new float[] {spawnInterval * 0.9f, spawnInterval * 0.8f, spawnInterval * 0.75f, spawnInterval * 0.6f, spawnInterval * 0.5f};
         Debug.Log($"Enemy level is {level}, spawnInterval is {spawnInterval}");
