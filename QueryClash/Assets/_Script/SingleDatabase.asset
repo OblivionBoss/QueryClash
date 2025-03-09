@@ -85,15 +85,3 @@ MonoBehaviour:
     <ID>k__BackingField: 208
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 4223672987726780156, guid: 3ca27e7db8227324b895127eb5508ff0, type: 3}
-  - <Name>k__BackingField: RightHealer
-    <ID>k__BackingField: 209
-    <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 3792373499563084385, guid: 5b1747281a0bdc04baedc3c86c2bace7, type: 3}
-  - <Name>k__BackingField: RightBuffer
-    <ID>k__BackingField: 210
-    <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 6437428359607094924, guid: 2d04210c162cf4e43ae6a83703ed4675, type: 3}
-  - <Name>k__BackingField: TestHealer
-    <ID>k__BackingField: 1
-    <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 418039146114299213, guid: 19439032082703a47986611d79b4c52f, type: 3}

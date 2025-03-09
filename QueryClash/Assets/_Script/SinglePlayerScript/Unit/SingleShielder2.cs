@@ -14,11 +14,11 @@ public class SingleShielder2 : SingleSoldier
     void Start()
     {
         base.Start();
-        MaxHp = 750f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
+        MaxHp = 750f * Mathf.Pow(1 + score / 500f, 2);         // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 30f * (1 + score / 1000);
+        Atk = 20f * Mathf.Pow(1 + score / 500f, 2);
         HealthBarUpdate();
     }
 
@@ -36,7 +36,7 @@ public class SingleShielder2 : SingleSoldier
 
     public async void ActiveSkill()
     {
-        if(this.HitCount >= 10)
+        if(this.HitCount >= 5)
         {
             this.childAnimator = GetComponentInChildren<Animator>();
             childAnimator.SetBool("Shooting", true);
@@ -50,7 +50,7 @@ public class SingleShielder2 : SingleSoldier
     public override void ReduceHp(float damage)
     {
         CurrentHp -= damage;
-        healthBar.fillAmount = CurrentHp / MaxHp;
+        HealthBarUpdate();
         HitCount++;
         if (CurrentHp <= 0)
         {

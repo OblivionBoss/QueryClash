@@ -9,13 +9,13 @@ public class BuffSupport : Soldier
     {
         base.Start();
 
-        float maxhp = 300f * (1 + score.Value / 1000);
+        float maxhp = 300f * (Mathf.Pow(1 + score.Value / 500f, 2));
         UpdateSpawnHP(maxhp);
 
         unitTag = gameObject.tag;
         MaxHp.Value = maxhp;
         CurrentHp.Value = MaxHp.Value;
-        Atk = 5 * (1 + score.Value / 1000);
+        Atk = 5 * (Mathf.Pow(1 + score.Value / 500f, 2));
     }
 
     public override void OnPlaced()

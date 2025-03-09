@@ -17,7 +17,7 @@ public class SingleShielder1 : SingleSoldier
     void Start()
     {
         base.Start();
-        MaxHp = 1000f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
+        MaxHp = 1000f * Mathf.Pow(1 + score / 500f, 2);         // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
@@ -83,7 +83,7 @@ public class SingleShielder1 : SingleSoldier
     {
         if (baseManager.gameEnd) return;
         CurrentHp -= damage * (1-Defence);
-        healthBar.fillAmount = CurrentHp / MaxHp;
+        HealthBarUpdate();
         if (CurrentHp <= 0)
         {
             

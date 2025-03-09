@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class SingleSniper2 : SingleSoldier
 {
-    public float skillCooldown = 15;
+    public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
 
     private bool skillUsing;
     public GameObject specialBullet;
-    void Start()
+    void Start()    
     {
         base.Start();
-        MaxHp = 100f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
+        MaxHp = 100f * Mathf.Pow(1 + score / 500f, 2);         // Set specific MaxHp for LeftFrontline
         spawnRate = 2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 20 * (1 + score / 1000);
+        Atk = 25 * Mathf.Pow(1 + score / 500f, 2);
         HealthBarUpdate();
     }
 

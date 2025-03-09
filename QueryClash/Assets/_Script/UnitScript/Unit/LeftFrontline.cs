@@ -47,7 +47,7 @@ public class LeftFrontline : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            spawnRate = 0.3f;
+            spawnRate = 0.5f;
             skillDuration += Time.deltaTime; // Start counting skill duration
 
             PlaySoundAndAnimationClient();
@@ -57,7 +57,7 @@ public class LeftFrontline : Soldier
             skillDuration += Time.deltaTime;
 
             // Check if skill duration has ended
-            if (skillDuration >= 5f)
+            if (skillDuration >= 3f)
             {
                 ResetSkill();
                 Debug.Log("Skill ended");

@@ -14,14 +14,14 @@ public class Shielder2 : Soldier
     {
         base.Start();
 
-        float maxhp = 750f * (1 + score.Value / 1000);
+        float maxhp = 750f * Mathf.Pow(1 + score.Value / 500f, 2);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 30f * (1 + score.Value / 1000);
+        Atk = 20f * Mathf.Pow(1 + score.Value / 500f, 2);
     }
 
     [Server]
@@ -34,7 +34,7 @@ public class Shielder2 : Soldier
     [Server]
     public void ActiveSkill()
     {
-        if(HitCount.Value >= 10)
+        if(HitCount.Value >= 5)
         {
             SpawnBullet();
             HitCount.Value = 0;
