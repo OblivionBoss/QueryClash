@@ -3,7 +3,7 @@ using FishNet.Object;
 
 public class Sniper2 : Soldier
 {
-    public float skillCooldown = 15;
+    public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
     
@@ -14,7 +14,7 @@ public class Sniper2 : Soldier
     {
         base.Start();
 
-        float maxhp = 100f * (1 + score.Value / 1000);
+        float maxhp = 100f * Mathf.Pow(1 + score.Value / 500f, 2);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;   // Set specific MaxHp for LeftFrontline

@@ -25,7 +25,7 @@ public class Healer : Unit
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<Timer>();
-        healAmount *= 10f + (score.Value / 1000);
+        healAmount = 10f * (Mathf.Pow(1 + score.Value / 500f, 2));
 
         if (specialEffect == null)
         {

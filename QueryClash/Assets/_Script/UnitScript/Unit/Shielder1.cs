@@ -17,7 +17,7 @@ public class Shielder1 : Soldier
     {
         base.Start();
 
-        float maxhp = 1000f * (1 + score.Value / 1000);
+        float maxhp = 1000f * Mathf.Pow(1 + score.Value / 500f, 2);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp; // Set specific MaxHp for LeftFrontline
