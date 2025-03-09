@@ -260,7 +260,7 @@ public class Soldier : Unit
         {
             string healthBarPath = gameObject.CompareTag("LeftTeam") ?
                 "Left Healthbar Canvas/HealthBar" :
-                "Right Healthbar Canvas/HealthBar"; 
+                "Right Healthbar Canvas/HealthBar";
 
             healthBar = transform.Find(healthBarPath)?.GetComponent<Image>();
 

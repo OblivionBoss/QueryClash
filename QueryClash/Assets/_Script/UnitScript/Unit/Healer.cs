@@ -1,11 +1,10 @@
 using FishNet.Object;
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Healer : Unit
 {
-    public float healAmount;    // Amount healed per second
+    public float healAmount ;    // Amount healed per second
     public float healDuration = 10f;  // Total healing duration
     public float healInterval = 2f;   // Heal every second
     public float healRange = 1.2f;      // Healing radius
@@ -26,7 +25,7 @@ public class Healer : Unit
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<Timer>();
-        healAmount = 10f * (float)Math.Pow(1 + score.Value / 500, 2);
+        healAmount *= 10f + (score.Value / 1000);
 
         if (specialEffect == null)
         {

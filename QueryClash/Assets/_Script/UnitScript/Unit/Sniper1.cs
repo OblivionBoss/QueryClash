@@ -1,10 +1,9 @@
 using UnityEngine;
 using FishNet.Object;
-using System;
 
 public class Sniper1 : Soldier
 {
-    public float skillCooldown = 10;
+    public float skillCooldown = 15;
     public float skillCooldownRemaining;
     public float skillDuration;
     
@@ -15,14 +14,14 @@ public class Sniper1 : Soldier
     {
         base.Start();
 
-        float maxhp = 100f * (float)Math.Pow(1 + score.Value / 500, 2);
+        float maxhp = 100f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;   // Set specific MaxHp for LeftFrontline
         spawnRate = 2f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 25 * (float)Math.Pow(1 + score.Value / 500, 2);
+        Atk = 20 * (1 + score.Value / 1000);
     }
 
     [Server]

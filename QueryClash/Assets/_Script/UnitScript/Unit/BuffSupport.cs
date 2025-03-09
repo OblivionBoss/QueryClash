@@ -1,6 +1,5 @@
 using UnityEngine;
 using FishNet.Object;
-using System;
 
 public class BuffSupport : Soldier
 {
@@ -10,13 +9,13 @@ public class BuffSupport : Soldier
     {
         base.Start();
 
-        float maxhp = 300f * (float)Math.Pow(1 + score.Value / 500, 2);
+        float maxhp = 300f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         unitTag = gameObject.tag;
         MaxHp.Value = maxhp;
         CurrentHp.Value = MaxHp.Value;
-        Atk = 5 * (float)Math.Pow(1 + score.Value / 500, 2);
+        Atk = 5 * (1 + score.Value / 1000);
     }
 
     public override void OnPlaced()

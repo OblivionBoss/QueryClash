@@ -1,7 +1,6 @@
 using UnityEngine;
 using FishNet.Object;
 using System.Collections;
-using System;
 
 public class RightFrontline : Soldier
 {
@@ -16,14 +15,14 @@ public class RightFrontline : Soldier
     {
         base.Start();
 
-        float maxhp = 200f * (float)Math.Pow(1 + score.Value / 500, 2);
+        float maxhp = 150f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;    // Set specific MaxHp for LeftFrontline
-        spawnRate = 1f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
+        spawnRate = 1.2f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (float)Math.Pow(1 + score.Value / 500, 2);
+        Atk = 10 * (1 + score.Value / 1000);
     }
 
     [Server]
@@ -53,7 +52,7 @@ public class RightFrontline : Soldier
             Debug.Log("Skill activated");
             PlaySoundAndAnimationClient();
 
-            CurrentHp.Value = Mathf.Min(CurrentHp.Value + (0.2f*MaxHp.Value), MaxHp.Value);
+            CurrentHp.Value = Mathf.Min(CurrentHp.Value + 50, MaxHp.Value);
 
             Debug.Log("Skill ended");
             ResetSkill();

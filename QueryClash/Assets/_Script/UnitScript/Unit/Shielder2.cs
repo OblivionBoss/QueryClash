@@ -3,7 +3,6 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using System.Threading.Tasks;
 using System.Collections;
-using System;
 
 public class Shielder2 : Soldier
 {
@@ -15,14 +14,14 @@ public class Shielder2 : Soldier
     {
         base.Start();
 
-        float maxhp = 750f * (float)Math.Pow(1 + score.Value / 500, 2);
+        float maxhp = 750f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 30f * (float)Math.Pow(1 + score.Value / 500, 2);
+        Atk = 30f * (1 + score.Value / 1000);
     }
 
     [Server]
@@ -35,7 +34,7 @@ public class Shielder2 : Soldier
     [Server]
     public void ActiveSkill()
     {
-        if(HitCount.Value >= 2)
+        if(HitCount.Value >= 10)
         {
             SpawnBullet();
             HitCount.Value = 0;

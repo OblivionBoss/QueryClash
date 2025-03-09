@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +10,9 @@ public class SingleBuffSupport : SingleSoldier
     {
         base.Start();
         unitTag = gameObject.tag;
-        MaxHp = 300f * (float)Math.Pow(1 + score / 500, 2);
+        MaxHp = 300f * (1 + score / 1000);
         CurrentHp = MaxHp;
-        Atk = 5 * (float)Math.Pow(1 + score / 500,2);
+        Atk = 5 * (1 + score / 1000);
         HealthBarUpdate();
     }
 

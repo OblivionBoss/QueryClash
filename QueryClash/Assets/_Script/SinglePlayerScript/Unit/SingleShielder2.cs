@@ -2,26 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-using System;
 
 public class SingleShielder2 : SingleSoldier
 {
 
     
     public int HitCount = 0;
-    private int hitcountInterval=2;
 
 
     // Start is called before the first frame update
     void Start()
     {
         base.Start();
-                
+        MaxHp = 750f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
         spawnRate = 0f;       // Set specific spawn rate How often to spawn bullets (in seconds)
-        bulletTimer = 0f;    // Initialize bullet timer           
-        MaxHp = 750f * (float)Math.Pow(1 + score / 500, 2);
-        CurrentHp = MaxHp;
-        Atk = 30f * (float)Math.Pow(1 + score / 500, 2);
+        bulletTimer = 0f;     // Initialize bullet timer
+        CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
+        Atk = 30f * (1 + score / 1000);
         HealthBarUpdate();
     }
 
@@ -39,7 +36,7 @@ public class SingleShielder2 : SingleSoldier
 
     public async void ActiveSkill()
     {
-        if(this.HitCount >= hitcountInterval)
+        if(this.HitCount >= 10)
         {
             this.childAnimator = GetComponentInChildren<Animator>();
             childAnimator.SetBool("Shooting", true);
@@ -53,7 +50,7 @@ public class SingleShielder2 : SingleSoldier
     public override void ReduceHp(float damage)
     {
         CurrentHp -= damage;
-        HealthBarUpdate();
+        healthBar.fillAmount = CurrentHp / MaxHp;
         HitCount++;
         if (CurrentHp <= 0)
         {

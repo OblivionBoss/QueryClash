@@ -1,6 +1,5 @@
 using UnityEngine;
 using FishNet.Object;
-using System;
 
 public class Shielder1 : Soldier
 {
@@ -18,7 +17,7 @@ public class Shielder1 : Soldier
     {
         base.Start();
 
-        float maxhp = 1000f * (float)Math.Pow(1 + score.Value / 500, 2);
+        float maxhp = 1000f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp; // Set specific MaxHp for LeftFrontline
@@ -71,7 +70,6 @@ public class Shielder1 : Soldier
     public override void ReduceHp(float damage)
     {
         CurrentHp.Value = Mathf.Max(0, CurrentHp.Value - damage * (1 - Mathf.Min(0.9f, Defence)));
-        
         if (CurrentHp.Value <= 0)
         {
             Vector3Int gridPosition = grid.WorldToCell(transform.position);

@@ -1,6 +1,5 @@
 using UnityEngine;
 using FishNet.Object;
-using System;
 
 public class Cannon : Soldier
 {
@@ -8,14 +7,14 @@ public class Cannon : Soldier
     {
         base.Start();
 
-        float maxhp = 160f * (float)Math.Pow(1 + score.Value / 500, 2);
+        float maxhp = 300f * (1 + score.Value / 1000);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
         spawnRate = 2.5f;                   // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 15f * (float)Math.Pow(1 + score.Value / 500, 2);
+        Atk = 30 * (1 + score.Value / 1000);
     }
 
     [Server]
