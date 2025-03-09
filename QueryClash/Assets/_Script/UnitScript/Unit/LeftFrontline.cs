@@ -1,5 +1,6 @@
 using UnityEngine;
 using FishNet.Object;
+using System;
 
 public class LeftFrontline : Soldier
 {
@@ -14,14 +15,14 @@ public class LeftFrontline : Soldier
     {
         base.Start();
 
-        float maxhp = 100f * (1 + score.Value / 1000);
+        float maxhp = 100f * (float)Math.Pow(1 + score.Value / 500, 2);
         UpdateSpawnHP(maxhp);
 
         MaxHp.Value = maxhp;  // Set specific MaxHp for LeftFrontline
         spawnRate = 1f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (1 + score.Value / 1000);
+        Atk = 10 * (float)Math.Pow(1 + score.Value / 500, 2);
     }
 
     [Server]
@@ -47,7 +48,7 @@ public class LeftFrontline : Soldier
         if (skillCooldownRemaining >= skillCooldown && skillDuration == 0)
         {
             Debug.Log("Skill activated");
-            spawnRate = 0.3f;
+            spawnRate = 0.5f;
             skillDuration += Time.deltaTime; // Start counting skill duration
 
             PlaySoundAndAnimationClient();
@@ -57,7 +58,7 @@ public class LeftFrontline : Soldier
             skillDuration += Time.deltaTime;
 
             // Check if skill duration has ended
-            if (skillDuration >= 5f)
+            if (skillDuration >= 3f)
             {
                 ResetSkill();
                 Debug.Log("Skill ended");

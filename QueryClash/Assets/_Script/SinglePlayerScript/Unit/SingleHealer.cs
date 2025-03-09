@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class SingleHealer : SingleUnit
     public float healInterval = 1f;   // Heal every second
     public float healRange = 1.2f;      // Healing radius
 
-    private bool isHealing = false;
+    public bool isHealing = false;
 
     public AudioClip HealingSound; // Assign in the inspector
     public AudioSource healingAudioSource;
@@ -26,7 +27,7 @@ public class SingleHealer : SingleUnit
         base.Start();
         grid = GameObject.FindObjectOfType<Grid>();
         timer = GameObject.FindObjectOfType<SingleTimer>();
-        healAmount *= 10 + (score / 1000);
+        healAmount = 10 * (float)Math.Pow(1 + score / 500, 2);
 
         if (specialEffect == null)
         {
@@ -117,9 +118,9 @@ public class SingleHealer : SingleUnit
 
     private void Heal(SingleSoldier soldier)
     {
-        //Debug.Log($"Healing {soldier.gameObject.name} for {healAmount} HP (Expected: 20)");
+        Debug.Log("Start Heal");
         soldier.HealingHp(healAmount);
-        //Debug.Log($"{soldier.gameObject.name} healed to {soldier.CurrentHp} HP.");
+        
     }
 
     private void OnDrawGizmos()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,12 +14,14 @@ public class SingleBurst : SingleSoldier
     void Start()
     {
         base.Start();
-        MaxHp = 100f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
+        MaxHp = 100f * (float)Math.Pow(1 + score / 500, 2);         // Set specific MaxHp for LeftFrontline
         spawnRate = 1f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
         CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 10 * (1 + score / 1000);
+        Atk = 10 * (float)Math.Pow(1 + score / 500, 2);
         HealthBarUpdate();
+
+
     }
 
     void Update()
@@ -51,7 +54,7 @@ public class SingleBurst : SingleSoldier
             Debug.Log("Skill activated");
             skillFX.SetActive(true);
             audioSource.PlayOneShot(skillSound);
-            spawnRate = 0.3f;
+            spawnRate = 0.5f;
             skillDuration += Time.deltaTime; // Start counting skill duration
         }
         else if (skillDuration > 0) // Skill is active
@@ -59,7 +62,7 @@ public class SingleBurst : SingleSoldier
             skillDuration += Time.deltaTime;
 
             // Check if skill duration has ended
-            if (skillDuration >= 5f)
+            if (skillDuration >= 3f)
             {
                 ResetSkill();
                 Debug.Log("Skill ended");

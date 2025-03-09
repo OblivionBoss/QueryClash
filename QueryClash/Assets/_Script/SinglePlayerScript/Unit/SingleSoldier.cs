@@ -136,12 +136,7 @@ public class SingleSoldier : SingleUnit
         HealthBarUpdate();
         if (CurrentHp <= 0)
         {
-            //if (grid == null)
-            //{
-            //    Debug.LogError("Grid is not assigned to the unit!");
-            //    return;
-            //}
-            // Get the grid position of the unit
+            
             Vector3Int gridPosition = grid.WorldToCell(transform.position);
 
             // Remove the unit from the PlacementSystem
@@ -152,7 +147,10 @@ public class SingleSoldier : SingleUnit
 
     public virtual void HealingHp(float heal)
     {
-        CurrentHp = Mathf.Min(MaxHp, CurrentHp + heal);
+        Debug.Log($"Before healing: {CurrentHp}");
+        CurrentHp += heal;
+        if(CurrentHp >= MaxHp) CurrentHp = MaxHp;   
+        Debug.Log($"Hp after healing is {CurrentHp} .");
         HealthBarUpdate();
     }
 

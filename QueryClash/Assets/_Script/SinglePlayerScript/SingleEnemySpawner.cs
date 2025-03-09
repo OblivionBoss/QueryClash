@@ -9,7 +9,7 @@ public class SingleEnemySpawner : MonoBehaviour
     [SerializeField]
     private List<Vector3> availablePositions = new(); // List of spawnable positions
     [SerializeField]
-    private List<int> enemyIds = new() { 201, 202, 203, 204, 205, 206, 207, 208, 209, 210 }; // Enemy IDs
+    private List<int> enemyIds = new() { 201, 202, 203, 204, 205, 206, 207, 208};
 
     [SerializeField]
     private ObjectsDatabaseSO database; // Reference to the object database
@@ -23,8 +23,10 @@ public class SingleEnemySpawner : MonoBehaviour
     public BaseManager baseManager;
 
     private int[] rollChance;
-    
-    
+    private int[] enemyScores;
+
+
+
     private void Start()
     {
         SetLevelRollChanceAndSpawntime(SingleSceneManager.singleSceneManager.difficulty); 
@@ -94,11 +96,11 @@ public class SingleEnemySpawner : MonoBehaviour
     {
         int roll = UnityEngine.Random.Range(0, 100); // Random number from 0 to 99
 
-        if (roll < rollChance[0]) return 0;       // 50% chance
-        else if (roll < rollChance[1]) return 100;     // 30% chance
-        else if (roll < rollChance[2]) return 500;     // 10% chance
-        else if (roll < rollChance[3]) return 900;     // 9% chance
-        else return 1250;                   // 1% chance
+        if (roll < rollChance[0]) return enemyScores[0];       // 50% chance
+        else if (roll < rollChance[1]) return enemyScores[1];     // 30% chance
+        else if (roll < rollChance[2]) return enemyScores[2];     // 10% chance
+        else if (roll < rollChance[3]) return enemyScores[3];     // 9% chance
+        else return enemyScores[4];                   // 1% chance
     }
 
     private void SpawnEnemy()
@@ -173,20 +175,23 @@ public class SingleEnemySpawner : MonoBehaviour
         if (level == 0)
         {
             rollChance = new int[] { 50, 80, 90, 97 };
-            spawnInterval = 120f;
+            enemyScores = new int[] { 0, 100, 500, 810, 1210 };
+            spawnInterval = 60f;
             
         }
         else if (level == 1)
         {
             rollChance = new int[] { 40, 80, 90, 97 };
-            spawnInterval = 100f;
+            enemyScores = new int[] { 0, 200, 600, 900, 1300 };
+            spawnInterval = 45f;
         }
         else if (level == 2)
         {
-            rollChance = new int[] { 10, 50, 80, 95 };
-            spawnInterval = 80f;
+            rollChance = new int[] { 1, 10, 40, 80 };
+            enemyScores = new int[] { 0, 350, 750, 1100, 2000 };
+            spawnInterval = 30f;
         }
-        newSpawnTime = new float[] {spawnInterval * 0.9f, spawnInterval * 0.8f, spawnInterval * 0.75f, spawnInterval * 0.6f, spawnInterval * 0.5f};
+        newSpawnTime = new float[] {spawnInterval * 0.8f, spawnInterval * 0.75f, spawnInterval * 0.5f, spawnInterval * 0.4f, spawnInterval * 0.3f};
         Debug.Log($"Enemy level is {level}, spawnInterval is {spawnInterval}");
     }
 }

@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SingleSniper1 : SingleSoldier
 {
-    public float skillCooldown = 15;
+    public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
    
@@ -13,11 +14,11 @@ public class SingleSniper1 : SingleSoldier
     void Start()
     {
         base.Start();
-        MaxHp = 100f * (1 + score / 1000);         // Set specific MaxHp for LeftFrontline
         spawnRate = 2f;       // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;     // Initialize bullet timer
-        CurrentHp = MaxHp;    // Initialize CurrentHp to MaxHp   
-        Atk = 20 * (1 + score / 1000);
+        MaxHp = 100f * (float)Math.Pow(1 + score / 500, 2);
+        CurrentHp = MaxHp;
+        Atk = 25 * (float)Math.Pow(1 + score / 500, 2);
         HealthBarUpdate();
     }
 
