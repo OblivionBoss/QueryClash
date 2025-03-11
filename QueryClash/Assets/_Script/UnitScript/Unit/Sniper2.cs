@@ -21,7 +21,7 @@ public class Sniper2 : Soldier
         spawnRate = 2f;                     // Set specific spawn rate How often to spawn bullets (in seconds)
         bulletTimer = 0f;                   // Initialize bullet timer
         CurrentHp.Value = MaxHp.Value;            // Initialize CurrentHp to MaxHp   
-        Atk = 20 * (1 + score.Value / 1000);
+        Atk = 20 * Mathf.Pow(1 + score.Value / 500f, 2); 
     }
 
     [Server]

@@ -3,7 +3,7 @@ using FishNet.Object;
 
 public class Sniper1 : Soldier
 {
-    public float skillCooldown = 15;
+    public float skillCooldown = 10;
     public float skillCooldownRemaining;
     public float skillDuration;
     
