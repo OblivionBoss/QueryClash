@@ -1,3 +1,0 @@
-singleplayer 09-03-2568_22-47-51-055 company.db Hard
-#P-04:37-S# { SELECT  Relationship  FROM  DEPENDENT  WHERE  DPD_ID  <=  4 } @0,4,0,0,0,0@ |1,0,4,0,0,1600.00,0.00,4| [(0,0,400.00),(0,0,400.00),(0,0,400.00),(0,0,400.00)]
-#P-03:42-S# { SELECT  Lastname  ,  Country  ,  Sex  ,  Dnumber  ,  Dname  ,  Plocation  ,  Dnum  FROM  EMPLOYEE  ,  DEPARTMENT  ,  PROJECT   WHERE  EMP_ID  =  1001  AND  Dnumber  =  1  AND  Pnumber  =  203 } @2,0,0,7,0,0@ |3,0,7,0,0,13842.76,0.00,7| [(2,0,1977.54),(2,0,1977.54),(2,0,1977.54),(2,0,1977.54),(2,0,1977.54),(2,0,1977.54),(2,0,1977.54)]

@@ -93,6 +93,9 @@ public class GetOppIP : MonoBehaviour
         {
             Debug.LogError("Connection Stop.");
             Destroy(GameObject.Find("NetworkManager"));
+            Destroy(GameObject.Find("SceneManager"));
+            GameObject a = GameObject.Find("FirstGearGames DDOL");
+            if (a != null) Destroy(a);
             SceneManager.LoadSceneAsync("GameLobby");
         }
         else if (args.ConnectionState == LocalConnectionState.Started)
