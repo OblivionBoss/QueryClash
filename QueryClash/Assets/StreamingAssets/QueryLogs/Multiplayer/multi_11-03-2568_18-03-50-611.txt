@@ -1,4 +1,0 @@
-multiplayer 11-03-2568_18-03-50-611 company.db
-#P-03:58-S# { SELECT  Pnumber  ,  Pname  ,  Dnum  ,  W_ID  FROM  PROJECT  JOIN  WORKS_ON  WHERE  Pnumber  =  204  AND  W_ID  IN  (  1  ,  2  ,  4  ,  6  ) } @4,0,0,0,0,7@ |2,0,7,0,0,7609.68,0.00,7| [(4,3,915.67),(4,3,915.67),(4,3,915.67),(4,0,1215.67),(4,0,1215.67),(4,0,1215.67),(4,0,1215.67)]
-#P-03:34-S# { SELECT  Dnumber  FROM  DEPARTMENT  WHERE  Dnumber  <=  3 } @4,0,1,0,0,2@ |1,1,2,1,0,415.69,0.00,3| [(1,0,138.56),(4,0,138.56),(4,0,138.56)]
-#P-02:29-S# { SELECT  Sex  ,  Plocation  ,  Dnum  FROM  EMPLOYEE  ,  PROJECT  WHERE  EMP_ID  >=  1005  AND  Pnumber  =  206 } @4,0,0,1,0,4@ |2,1,4,1,0,3025.84,0.00,5| [(4,0,685.17),(4,0,685.17),(2,0,685.17),(4,2,485.17),(4,2,485.17)]

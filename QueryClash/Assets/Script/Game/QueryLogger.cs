@@ -7,6 +7,7 @@ public class QueryLogger : MonoBehaviour
     private string timestamp;
     public RDBManager RDBManager;
     public SingleEnemySpawner Spawner;
+    public bool isLog = false;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class QueryLogger : MonoBehaviour
 
     public void LogQuery(string queryLog)
     {
+        if (!isLog) return;
         if (RDBManager.isNetwork)
         {
             string multiFilePath = Application.streamingAssetsPath + "/QueryLogs/Multiplayer/" + "multi_" + timestamp + ".txt";
