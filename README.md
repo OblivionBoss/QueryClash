@@ -20,3 +20,6 @@ A Unity project for educational game for exercising SQL language. A project subm
 3. Add new project from disk and ...
     - select folder containing the source code.
 4. Select `QueryClash` project in Unity Hub
+
+Note: If you never install Shader Graph from unity package manager, you may find a problem with shader files.
+![image](https://github.com/user-attachments/assets/00d05c8f-85ae-47b6-bb6c-dae4c47e2218)
